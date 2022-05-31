@@ -61,7 +61,7 @@ class BottomButtons extends StatelessWidget {
                       ),
                     ),
                     onTap: () {
-                      //  _storeOnboardInfo();
+                      _storeOnboardInfo();
                       Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(builder: (context) => LoginPage()),
@@ -74,6 +74,7 @@ class BottomButtons extends StatelessWidget {
           : [
               TextButton(
                 onPressed: () {
+                  _storeOnboardInfo();
                   Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(builder: (context) => LoginPage()),

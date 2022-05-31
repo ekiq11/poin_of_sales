@@ -61,7 +61,7 @@ class HomePage extends StatelessWidget {
         // closer together (more dense) than on mobile platforms.
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: isviewed == 0 ? const Screen() : LoginPage(),
+      home: isviewed == 0 ? LoginPage() : Screen(),
       debugShowCheckedModeBanner: false,
       initialRoute: '/',
       routes: {

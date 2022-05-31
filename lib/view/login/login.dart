@@ -22,7 +22,6 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController passwordController = TextEditingController();
   bool visible = false;
   final String? sUrl = "https://rotiduadelima.id/api/v1/";
-  String? username;
 
   @override
   void initState() {
@@ -47,7 +46,7 @@ class _LoginPageState extends State<LoginPage> {
           // ignore: avoid_print
           print(response);
           if (response['error'] == false) {
-            Navigator.pushReplacement<void, void>(
+            Navigator.pushReplacement(
               context,
               MaterialPageRoute<void>(
                 builder: (BuildContext context) =>
@@ -162,14 +161,21 @@ class _LoginPageState extends State<LoginPage> {
                       ],
                     ),
                   ),
+                  //CircularProgressIndicator
+
                   Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.only(top: 18.0),
                     child: Visibility(
                       maintainSize: true,
                       maintainAnimation: true,
                       maintainState: true,
                       visible: visible,
-                      child: const CircularProgressIndicator(),
+                      child: CircularProgressIndicator(
+                        valueColor: AlwaysStoppedAnimation<Color>(
+                          Colors.amber,
+                        ),
+                        strokeWidth: 5.0,
+                      ),
                     ),
                   ),
                   Container(

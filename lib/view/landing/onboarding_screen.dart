@@ -7,19 +7,19 @@ final List<ExplanationData> data = [
       description:
           "Memudahkan mengatur dan mengelola toko yang anda miliki. Memudahkan mengatur dan mengelola toko yang anda miliki.",
       title: "Poin Of Sale",
-      subtitle: "Toko Kue - Cake",
+      subtitle: "Roti Dua Lima",
       localImageSrc: "asset/image/splash_1.png"),
   ExplanationData(
       description:
           "Memudahkan mengatur dan mengelola toko yang anda miliki. Memudahkan mengatur dan mengelola toko yang anda miliki.",
       title: "Poin Of Sale",
-      subtitle: "Toko Kue - Cake",
+      subtitle: "Roti Dua Lima",
       localImageSrc: "asset/image/splash_2.png"),
   ExplanationData(
       description:
           "Memudahkan mengatur dan mengelola toko yang anda miliki. Memudahkan mengatur dan mengelola toko yang anda miliki.",
       title: "Poin Of Sale",
-      subtitle: "Toko Kue - Cake",
+      subtitle: "Roti Dua Lima",
       localImageSrc: "asset/image/splash_3.png"),
 ];
 
