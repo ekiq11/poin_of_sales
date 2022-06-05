@@ -21,44 +21,45 @@ class _PoinOfSaleState extends State<PoinOfSale> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        //appbar
-        appBar: AppBar(
-          title: Center(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: const [
-                Text('Roti Dua Lima'),
-              ],
-            ),
+      //appbar
+      appBar: AppBar(
+        title: Center(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: const [
+              Text('Roti Dua Lima'),
+            ],
           ),
-          //shadow
-          elevation: 0,
-          //back button
         ),
-        body: FutureBuilder<List<dynamic>>(
-          future: _fetchDataBarang(),
-          builder: (BuildContext context, AsyncSnapshot snapshot) {
-            if (snapshot.hasData) {
-              return ListView.builder(
-                padding: EdgeInsets.all(10),
-                itemCount: snapshot.data.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return Card(
-                    child: ListTile(
-                      title: Text(snapshot.data[index]['nama_barang']),
-                      subtitle: Text(snapshot.data[index]['harga_pokok']),
-                      // leading: CircleAvatar(
-                      //   backgroundImage:
-                      //       NetworkImage(snapshot.data[index]['gambar']),
-                      // ),
-                    ),
-                  );
-                },
-              );
-            } else {
-              return Center(child: CircularProgressIndicator());
-            }
-          },
-        ));
+        //shadow
+        elevation: 0,
+        //back button
+      ),
+      body: FutureBuilder<List<dynamic>>(
+        future: _fetchDataBarang(),
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
+          if (snapshot.hasData) {
+            return ListView.builder(
+              padding: EdgeInsets.all(10),
+              itemCount: snapshot.data.length,
+              itemBuilder: (BuildContext context, int index) {
+                return Card(
+                  child: ListTile(
+                    title: Text(snapshot.data[index]['nama_barang']),
+                    subtitle: Text(snapshot.data[index]['harga_pokok']),
+                    // leading: CircleAvatar(
+                    //   backgroundImage:
+                    //       NetworkImage(snapshot.data[index]['gambar']),
+                    // ),
+                  ),
+                );
+              },
+            );
+          } else {
+            return Center(child: CircularProgressIndicator());
+          }
+        },
+      ),
+    );
   }
 }

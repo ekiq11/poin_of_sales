@@ -23,11 +23,6 @@ class _LoginPageState extends State<LoginPage> {
   bool visible = false;
   final String? sUrl = "https://rotiduadelima.id/api/v1/";
 
-  @override
-  void initState() {
-    super.initState();
-  }
-
   _cekLogin() async {
     setState(() {
       visible = true;
@@ -129,37 +124,35 @@ class _LoginPageState extends State<LoginPage> {
                     flex: 1,
                     child: SizedBox(),
                   ),
-                  SingleChildScrollView(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        const Text(
-                          "Selamat Datang",
-                          style: TextStyle(
-                            fontSize: 30,
-                            fontWeight: FontWeight.bold,
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      const Text(
+                        "Selamat Datang",
+                        style: TextStyle(
+                          fontSize: 30,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      const Text(
+                        "Roti Dua Lima",
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 10.0),
+                        child: Center(
+                          child: Image.asset(
+                            "asset/login/login.png",
+                            height: 70.0,
+                            width: 200.0,
                           ),
                         ),
-                        const Text(
-                          "Roti Dua Lima",
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.w400,
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 10.0),
-                          child: Center(
-                            child: Image.asset(
-                              "asset/login/login.png",
-                              height: 70.0,
-                              width: 200.0,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                   //CircularProgressIndicator
 

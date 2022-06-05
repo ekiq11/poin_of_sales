@@ -35,7 +35,10 @@ class _HalamanUtamaState extends State<HalamanUtama> {
         children: const [
           CustomCard(
               title: "P O S", image: "asset/icon/pos.png", route: "/pos"),
-          CustomCard(title: "Report", image: "asset/icon/report.png"),
+          CustomCard(
+              title: "Report",
+              image: "asset/icon/report.png",
+              route: "/laporanHarian"),
           CustomCard(
               title: "Logout",
               image: "asset/icon/logout.png",

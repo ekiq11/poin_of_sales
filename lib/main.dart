@@ -3,6 +3,11 @@ import 'package:flutter/services.dart';
 import 'package:poin_of_sales/view/landing/onboarding_screen.dart';
 import 'package:poin_of_sales/view/login/login.dart';
 import 'package:poin_of_sales/view/pos/pos.dart';
+import 'package:poin_of_sales/view/report/laporan_bulanan.dart';
+import 'package:poin_of_sales/view/report/laporan_harian.dart';
+import 'package:poin_of_sales/view/report/laporan_kemarin.dart';
+import 'package:poin_of_sales/view/report/laporan_mingguan.dart';
+import 'package:poin_of_sales/view/report/laporan_tigapuluh_hari.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 int? isviewed;
@@ -68,6 +73,11 @@ class HomePage extends StatelessWidget {
         // When navigating to the "/second" route, build the SecondScreen widget.
         '/pos': (context) => const PoinOfSale(),
         '/logout': (context) => LoginPage(),
+        '/laporanHarian': (context) => LaporanHarian(),
+        '/laporanKemarin': (context) => LaporanKemarin(),
+        '/laporanMingguan': (context) => LaporanMingguan(),
+        '/laporanBulanan': (context) => LaporanBulanan(),
+        '/laporanTigaPuluhHari': (context) => LaporanTigaPuluhHari(),
       },
     );
   }

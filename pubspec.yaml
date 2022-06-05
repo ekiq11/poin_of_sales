@@ -36,6 +36,8 @@ dependencies:
   cupertino_icons: ^1.0.2
   shared_preferences: ^2.0.15
   http: any
+  intl: ^0.17.0
+  datetime_picker_formfield: ^2.0.0
   
 
 dev_dependencies:
@@ -69,6 +71,7 @@ flutter:
     - asset/icon/pos.png
     - asset/icon/report.png
     - asset/icon/logout.png
+    - asset/icon/no_data.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
