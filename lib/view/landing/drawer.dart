@@ -1,4 +1,4 @@
-// ignore_for_file: empty_catches
+// ignore_for_file: empty_catches, use_key_in_widget_constructors
 
 import 'dart:convert';
 import 'package:flutter/material.dart';
@@ -7,7 +7,8 @@ import 'package:intl/intl.dart';
 import '../report/laporan_periode.dart';
 
 class DrawerFlutter extends StatefulWidget {
-  const DrawerFlutter({Key? key}) : super(key: key);
+  final String? username;
+  const DrawerFlutter({this.username});
 
   @override
   State<DrawerFlutter> createState() => _DrawerFlutterState();
@@ -228,7 +229,7 @@ class _DrawerFlutterState extends State<DrawerFlutter> {
                         ),
                       ),
                       child: const Text(
-                        'Login',
+                        'Cari',
                         style: TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.w500,

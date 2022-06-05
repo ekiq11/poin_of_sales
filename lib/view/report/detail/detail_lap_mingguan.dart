@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:poin_of_sales/view/landing/drawer.dart';
 import '../../../api/api.dart';
 import '../../../model/currency_format.dart';
-import '../../../model/detail/model_detail_lap_kemarin.dart';
 import '../../../model/detail/model_detail_lap_mingguan.dart';
 
 class DetLapMingguan extends StatefulWidget {
@@ -17,7 +16,7 @@ class DetLapMingguan extends StatefulWidget {
 class _DetLapMingguanState extends State<DetLapMingguan> {
   Future<List<LapDataMingguan>> _fetchDetailLaporanMingguan() async {
     final result = await http.get(Uri.parse(BaseURL.lapDataMingguan));
-    print(result);
+    debugPrint('$result');
     var list = json.decode(result.body)['data'].cast<Map<String, dynamic>>();
     return await list
         .map<LapDataMingguan>((json) => LapDataMingguan.fromJson(json))
@@ -71,86 +70,103 @@ class _DetLapMingguanState extends State<DetLapMingguan> {
                       ? Center(child: CircularProgressIndicator())
                       : Column(
                           children: [
-                            DataTable(
-                              columns: const <DataColumn>[
-                                DataColumn(
-                                  label: Text(
-                                    "Nama ",
-                                    style: TextStyle(
-                                        fontSize: 20.0,
-                                        fontWeight: FontWeight.w600),
-                                  ),
-                                ),
-                                DataColumn(
-                                  label: Text(
-                                    "Jenis ",
-                                    style: TextStyle(
-                                        fontSize: 20.0,
-                                        fontWeight: FontWeight.w600),
-                                  ),
-                                ),
-                                DataColumn(
-                                  label: Text(
-                                    "Qty ",
-                                    style: TextStyle(
-                                        fontSize: 20.0,
-                                        fontWeight: FontWeight.w600),
-                                  ),
-                                ),
-                                DataColumn(
-                                  label: Text(
-                                    "Total (Rp)",
-                                    style: TextStyle(
-                                        fontSize: 20.0,
-                                        fontWeight: FontWeight.w600),
-                                  ),
-                                ),
-                              ],
-                              rows: snapshot.data.map<DataRow>(
-                                (e) {
-                                  return DataRow(
-                                    cells: <DataCell>[
-                                      DataCell(
-                                        SizedBox(
-                                          width: 250,
-                                          child: Text(
-                                            "${e.barang}",
-                                            style: TextStyle(fontSize: 20.0),
-                                          ),
-                                        ),
+                            SingleChildScrollView(
+                              scrollDirection: Axis.vertical,
+                              padding: EdgeInsets.all(1.2),
+                              child: FittedBox(
+                                fit: BoxFit.fill,
+                                child: DataTable(
+                                  headingRowColor:
+                                      MaterialStateColor.resolveWith(
+                                          (states) => Colors.amber),
+                                  sortColumnIndex: 1,
+                                  sortAscending: true,
+                                  columns: const <DataColumn>[
+                                    DataColumn(
+                                      label: Text(
+                                        "Nama ",
+                                        style: TextStyle(
+                                            fontSize: 20.0,
+                                            fontWeight: FontWeight.w600),
                                       ),
-                                      DataCell(
-                                        SizedBox(
-                                          width: 200,
-                                          child: Text(
-                                            "${e.jenis}",
-                                            style: TextStyle(fontSize: 20.0),
-                                          ),
-                                        ),
+                                    ),
+                                    DataColumn(
+                                      label: Text(
+                                        "Jenis ",
+                                        style: TextStyle(
+                                            fontSize: 20.0,
+                                            fontWeight: FontWeight.w600),
                                       ),
-                                      DataCell(
-                                        SizedBox(
-                                          width: 170,
-                                          child: Text(
-                                            "${e.banyak}",
-                                            style: TextStyle(fontSize: 20.0),
-                                          ),
-                                        ),
+                                    ),
+                                    DataColumn(
+                                      label: Text(
+                                        "Qty ",
+                                        style: TextStyle(
+                                            fontSize: 20.0,
+                                            fontWeight: FontWeight.w600),
                                       ),
-                                      DataCell(
-                                        SizedBox(
-                                          width: 180,
-                                          child: Text(
-                                            " ${CurrencyFormat.convertToIdr(int.parse(e.total), 2)}",
-                                            style: TextStyle(fontSize: 20.0),
-                                          ),
-                                        ),
+                                    ),
+                                    DataColumn(
+                                      label: Text(
+                                        "Total (Rp)",
+                                        style: TextStyle(
+                                            fontSize: 20.0,
+                                            fontWeight: FontWeight.w600),
                                       ),
-                                    ],
-                                  );
-                                },
-                              ).toList(),
+                                    ),
+                                  ],
+                                  rows: snapshot.data.map<DataRow>(
+                                    (e) {
+                                      return DataRow(
+                                        cells: <DataCell>[
+                                          DataCell(
+                                            SizedBox(
+                                              width: 250,
+                                              child: Text(
+                                                "${e.barang}",
+                                                style:
+                                                    TextStyle(fontSize: 20.0),
+                                              ),
+                                            ),
+                                          ),
+                                          DataCell(
+                                            SizedBox(
+                                              width: 200,
+                                              child: Text(
+                                                "${e.jenis}",
+                                                style:
+                                                    TextStyle(fontSize: 20.0),
+                                              ),
+                                            ),
+                                          ),
+                                          DataCell(
+                                            SizedBox(
+                                              width: 170,
+                                              child: Text(
+                                                " ${e.banyak}",
+                                                style:
+                                                    TextStyle(fontSize: 20.0),
+                                              ),
+                                            ),
+                                          ),
+                                          DataCell(
+                                            SizedBox(
+                                              width: 180,
+                                              child: Text(
+                                                " ${CurrencyFormat.convertToIdr(int.parse(e.total), 2)}",
+                                                style:
+                                                    TextStyle(fontSize: 20.0),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      );
+                                    },
+                                  ).toList(),
+                                ),
+                              ),
                             ),
+                            Divider(),
                             Padding(
                               padding: const EdgeInsets.all(15.0),
                               child: Text(

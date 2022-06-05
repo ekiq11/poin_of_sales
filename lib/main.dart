@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:poin_of_sales/view/landing/onboarding_screen.dart';
 import 'package:poin_of_sales/view/login/login.dart';
-import 'package:poin_of_sales/view/pos/pos.dart';
 import 'package:poin_of_sales/view/report/laporan_bulanan.dart';
-import 'package:poin_of_sales/view/report/laporan_harian.dart';
 import 'package:poin_of_sales/view/report/laporan_kemarin.dart';
 import 'package:poin_of_sales/view/report/laporan_mingguan.dart';
 import 'package:poin_of_sales/view/report/laporan_tigapuluh_hari.dart';
@@ -71,9 +69,9 @@ class HomePage extends StatelessWidget {
       initialRoute: '/',
       routes: {
         // When navigating to the "/second" route, build the SecondScreen widget.
-        '/pos': (context) => const PoinOfSale(),
-        '/logout': (context) => LoginPage(),
-        '/laporanHarian': (context) => LaporanHarian(),
+        // '/pos': (context) => const PoinOfSale(),
+        // '/logout': (context) => LoginPage(),
+        // '/laporanHarian': (context) => LaporanHarian(),
         '/laporanKemarin': (context) => LaporanKemarin(),
         '/laporanMingguan': (context) => LaporanMingguan(),
         '/laporanBulanan': (context) => LaporanBulanan(),
