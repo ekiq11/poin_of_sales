@@ -62,10 +62,13 @@ class _LaporanTigaPuluhHariState extends State<LaporanTigaPuluhHari> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: const [
                 Center(
-                  child: Text(
-                    "Laporan (30) Tiga Puluh Hari",
-                    style:
-                        TextStyle(fontSize: 30.0, fontWeight: FontWeight.w600),
+                  child: FittedBox(
+                    fit: BoxFit.scaleDown,
+                    child: Text(
+                      "Laporan (30) Tiga Puluh Hari",
+                      style: TextStyle(
+                          fontSize: 30.0, fontWeight: FontWeight.w600),
+                    ),
                   ),
                 ),
                 Text(

@@ -43,10 +43,13 @@ class _DetLapBulananState extends State<DetLapBulanan> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: const [
                 Center(
-                  child: Text(
-                    "Detail Laporan Bulanan",
-                    style:
-                        TextStyle(fontSize: 30.0, fontWeight: FontWeight.w600),
+                  child: FittedBox(
+                    fit: BoxFit.scaleDown,
+                    child: Text(
+                      "Detail Laporan Bulanan",
+                      style: TextStyle(
+                          fontSize: 30.0, fontWeight: FontWeight.w600),
+                    ),
                   ),
                 ),
                 Text(

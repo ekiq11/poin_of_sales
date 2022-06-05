@@ -61,10 +61,13 @@ class _LaporanBulananState extends State<LaporanBulanan> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: const [
                 Center(
-                  child: Text(
-                    "Laporan Bulanan",
-                    style:
-                        TextStyle(fontSize: 30.0, fontWeight: FontWeight.w600),
+                  child: FittedBox(
+                    fit: BoxFit.scaleDown,
+                    child: Text(
+                      "Laporan Bulanan",
+                      style: TextStyle(
+                          fontSize: 30.0, fontWeight: FontWeight.w600),
+                    ),
                   ),
                 ),
                 Text(

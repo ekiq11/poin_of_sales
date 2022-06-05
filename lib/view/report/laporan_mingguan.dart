@@ -63,10 +63,13 @@ class _LaporanMingguanState extends State<LaporanMingguan> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: const [
                 Center(
-                  child: Text(
-                    "Laporan (7) Tujuh Hari",
-                    style:
-                        TextStyle(fontSize: 30.0, fontWeight: FontWeight.w600),
+                  child: FittedBox(
+                    fit: BoxFit.scaleDown,
+                    child: Text(
+                      "Laporan (7) Tujuh Hari",
+                      style: TextStyle(
+                          fontSize: 30.0, fontWeight: FontWeight.w600),
+                    ),
                   ),
                 ),
                 Text(

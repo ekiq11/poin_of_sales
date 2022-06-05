@@ -58,7 +58,8 @@ class _DrawerFlutterState extends State<DrawerFlutter> {
               builder: (BuildContext context) {
                 return AlertDialog(
                   title: const Text("Tanggal Tidak Valid"),
-                  content: const Text("Masukkan Tanggal yang Sesuai"),
+                  content:
+                      const Text("Tanggal yang anda masukkan tidak sesuai !"),
                   actions: <Widget>[
                     TextButton(
                       child: const Text("OK"),
@@ -80,7 +81,23 @@ class _DrawerFlutterState extends State<DrawerFlutter> {
         },
       );
       //alertdialog
-
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text("Failed"),
+            content: const Text("Tanggal harus di isi !"),
+            actions: <Widget>[
+              TextButton(
+                child: const Text("OK"),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              )
+            ],
+          );
+        },
+      );
     }
   }
 

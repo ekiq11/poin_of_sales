@@ -62,10 +62,13 @@ class _LaporanKemarinState extends State<LaporanKemarin> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: const [
                 Center(
-                  child: Text(
-                    "Laporan Kemarin",
-                    style:
-                        TextStyle(fontSize: 30.0, fontWeight: FontWeight.w600),
+                  child: FittedBox(
+                    fit: BoxFit.scaleDown,
+                    child: Text(
+                      "Laporan Kemarin",
+                      style: TextStyle(
+                          fontSize: 30.0, fontWeight: FontWeight.w600),
+                    ),
                   ),
                 ),
                 Text(
