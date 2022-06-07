@@ -32,7 +32,29 @@ class _DetLapPeriodeState extends State<DetLapPeriode> {
     return Scaffold(
       //buat Appbar
       appBar: AppBar(
-        title: Text("Detail Laporan Periode"),
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text("Detail Laporan Periode"),
+            ElevatedButton(
+              onPressed: () async {
+                Navigator.pop(context);
+              },
+              style: ElevatedButton.styleFrom(
+                primary: Colors.black87,
+              ),
+              child: Row(
+                children: const [
+                  Padding(
+                    padding: EdgeInsets.only(right: 25.0),
+                    child: Icon(Icons.arrow_back, color: Colors.amber),
+                  ),
+                  Text("Kembali", style: TextStyle(color: Colors.amber)),
+                ],
+              ),
+            ),
+          ],
+        ),
         elevation: 0,
       ),
       //buatkan drawer

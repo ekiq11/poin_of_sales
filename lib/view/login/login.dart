@@ -31,7 +31,8 @@ class _LoginPageState extends State<LoginPage> {
     var params =
         "login.php?username=${userNameController.text}&password=${passwordController.text}";
     // ignore: avoid_print
-    print(params);
+    prefs.setString('username', userNameController.text);
+    // print(params);
     if (userNameController.text.isNotEmpty &&
         passwordController.text.isNotEmpty) {
       try {

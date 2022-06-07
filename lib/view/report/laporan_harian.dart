@@ -1,4 +1,4 @@
-// ignore_for_file: use_key_in_widget_constructors
+// ignore_for_file: use_key_in_widget_constructors, use_build_context_synchronously
 
 import 'dart:convert';
 import 'package:http/http.dart' as http;
@@ -6,13 +6,13 @@ import 'package:flutter/material.dart';
 import 'package:poin_of_sales/model/model_lap_harian.dart';
 import 'package:poin_of_sales/view/home.dart';
 import 'package:poin_of_sales/view/landing/drawer.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../api/api.dart';
 import '../../model/currency_format.dart';
 import 'detail/detail_lap_harian.dart';
 
 class LaporanHarian extends StatefulWidget {
-  final String? username;
-  const LaporanHarian({this.username});
+  const LaporanHarian({Key? key}) : super(key: key);
 
   @override
   State<LaporanHarian> createState() => _LaporanHarianState();
@@ -28,6 +28,21 @@ class _LaporanHarianState extends State<LaporanHarian> {
         .toList();
   }
 
+  String? username;
+  getPref() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    setState(() {
+      username = preferences.getString("username");
+    });
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getPref();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,12 +55,16 @@ class _LaporanHarianState extends State<LaporanHarian> {
       drawer: DrawerFlutter(),
       //buat body
       floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {
+        onPressed: () async {
           // Add your onPressed code here!
+          SharedPreferences preferences = await SharedPreferences.getInstance();
+          setState(() {
+            username = preferences.getString("username");
+          });
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => HalamanUtama(username: widget.username),
+              builder: (context) => HalamanUtama(username: "$username"),
             ),
           );
           // print("username: ${widget.username!}");

@@ -1,9 +1,10 @@
-// ignore_for_file: use_key_in_widget_constructors
+// ignore_for_file: use_key_in_widget_constructors, use_build_context_synchronously
 
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:poin_of_sales/view/landing/drawer.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../api/api.dart';
 import '../../model/currency_format.dart';
 import '../../model/model_lap_periode.dart';
@@ -13,15 +14,15 @@ import 'detail/detail_lap_periode.dart';
 class LapPeriode extends StatefulWidget {
   final String? drTgl;
   final String? smpTgl;
-  final String? username;
 
-  const LapPeriode({this.drTgl, this.smpTgl, this.username});
+  const LapPeriode({this.drTgl, this.smpTgl});
 
   @override
   State<LapPeriode> createState() => _LapPeriodeState();
 }
 
 class _LapPeriodeState extends State<LapPeriode> {
+  String? username;
   Future<List<DataLapPeriode>> _fetchLaporanPeriode() async {
     final result = await http.get(Uri.parse(
         "${BaseURL.lapDataPeriode}dari_tanggal=${widget.drTgl}&sampai_tanggal=${widget.smpTgl}"));
@@ -44,14 +45,19 @@ class _LapPeriodeState extends State<LapPeriode> {
       drawer: DrawerFlutter(),
       //buat body
       floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {
+        onPressed: () async {
           // Add your onPressed code here!
+          SharedPreferences preferences = await SharedPreferences.getInstance();
+          setState(() {
+            username = preferences.getString("username");
+          });
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => HalamanUtama(username: widget.username),
+              builder: (context) => HalamanUtama(username: "$username"),
             ),
           );
+
           //  print("username: ${widget.username!}");
         },
         label: const Text('Home'),

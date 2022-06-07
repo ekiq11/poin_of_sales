@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:poin_of_sales/view/landing/drawer.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../../api/api.dart';
 import '../../../model/currency_format.dart';
 import '../../../model/detail/model_detail_lap_tiga_puluh_hari.dart';
@@ -14,6 +15,7 @@ class DetLapTigaPuluhHari extends StatefulWidget {
 }
 
 class _DetLapTigaPuluhHariState extends State<DetLapTigaPuluhHari> {
+  String? username;
   Future<List<LapDataTigaPuluhHari>> _fetchDetailLaporanTigaPuluhHari() async {
     final result = await http.get(Uri.parse(BaseURL.lapDataMingguan));
     debugPrint('$result');
@@ -29,7 +31,29 @@ class _DetLapTigaPuluhHariState extends State<DetLapTigaPuluhHari> {
     return Scaffold(
       //buat Appbar
       appBar: AppBar(
-        title: Text("Detail Laporan Tiga Puluh Hari"),
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text("Detail Laporan Tiga Puluh Hari"),
+            ElevatedButton(
+              onPressed: () async {
+                Navigator.pop(context);
+              },
+              style: ElevatedButton.styleFrom(
+                primary: Colors.black87,
+              ),
+              child: Row(
+                children: const [
+                  Padding(
+                    padding: EdgeInsets.only(right: 25.0),
+                    child: Icon(Icons.arrow_back, color: Colors.amber),
+                  ),
+                  Text("Kembali", style: TextStyle(color: Colors.amber)),
+                ],
+              ),
+            ),
+          ],
+        ),
         elevation: 0,
       ),
       //buatkan drawer

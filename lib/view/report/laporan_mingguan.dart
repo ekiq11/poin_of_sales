@@ -1,9 +1,10 @@
-// ignore_for_file: use_key_in_widget_constructors
+// ignore_for_file: use_key_in_widget_constructors, use_build_context_synchronously
 
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:poin_of_sales/view/landing/drawer.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../api/api.dart';
 import '../../model/currency_format.dart';
 import '../../model/model_lap_mingguan.dart';
@@ -11,14 +12,14 @@ import '../home.dart';
 import 'detail/detail_lap_mingguan.dart';
 
 class LaporanMingguan extends StatefulWidget {
-  final String? username;
-  const LaporanMingguan({this.username});
+  const LaporanMingguan({Key? key}) : super(key: key);
 
   @override
   State<LaporanMingguan> createState() => _LaporanMingguanState();
 }
 
 class _LaporanMingguanState extends State<LaporanMingguan> {
+  String? username;
   Future<List<DataMingguan>> _fetchLaporanMingguan() async {
     final result = await http.get(Uri.parse(BaseURL.laporanMingguan));
     var list = json.decode(result.body)['data'].cast<Map<String, dynamic>>();
@@ -40,12 +41,16 @@ class _LaporanMingguanState extends State<LaporanMingguan> {
       drawer: DrawerFlutter(),
       //buat body
       floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {
+        onPressed: () async {
           // Add your onPressed code here!
+          SharedPreferences preferences = await SharedPreferences.getInstance();
+          setState(() {
+            username = preferences.getString("username");
+          });
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => HalamanUtama(username: widget.username),
+              builder: (context) => HalamanUtama(username: "$username"),
             ),
           );
           //  print("username: ${widget.username!}");

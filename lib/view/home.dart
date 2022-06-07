@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:poin_of_sales/view/login/login.dart';
 import 'package:poin_of_sales/view/report/laporan_harian.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HalamanUtama extends StatefulWidget {
   final String? username;
@@ -12,6 +13,21 @@ class HalamanUtama extends StatefulWidget {
 }
 
 class _HalamanUtamaState extends State<HalamanUtama> {
+  String? username;
+  getPref() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    setState(() {
+      username = preferences.getString("username");
+    });
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getPref();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,7 +37,7 @@ class _HalamanUtamaState extends State<HalamanUtama> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               const Text('Roti Dua Lima'),
-              Text('${widget.username}'),
+              Text('$username'),
             ],
           ),
         ),
@@ -46,8 +62,7 @@ class _HalamanUtamaState extends State<HalamanUtama> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) =>
-                      LaporanHarian(username: widget.username),
+                  builder: (context) => LaporanHarian(),
                 ),
               );
               //print("username: ${widget.username!}");
