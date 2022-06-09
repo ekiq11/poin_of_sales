@@ -67,10 +67,10 @@ class HomePage extends StatelessWidget {
       ),
       home: isviewed == 0 ? LoginPage() : Screen(),
       debugShowCheckedModeBanner: false,
-      initialRoute: '/',
+      // initialRoute: '/',
       // routes: {
       //   // When navigating to the "/second" route, build the SecondScreen widget.
-      //   // '/pos': (context) => const PoinOfSale(),
+      // '/pos': (context) => const PoinOfSale(),
       //   // '/logout': (context) => LoginPage(),
       //   // '/laporanHarian': (context) => LaporanHarian(),
       //   // '/laporanKemarin': (context) => LaporanKemarin(),

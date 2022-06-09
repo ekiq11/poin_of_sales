@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:poin_of_sales/api/api.dart';
 import 'package:poin_of_sales/view/home.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
@@ -21,32 +22,35 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController userNameController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   bool visible = false;
-  final String? sUrl = "https://rotiduadelima.id/api/v1/";
 
   _cekLogin() async {
     setState(() {
       visible = true;
     });
-    final prefs = await SharedPreferences.getInstance();
-    var params =
-        "login.php?username=${userNameController.text}&password=${passwordController.text}";
-    // ignore: avoid_print
-    prefs.setString('username', userNameController.text);
+
     // print(params);
     if (userNameController.text.isNotEmpty &&
         passwordController.text.isNotEmpty) {
       try {
-        var res = await http.get(Uri.parse(sUrl! + params));
+        final res = await http.post(Uri.parse(BaseURL.login), body: {
+          "username": userNameController.text,
+          "password": passwordController.text,
+        });
         if (res.statusCode == 200) {
-          var response = json.decode(res.body);
+          var response = json.decode(res.body)['data'];
+
           // ignore: avoid_print
-          print(response);
-          if (response['error'] == false) {
+          print(response[0]['id_user']);
+          if (response.length != 0) {
+            final prefs = await SharedPreferences.getInstance();
+            prefs.setString('username', userNameController.text);
+            prefs.setString('idUser', response[0]['id_user']);
             Navigator.pushReplacement(
               context,
               MaterialPageRoute<void>(
-                builder: (BuildContext context) =>
-                    HalamanUtama(username: userNameController.text),
+                builder: (BuildContext context) => HalamanUtama(
+                    username: userNameController.text,
+                    idUser: response[0]['id_user']),
               ),
             );
           } else {

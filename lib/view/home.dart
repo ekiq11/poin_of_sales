@@ -2,22 +2,25 @@
 
 import 'package:flutter/material.dart';
 import 'package:poin_of_sales/view/login/login.dart';
+import 'package:poin_of_sales/view/pos/pos.dart';
 import 'package:poin_of_sales/view/report/laporan_harian.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class HalamanUtama extends StatefulWidget {
   final String? username;
-  const HalamanUtama({this.username});
+  final String? idUser;
+  const HalamanUtama({this.username, this.idUser});
   @override
   State<HalamanUtama> createState() => _HalamanUtamaState();
 }
 
 class _HalamanUtamaState extends State<HalamanUtama> {
-  String? username;
+  String? username, idUser;
   getPref() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     setState(() {
       username = preferences.getString("username");
+      idUser = preferences.getString("idUser");
     });
   }
 
@@ -37,7 +40,7 @@ class _HalamanUtamaState extends State<HalamanUtama> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               const Text('Roti Dua Lima'),
-              Text('$username'),
+              Text('$username - ${widget.idUser}'),
             ],
           ),
         ),
@@ -53,7 +56,7 @@ class _HalamanUtamaState extends State<HalamanUtama> {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const HalamanUtama()),
+                  MaterialPageRoute(builder: (context) => const PoinOfSale()),
                 );
               },
               child: CustomCard(title: "P O S", image: "asset/icon/pos.png")),
@@ -73,7 +76,11 @@ class _HalamanUtamaState extends State<HalamanUtama> {
             ),
           ),
           InkWell(
-            onTap: () {
+            onTap: () async {
+              SharedPreferences prefs = await SharedPreferences.getInstance();
+              prefs.remove('username');
+              prefs.remove('idUser');
+              // ignore: use_build_context_synchronously
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => LoginPage()),

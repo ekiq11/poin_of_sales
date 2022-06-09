@@ -35,30 +35,88 @@ class _PoinOfSaleState extends State<PoinOfSale> {
         elevation: 0,
         //back button
       ),
-      body: FutureBuilder<List<dynamic>>(
-        future: _fetchDataBarang(),
-        builder: (BuildContext context, AsyncSnapshot snapshot) {
-          if (snapshot.hasData) {
-            return ListView.builder(
-              padding: EdgeInsets.all(10),
-              itemCount: snapshot.data.length,
-              itemBuilder: (BuildContext context, int index) {
-                return Card(
-                  child: ListTile(
-                    title: Text(snapshot.data[index]['nama_barang']),
-                    subtitle: Text(snapshot.data[index]['harga_pokok']),
-                    // leading: CircleAvatar(
-                    //   backgroundImage:
-                    //       NetworkImage(snapshot.data[index]['gambar']),
-                    // ),
-                  ),
-                );
+      body: Row(
+        children: [
+          Expanded(
+            flex: 3,
+            child: FutureBuilder<List<dynamic>>(
+              future: _fetchDataBarang(),
+              builder: (BuildContext context, AsyncSnapshot snapshot) {
+                if (snapshot.hasData) {
+                  return ListView.builder(
+                    padding: EdgeInsets.all(10),
+                    itemCount: snapshot.data.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return Card(
+                        elevation: 0,
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: ListTile(
+                                title:
+                                    Text(snapshot.data[index]['nama_barang']),
+                                subtitle:
+                                    Text(snapshot.data[index]['harga_pokok']),
+                                leading: CircleAvatar(
+                                  backgroundImage: NetworkImage(
+                                      "http://kbu-cdn.com/dk/wp-content/uploads/roti-goreng-madu.jpg"),
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(right: 15.0),
+                              child: ElevatedButton(
+                                  child: Row(
+                                    children: const [
+                                      Padding(
+                                        padding: EdgeInsets.only(right: 15.0),
+                                        child: Text("ADD"),
+                                      ),
+                                      Icon(Icons.add_shopping_cart_rounded),
+                                    ],
+                                  ),
+                                  onPressed: () {}),
+                            ),
+                          ],
+                        ),
+                      );
+                    },
+                  );
+                } else {
+                  return Center(child: CircularProgressIndicator());
+                }
               },
-            );
-          } else {
-            return Center(child: CircularProgressIndicator());
-          }
-        },
+            ),
+          ),
+          Expanded(
+            flex: 3,
+            child: Container(
+              color: Color.fromARGB(255, 221, 221, 221),
+              child: Column(
+                children: [
+                  Padding(
+                    padding: EdgeInsets.only(top: 15.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: const [
+                        Padding(
+                          padding: EdgeInsets.all(15.0),
+                          child: Icon(Icons.shopping_cart_checkout_rounded,
+                              color: Colors.black87, size: 32.0),
+                        ),
+                        Text("Keranjang",
+                            style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.w600,
+                                color: Colors.black87)),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
