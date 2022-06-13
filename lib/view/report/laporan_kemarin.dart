@@ -19,7 +19,7 @@ class LaporanKemarin extends StatefulWidget {
 }
 
 class _LaporanKemarinState extends State<LaporanKemarin> {
-  String? username;
+  String? username, idUser;
   Future<List<DataKemarin>> _fetchLaporanKemarin() async {
     final result = await http.get(Uri.parse(BaseURL.laporanKemarin));
     var list = json.decode(result.body)['data'].cast<Map<String, dynamic>>();
@@ -47,11 +47,13 @@ class _LaporanKemarinState extends State<LaporanKemarin> {
           SharedPreferences preferences = await SharedPreferences.getInstance();
           setState(() {
             username = preferences.getString("username");
+            idUser = preferences.getString("idUser");
           });
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => HalamanUtama(username: "$username"),
+              builder: (context) =>
+                  HalamanUtama(username: "$username", idUser: "$idUser"),
             ),
           );
           //   print("username: ${widget.username!}");

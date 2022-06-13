@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:poin_of_sales/view/landing/drawer.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import '../../../api/api.dart';
 import '../../../model/currency_format.dart';
 import '../../../model/detail/model_detail_lap_tiga_puluh_hari.dart';

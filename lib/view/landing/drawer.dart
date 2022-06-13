@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../report/detail/detail_lap_periode.dart';
 import '../report/laporan_bulanan.dart';
 import '../report/laporan_harian.dart';
 import '../report/laporan_kemarin.dart';
@@ -118,7 +117,6 @@ class _DrawerFlutterState extends State<DrawerFlutter> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     getPref();
   }

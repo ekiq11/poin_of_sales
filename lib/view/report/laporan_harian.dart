@@ -28,17 +28,17 @@ class _LaporanHarianState extends State<LaporanHarian> {
         .toList();
   }
 
-  String? username;
+  String? username, idUser;
   getPref() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     setState(() {
       username = preferences.getString("username");
+      idUser = preferences.getString("idUser");
     });
   }
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     getPref();
   }
@@ -64,7 +64,8 @@ class _LaporanHarianState extends State<LaporanHarian> {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => HalamanUtama(username: "$username"),
+              builder: (context) =>
+                  HalamanUtama(username: "$username", idUser: "$idUser"),
             ),
           );
           // print("username: ${widget.username!}");

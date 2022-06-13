@@ -26,7 +26,6 @@ class _HalamanUtamaState extends State<HalamanUtama> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     getPref();
   }

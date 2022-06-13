@@ -23,4 +23,14 @@ class BaseURL {
       "https://rotiduadelima.id/api/v1/laporan_periode.php?";
   static const String lapDataPeriodeDetail =
       "https://rotiduadelima.id/api/v1/detail_laporan_periode.php?";
+  static const String tambahKeranjang =
+      "https://rotiduadelima.id/api/v1/tambah_barang.php";
+  static const String dataKeranjang =
+      "https://rotiduadelima.id/api/v1/list_barang.php";
+  static const String kurangi =
+      "https://rotiduadelima.id/api/v1/kurangi_jumlah.php?id_temp=";
+  static const String hapus =
+      "https://rotiduadelima.id/api/v1/hapus_barang.php?id_temp=";
+  static const String add =
+      "https://rotiduadelima.id/api/v1/update_jumlah.php?id_temp=";
 }

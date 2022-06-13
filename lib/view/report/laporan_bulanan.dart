@@ -18,7 +18,7 @@ class LaporanBulanan extends StatefulWidget {
 }
 
 class _LaporanBulananState extends State<LaporanBulanan> {
-  String? username;
+  String? username, idUser;
   Future<List<DataBulanan>> _fetchLaporanBulanan() async {
     final result = await http.get(Uri.parse(BaseURL.laporanMingguan));
     var list = json.decode(result.body)['data'].cast<Map<String, dynamic>>();
@@ -42,14 +42,17 @@ class _LaporanBulananState extends State<LaporanBulanan> {
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () async {
           // Add your onPressed code here!
+
           SharedPreferences preferences = await SharedPreferences.getInstance();
           setState(() {
             username = preferences.getString("username");
+            idUser = preferences.getString("idUser");
           });
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => HalamanUtama(username: "$username"),
+              builder: (context) =>
+                  HalamanUtama(username: "$username", idUser: "$idUser"),
             ),
           );
 

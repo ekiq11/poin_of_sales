@@ -22,7 +22,7 @@ class LapPeriode extends StatefulWidget {
 }
 
 class _LapPeriodeState extends State<LapPeriode> {
-  String? username;
+  String? username, idUser;
   Future<List<DataLapPeriode>> _fetchLaporanPeriode() async {
     final result = await http.get(Uri.parse(
         "${BaseURL.lapDataPeriode}dari_tanggal=${widget.drTgl}&sampai_tanggal=${widget.smpTgl}"));
@@ -50,11 +50,13 @@ class _LapPeriodeState extends State<LapPeriode> {
           SharedPreferences preferences = await SharedPreferences.getInstance();
           setState(() {
             username = preferences.getString("username");
+            idUser = preferences.getString("idUser");
           });
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => HalamanUtama(username: "$username"),
+              builder: (context) =>
+                  HalamanUtama(username: "$username", idUser: "$idUser"),
             ),
           );
 
