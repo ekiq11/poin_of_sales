@@ -39,6 +39,7 @@ dependencies:
   intl: ^0.17.0
   datetime_picker_formfield: ^2.0.0
   badges: ^2.0.3
+  ticket_widget: ^0.0.1
   
 
 dev_dependencies:
@@ -69,6 +70,7 @@ flutter:
     - asset/image/splash_2.png
     - asset/image/splash_3.png
     - asset/image/keranjang_kosong.png
+    - asset/image/sukses.png
     - asset/login/login.png
     - asset/icon/pos.png
     - asset/icon/report.png

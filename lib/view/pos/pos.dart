@@ -6,6 +6,8 @@ import 'dart:convert';
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:poin_of_sales/view/pos/payment/payment.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../api/api.dart';
 import '../../model/currency_format.dart';
@@ -24,6 +26,24 @@ class _PoinOfSaleState extends State<PoinOfSale> {
   final StreamController<List> _streamctrl = StreamController();
   Timer? _timer;
   Timer? _waktu;
+
+  @override
+  void initState() {
+    getPref();
+    _fetchDataKeranjang();
+    _fetchDataTotal();
+    _timer =
+        Timer.periodic(Duration(seconds: 1), (timer) => _fetchDataKeranjang());
+    _waktu = Timer.periodic(Duration(seconds: 1), (timer) => _fetchDataTotal());
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    if (_timer!.isActive) _timer!.cancel();
+    if (_waktu!.isActive) _waktu!.cancel();
+    super.dispose();
+  }
 
   Future<List<dynamic>> _fetchDataBarang() async {
     var result = await http.get(Uri.parse(BaseURL.pos));
@@ -44,21 +64,13 @@ class _PoinOfSaleState extends State<PoinOfSale> {
     return data;
   }
 
-  @override
-  void initState() {
-    _fetchDataKeranjang();
-    _fetchDataTotal();
-    _timer =
-        Timer.periodic(Duration(seconds: 1), (timer) => _fetchDataKeranjang());
-    _waktu = Timer.periodic(Duration(seconds: 1), (timer) => _fetchDataTotal());
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    if (_timer!.isActive) _timer!.cancel();
-    if (_waktu!.isActive) _waktu!.cancel();
-    super.dispose();
+  String? username, idUser;
+  getPref() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    setState(() {
+      username = preferences.getString("username");
+      idUser = preferences.getString("idUser");
+    });
   }
 
   @override
@@ -364,7 +376,13 @@ class _PoinOfSaleState extends State<PoinOfSale> {
                                               focusElevation: 5,
                                               splashColor: Colors.amber,
                                               elevation: 1,
-                                              onPressed: () {},
+                                              onPressed: () {
+                                                Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            Payment()));
+                                              },
                                               label: Row(
                                                 mainAxisAlignment:
                                                     MainAxisAlignment
