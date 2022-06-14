@@ -1,4 +1,4 @@
-// ignore_for_file: unrelated_type_equality_checks, use_build_context_synchronously
+// ignore_for_file: unrelated_type_equality_checks, use_build_context_synchronously, avoid_print
 
 import 'dart:convert';
 import 'package:flutter/material.dart';
@@ -18,9 +18,13 @@ class Payment extends StatefulWidget {
 
 class _PaymentState extends State<Payment> {
   bool? isVisible = true;
-  String? jumlahUang;
-  int? kembalian, num1, num2, result;
+  String? jumlahUang, kdBank;
+  int? kembalian, num1, num2;
+  int? result = 0;
   bool? form = false;
+  bool? cek = false;
+  bool? tunai = false;
+  bool? nonTunai = false;
 
   final TextEditingController totalUangController = TextEditingController();
   Future<List<dynamic>?> _fetchDataKeranjang() async {
@@ -109,14 +113,18 @@ class _PaymentState extends State<Payment> {
                                       fontWeight: FontWeight.w600,
                                       color: Colors.black87),
                                 ),
-                                Text(
-                                  CurrencyFormat.convertToIdr(
-                                      int.parse("$result"), 2),
-                                  style: TextStyle(
-                                      fontSize: 20.0,
-                                      fontWeight: FontWeight.w600,
-                                      color: Colors.black87),
-                                ),
+                                // ignore: prefer_interpolation_to_compose_strings
+                                if (result != null)
+                                  Text(
+                                    // ignore: prefer_interpolation_to_compose_strings
+                                    "Kembalian : " +
+                                        CurrencyFormat.convertToIdr(
+                                            int.parse("$result"), 2),
+                                    style: TextStyle(
+                                        fontSize: 20.0, color: Colors.black87),
+                                  )
+                                else
+                                  Text(""),
                                 Padding(
                                     padding: EdgeInsets.only(
                                   bottom: 25.0,
@@ -131,6 +139,10 @@ class _PaymentState extends State<Payment> {
                                         onPressed: () {
                                           setState(() {
                                             isVisible = true;
+                                            form = true;
+                                            kdBank = "tunai";
+                                            tunai = true;
+                                            nonTunai = false;
                                           });
                                         },
                                         style: OutlinedButton.styleFrom(
@@ -167,6 +179,9 @@ class _PaymentState extends State<Payment> {
                                           setState(() {
                                             isVisible = false;
                                             form = true;
+                                            kdBank = "kartu";
+                                            nonTunai = true;
+                                            tunai = false;
                                           });
                                         },
                                         style: OutlinedButton.styleFrom(
@@ -210,6 +225,8 @@ class _PaymentState extends State<Payment> {
                                         OutlinedButton(
                                           onPressed: () {
                                             setState(() {
+                                              nonTunai = true;
+                                              tunai = false;
                                               num1 = int.parse(
                                                   snapshot.data[index]
                                                       ['total_belanja']);
@@ -250,6 +267,8 @@ class _PaymentState extends State<Payment> {
                                         OutlinedButton(
                                           onPressed: () {
                                             setState(() {
+                                              nonTunai = true;
+                                              tunai = false;
                                               num1 = 50000;
                                               num2 = int.parse(
                                                   snapshot.data[index]
@@ -287,6 +306,8 @@ class _PaymentState extends State<Payment> {
                                         ),
                                         OutlinedButton(
                                           onPressed: () {
+                                            nonTunai = true;
+                                            tunai = false;
                                             setState(() {
                                               num1 = 100000;
                                               num2 = int.parse(
@@ -345,7 +366,12 @@ class _PaymentState extends State<Payment> {
                                         color: Colors.grey,
                                       ),
                                     ),
-                                    onTap: () {},
+                                    onTap: () {
+                                      setState(() {
+                                        cek == cek;
+                                        result;
+                                      });
+                                    },
                                   ),
                                 ),
                               ],
@@ -353,83 +379,166 @@ class _PaymentState extends State<Payment> {
                             Spacer(
                               flex: 2,
                             ),
-                            InkWell(
-                              child: Container(
-                                width: MediaQuery.of(context).size.width,
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 15),
-                                alignment: Alignment.center,
-                                decoration: BoxDecoration(
-                                  borderRadius: const BorderRadius.all(
-                                    Radius.circular(5),
-                                  ),
-                                  boxShadow: <BoxShadow>[
-                                    BoxShadow(
-                                        color: Colors.grey.shade200,
-                                        offset: const Offset(2, 4),
-                                        blurRadius: 5,
-                                        spreadRadius: 2)
-                                  ],
-                                  gradient: const LinearGradient(
-                                    begin: Alignment.centerLeft,
-                                    end: Alignment.centerRight,
-                                    colors: [
-                                      Color(0xfffbb448),
-                                      Color(0xfff7892b)
+                            Visibility(
+                              visible: tunai!,
+                              child: InkWell(
+                                child: Container(
+                                  width: MediaQuery.of(context).size.width,
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 15),
+                                  alignment: Alignment.center,
+                                  decoration: BoxDecoration(
+                                    borderRadius: const BorderRadius.all(
+                                      Radius.circular(5),
+                                    ),
+                                    boxShadow: <BoxShadow>[
+                                      BoxShadow(
+                                          color: Colors.grey.shade200,
+                                          offset: const Offset(2, 4),
+                                          blurRadius: 5,
+                                          spreadRadius: 2)
                                     ],
+                                    gradient: const LinearGradient(
+                                      begin: Alignment.centerLeft,
+                                      end: Alignment.centerRight,
+                                      colors: [
+                                        Color(0xfffbb448),
+                                        Color(0xfff7892b)
+                                      ],
+                                    ),
+                                  ),
+                                  child: const Text(
+                                    'Bayar',
+                                    style: TextStyle(
+                                        fontSize: 22,
+                                        fontWeight: FontWeight.w500,
+                                        color: Colors.black87),
                                   ),
                                 ),
-                                child: const Text(
-                                  'Bayar',
-                                  style: TextStyle(
-                                      fontSize: 22,
-                                      fontWeight: FontWeight.w500,
-                                      color: Colors.black87),
-                                ),
-                              ),
-                              onTap: () async {
-                                //navigasi
-                                num1 = int.parse(totalUangController.text);
-                                num2 = int.parse(
-                                    snapshot.data[index]['total_belanja']);
-                                result = num1! - num2!;
-                                print(result);
-                                final res = await http.post(
-                                  Uri.parse(BaseURL.transaksi),
-                                  body: {
-                                    "kd_bank": isVisible!.toString(),
-                                    "id_kasir": "$idUser".toString(),
-                                    "subtotal": snapshot.data[index]
-                                            ['total_belanja']
-                                        .toString(),
-                                    "diskon": snapshot.data[index]['diskon']
-                                        .toString(),
-                                    "total_akhir": snapshot.data[index]
-                                            ['total_belanja']
-                                        .toString(),
-                                    "bayar": snapshot.data[index]['bayar']
-                                        .toString(),
-                                    "kembalian": "$result".toString(),
-                                    "kd_barang": snapshot.data[index]
-                                            ['kd_barang']
-                                        .toString(),
-                                    "barang": snapshot.data[index]['barang']
-                                        .toString(),
-                                    "harga": snapshot.data[index]['harga']
-                                        .toString(),
-                                    "banyak": snapshot.data[index]['banyak']
-                                        .toString(),
-                                    "total": snapshot.data[index]['total']
-                                        .toString(),
-                                  },
-                                );
+                                onTap: () async {
+                                  //navigasi
 
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => TransaksiSelesai(
-                                            kembalian: result)));
-                              },
+                                  num1 = int.parse(totalUangController.text);
+                                  num2 = int.parse(
+                                      snapshot.data[index]['total_belanja']);
+                                  result = num1! - num2!;
+                                  print(result);
+                                  final res = await http.post(
+                                    Uri.parse(BaseURL.transaksi),
+                                    body: {
+                                      "kd_bank": "$kdBank".toString(),
+                                      "id_kasir": "$idUser".toString(),
+                                      "subtotal": snapshot.data[index]
+                                              ['total_belanja']
+                                          .toString(),
+                                      "diskon": snapshot.data[index]['diskon']
+                                          .toString(),
+                                      "total_akhir": snapshot.data[index]
+                                              ['total_belanja']
+                                          .toString(),
+                                      "bayar": snapshot.data[index]['bayar']
+                                          .toString(),
+                                      "kembalian": "$result".toString(),
+                                      "kd_barang": snapshot.data[index]
+                                              ['kd_barang']
+                                          .toString(),
+                                      "barang": snapshot.data[index]['barang']
+                                          .toString(),
+                                      "harga": snapshot.data[index]['harga']
+                                          .toString(),
+                                      "banyak": snapshot.data[index]['banyak']
+                                          .toString(),
+                                      "total": snapshot.data[index]['total']
+                                          .toString(),
+                                    },
+                                  );
+
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              TransaksiSelesai(
+                                                  kembalian: result)));
+                                },
+                              ),
+                            ),
+                            Visibility(
+                              visible: nonTunai!,
+                              child: InkWell(
+                                child: Container(
+                                  width: MediaQuery.of(context).size.width,
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 15),
+                                  alignment: Alignment.center,
+                                  decoration: BoxDecoration(
+                                    borderRadius: const BorderRadius.all(
+                                      Radius.circular(5),
+                                    ),
+                                    boxShadow: <BoxShadow>[
+                                      BoxShadow(
+                                          color: Colors.grey.shade200,
+                                          offset: const Offset(2, 4),
+                                          blurRadius: 5,
+                                          spreadRadius: 2)
+                                    ],
+                                    gradient: const LinearGradient(
+                                      begin: Alignment.centerLeft,
+                                      end: Alignment.centerRight,
+                                      colors: [
+                                        Color(0xfffbb448),
+                                        Color(0xfff7892b)
+                                      ],
+                                    ),
+                                  ),
+                                  child: const Text(
+                                    'Bayar',
+                                    style: TextStyle(
+                                        fontSize: 22,
+                                        fontWeight: FontWeight.w500,
+                                        color: Colors.black87),
+                                  ),
+                                ),
+                                onTap: () async {
+                                  //navigasi
+                                  print("$result");
+                                  final res = await http.post(
+                                    Uri.parse(BaseURL.transaksi),
+                                    body: {
+                                      "kd_bank": "$kdBank".toString(),
+                                      "id_kasir": "$idUser".toString(),
+                                      "subtotal": snapshot.data[index]
+                                              ['total_belanja']
+                                          .toString(),
+                                      "diskon": snapshot.data[index]['diskon']
+                                          .toString(),
+                                      "total_akhir": snapshot.data[index]
+                                              ['total_belanja']
+                                          .toString(),
+                                      "bayar": snapshot.data[index]['bayar']
+                                          .toString(),
+                                      "kembalian": "$result".toString(),
+                                      "kd_barang": snapshot.data[index]
+                                              ['kd_barang']
+                                          .toString(),
+                                      "barang": snapshot.data[index]['barang']
+                                          .toString(),
+                                      "harga": snapshot.data[index]['harga']
+                                          .toString(),
+                                      "banyak": snapshot.data[index]['banyak']
+                                          .toString(),
+                                      "total": snapshot.data[index]['total']
+                                          .toString(),
+                                    },
+                                  );
+
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              TransaksiSelesai(
+                                                  kembalian: result)));
+                                },
+                              ),
                             )
                           ],
                         ),

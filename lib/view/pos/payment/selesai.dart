@@ -1,11 +1,13 @@
-// ignore_for_file: must_be_immutable, use_key_in_widget_constructors
+// ignore_for_file: must_be_immutable, use_key_in_widget_constructors, unrelated_type_equality_checks, use_build_context_synchronously
 
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:ticket_widget/ticket_widget.dart';
 import 'package:http/http.dart' as http;
 import '../../../api/api.dart';
 import '../../../model/currency_format.dart';
+import '../pos.dart';
 
 class TransaksiSelesai extends StatefulWidget {
   int? kembalian;
@@ -20,8 +22,22 @@ class _TransaksiSelesaiState extends State<TransaksiSelesai> {
   Future<List<dynamic>?> _fetchDataKeranjang() async {
     var result = await http.get(Uri.parse(BaseURL.dataKeranjang));
     var data = json.decode(result.body)['data'];
-
     return data;
+  }
+
+  String? username, idUser;
+  getPref() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    setState(() {
+      username = preferences.getString("username");
+      idUser = preferences.getString("idUser");
+    });
+  }
+
+  @override
+  void initState() {
+    getPref();
+    super.initState();
   }
 
   @override
@@ -129,10 +145,20 @@ class _TransaksiSelesaiState extends State<TransaksiSelesai> {
                                   ),
                                 ),
                                 OutlinedButton(
-                                  onPressed: () {
+                                  onPressed: () async {
                                     setState(() {
                                       isVisible = true;
                                     });
+                                    final res = await http.get(
+                                      Uri.parse(BaseURL.selesaibelanja),
+                                    );
+
+                                    Navigator.pushReplacement(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              const PoinOfSale()),
+                                    );
                                   },
                                   style: OutlinedButton.styleFrom(
                                     backgroundColor: Colors.lightBlueAccent,
