@@ -37,4 +37,6 @@ class BaseURL {
       "https://rotiduadelima.id/api/v1/simpan_transaksi.php";
   static const String selesaibelanja =
       "https://rotiduadelima.id/api/v1/kosongkan_keranjang.php";
+  static const String struk =
+      "https://rotiduadelima.id/api/v1/struk.php?no_transaksi=";
 }

@@ -25,6 +25,7 @@ class _PaymentState extends State<Payment> {
   bool? cek = false;
   bool? tunai = false;
   bool? nonTunai = false;
+  bool? kembali;
 
   final TextEditingController totalUangController = TextEditingController();
   Future<List<dynamic>?> _fetchDataKeranjang() async {
@@ -88,7 +89,7 @@ class _PaymentState extends State<Payment> {
                                     Text(
                                         snapshot.data[index]['no_transaksi']
                                             .toString(),
-                                        style: TextStyle(fontSize: 20.0)),
+                                        style: TextStyle(fontSize: 16.0)),
                                   ],
                                 ),
                               ],
@@ -115,14 +116,23 @@ class _PaymentState extends State<Payment> {
                                 ),
                                 // ignore: prefer_interpolation_to_compose_strings
                                 if (result != null)
-                                  Text(
-                                    // ignore: prefer_interpolation_to_compose_strings
-                                    "Kembalian : " +
-                                        CurrencyFormat.convertToIdr(
-                                            int.parse("$result"), 2),
-                                    style: TextStyle(
-                                        fontSize: 20.0, color: Colors.black87),
-                                  )
+                                  kembali == true
+                                      ? Text(
+                                          // ignore: prefer_interpolation_to_compose_strings
+                                          "Kembalian : " +
+                                              CurrencyFormat.convertToIdr(
+                                                  int.parse("0"), 2),
+                                          style: TextStyle(
+                                              fontSize: 20.0,
+                                              color: Colors.black87))
+                                      : Text(
+                                          // ignore: prefer_interpolation_to_compose_strings
+                                          "Kembalian : " +
+                                              CurrencyFormat.convertToIdr(
+                                                  int.parse("$result"), 2),
+                                          style: TextStyle(
+                                              fontSize: 20.0,
+                                              color: Colors.black87))
                                 else
                                   Text(""),
                                 Padding(
@@ -180,8 +190,8 @@ class _PaymentState extends State<Payment> {
                                             isVisible = false;
                                             form = true;
                                             kdBank = "kartu";
-                                            nonTunai = true;
-                                            tunai = false;
+                                            nonTunai = false;
+                                            tunai = true;
                                           });
                                         },
                                         style: OutlinedButton.styleFrom(
@@ -225,6 +235,7 @@ class _PaymentState extends State<Payment> {
                                         OutlinedButton(
                                           onPressed: () {
                                             setState(() {
+                                              kembali = false;
                                               nonTunai = true;
                                               tunai = false;
                                               num1 = int.parse(
@@ -267,6 +278,7 @@ class _PaymentState extends State<Payment> {
                                         OutlinedButton(
                                           onPressed: () {
                                             setState(() {
+                                              kembali = false;
                                               nonTunai = true;
                                               tunai = false;
                                               num1 = 50000;
@@ -306,6 +318,7 @@ class _PaymentState extends State<Payment> {
                                         ),
                                         OutlinedButton(
                                           onPressed: () {
+                                            kembali = false;
                                             nonTunai = true;
                                             tunai = false;
                                             setState(() {
@@ -370,6 +383,7 @@ class _PaymentState extends State<Payment> {
                                       setState(() {
                                         cek == cek;
                                         result;
+                                        kembali = true;
                                       });
                                     },
                                   ),
@@ -436,8 +450,7 @@ class _PaymentState extends State<Payment> {
                                       "total_akhir": snapshot.data[index]
                                               ['total_belanja']
                                           .toString(),
-                                      "bayar": snapshot.data[index]['bayar']
-                                          .toString(),
+                                      "bayar": "$num1".toString(),
                                       "kembalian": "$result".toString(),
                                       "kd_barang": snapshot.data[index]
                                               ['kd_barang']
@@ -514,8 +527,7 @@ class _PaymentState extends State<Payment> {
                                       "total_akhir": snapshot.data[index]
                                               ['total_belanja']
                                           .toString(),
-                                      "bayar": snapshot.data[index]['bayar']
-                                          .toString(),
+                                      "bayar": "$num1".toString(),
                                       "kembalian": "$result".toString(),
                                       "kd_barang": snapshot.data[index]
                                               ['kd_barang']

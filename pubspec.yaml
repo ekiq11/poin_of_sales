@@ -40,7 +40,16 @@ dependencies:
   datetime_picker_formfield: ^2.0.0
   badges: ^2.0.3
   ticket_widget: ^0.0.1
-  
+  screenshot: ^1.2.3
+  image_gallery_saver: ^1.7.1 
+  permission_handler: ^10.0.0
+  share_plus: ^4.0.8
+  path_provider: ^2.0.11
+  flutter_speed_dial: ^6.0.0
+
+ 
+
+
 
 dev_dependencies:
   flutter_test:
@@ -88,10 +97,10 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
-  # fonts:
-  #   - family: Schyler
-  #     fonts:
-  #       - asset: fonts/Schyler-Regular.ttf
+  fonts:
+    - family: Helvatica
+      fonts:
+        - asset: asset/font/helvatica.ttf
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic
   #   - family: Trajan Pro

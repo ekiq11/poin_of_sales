@@ -22,8 +22,8 @@ class PoinOfSale extends StatefulWidget {
 class _PoinOfSaleState extends State<PoinOfSale> {
   bool? isVisible = true;
 
-  final StreamController<List> _streamController = StreamController();
-  final StreamController<List> _streamctrl = StreamController();
+  final StreamController<List>? streamController = StreamController();
+  final StreamController<List>? streamctrl = StreamController();
   Timer? _timer;
   Timer? _waktu;
 
@@ -53,14 +53,22 @@ class _PoinOfSaleState extends State<PoinOfSale> {
   Future<List<dynamic>?> _fetchDataKeranjang() async {
     var result = await http.get(Uri.parse(BaseURL.dataKeranjang));
     var data = json.decode(result.body)['data'];
-    _streamController.add(data);
+    if (data != null) {
+      streamController!.add(data);
+    } else {
+      streamController!.add([]);
+    }
     return data;
   }
 
   Future<List<dynamic>?> _fetchDataTotal() async {
     var result = await http.get(Uri.parse(BaseURL.dataKeranjang));
     var data = json.decode(result.body)['data'];
-    _streamctrl.add(data);
+    if (data != null) {
+      streamctrl!.add(data);
+    } else {
+      streamctrl!.add([]);
+    }
     return data;
   }
 
@@ -190,7 +198,7 @@ class _PoinOfSaleState extends State<PoinOfSale> {
                       children: [
                         Expanded(
                           child: StreamBuilder(
-                            stream: _streamController.stream,
+                            stream: streamController!.stream,
                             builder: (context, snapshot) {
                               if (snapshot.hasData) {
                                 return FutureBuilder<List<dynamic>?>(
@@ -385,7 +393,7 @@ class _PoinOfSaleState extends State<PoinOfSale> {
                         ),
                         Expanded(
                           child: StreamBuilder(
-                            stream: _streamctrl.stream,
+                            stream: streamctrl!.stream,
                             builder: (context, snapshot) {
                               if (snapshot.hasData) {
                                 return FutureBuilder<List<dynamic>?>(

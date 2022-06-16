@@ -2,11 +2,14 @@
 
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:poin_of_sales/view/pos/payment/struk.dart';
+
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:ticket_widget/ticket_widget.dart';
 import 'package:http/http.dart' as http;
 import '../../../api/api.dart';
 import '../../../model/currency_format.dart';
+
 import '../pos.dart';
 
 class TransaksiSelesai extends StatefulWidget {
@@ -25,7 +28,7 @@ class _TransaksiSelesaiState extends State<TransaksiSelesai> {
     return data;
   }
 
-  String? username, idUser;
+  String? username, idUser, idTransaksi;
   getPref() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     setState(() {
@@ -79,7 +82,7 @@ class _TransaksiSelesaiState extends State<TransaksiSelesai> {
                                     Text(
                                         snapshot.data[index]['no_transaksi']
                                             .toString(),
-                                        style: TextStyle(fontSize: 20.0)),
+                                        style: TextStyle(fontSize: 16.0)),
                                   ],
                                 ),
                               ],
@@ -88,7 +91,7 @@ class _TransaksiSelesaiState extends State<TransaksiSelesai> {
                             Column(
                               children: [
                                 Text("Pembayaran Sukses",
-                                    style: TextStyle(fontSize: 20.0)),
+                                    style: TextStyle(fontSize: 16.0)),
                                 Padding(
                                   padding: const EdgeInsets.only(top: 20.0),
                                   child: SizedBox(
@@ -100,13 +103,13 @@ class _TransaksiSelesaiState extends State<TransaksiSelesai> {
                                 Padding(
                                   padding: const EdgeInsets.only(top: 18.0),
                                   child: Text("Total Kembalian",
-                                      style: TextStyle(fontSize: 20.0)),
+                                      style: TextStyle(fontSize: 16.0)),
                                 ),
                                 Text(
                                     CurrencyFormat.convertToIdr(
                                         int.parse(widget.kembalian.toString()),
                                         2),
-                                    style: TextStyle(fontSize: 40.0))
+                                    style: TextStyle(fontSize: 35.0))
                               ],
                             ),
                             Spacer(
@@ -117,9 +120,15 @@ class _TransaksiSelesaiState extends State<TransaksiSelesai> {
                               children: [
                                 OutlinedButton(
                                   onPressed: () {
-                                    setState(() {
-                                      isVisible = true;
-                                    });
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => Struk(
+                                            idTransaksi: snapshot.data[index]
+                                                    ['no_transaksi']
+                                                .toString()),
+                                      ),
+                                    );
                                   },
                                   style: OutlinedButton.styleFrom(
                                     backgroundColor: Colors.amber,
