@@ -38,7 +38,7 @@ class _HalamanUtamaState extends State<HalamanUtama> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text('Roti Dua Lima'),
+              const Text('Roti Dua Delima'),
               Text('$username - ${widget.idUser}'),
             ],
           ),

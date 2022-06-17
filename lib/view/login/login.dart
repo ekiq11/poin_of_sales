@@ -37,22 +37,30 @@ class _LoginPageState extends State<LoginPage> {
           "password": passwordController.text,
         });
         if (res.statusCode == 200) {
-          var response = json.decode(res.body)['data'];
+          var response = json.decode(res.body);
 
           // ignore: avoid_print
-          print(response[0]['id_user']);
-          if (response.length != 0) {
-            final prefs = await SharedPreferences.getInstance();
-            prefs.setString('username', userNameController.text);
-            prefs.setString('idUser', response[0]['id_user']);
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute<void>(
-                builder: (BuildContext context) => HalamanUtama(
-                    username: userNameController.text,
-                    idUser: response[0]['id_user']),
-              ),
-            );
+          print(response['error']);
+          if (response['error'] != true) {
+            final tes = await http.post(Uri.parse(BaseURL.login), body: {
+              "username": userNameController.text,
+              "password": passwordController.text,
+            });
+            if (tes.statusCode == 200) {
+              var responseData = json.decode(res.body)['data'];
+              print(responseData[0]['id_user']);
+              final prefs = await SharedPreferences.getInstance();
+              prefs.setString('username', userNameController.text);
+              prefs.setString('idUser', responseData[0]['id_user']);
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute<void>(
+                  builder: (BuildContext context) => HalamanUtama(
+                      username: userNameController.text,
+                      idUser: responseData[0]['id_user']),
+                ),
+              );
+            }
           } else {
             setState(
               () {
@@ -138,7 +146,7 @@ class _LoginPageState extends State<LoginPage> {
                             ),
                           ),
                           const Text(
-                            "Roti Dua Lima",
+                            "Roti Dua Delima",
                             style: TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.w400,

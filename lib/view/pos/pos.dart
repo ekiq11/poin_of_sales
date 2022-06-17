@@ -1,4 +1,4 @@
-// ignore_for_file: sized_box_for_whitespace, unused_local_variable
+// ignore_for_file: sized_box_for_whitespace, unused_local_variable, use_build_context_synchronously
 
 import 'dart:async';
 import 'dart:convert';
@@ -11,6 +11,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../api/api.dart';
 import '../../model/currency_format.dart';
+import '../home.dart';
 
 class PoinOfSale extends StatefulWidget {
   const PoinOfSale({Key? key}) : super(key: key);
@@ -89,8 +90,28 @@ class _PoinOfSaleState extends State<PoinOfSale> {
         title: Center(
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: const [
+            children: [
               Text('Roti Dua Lima'),
+              IconButton(
+                  onPressed: () async {
+                    // Add your onPressed code here!
+                    SharedPreferences preferences =
+                        await SharedPreferences.getInstance();
+                    setState(() {
+                      username = preferences.getString("username");
+                      idUser = preferences.getString("idUser");
+                    });
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute<void>(
+                        builder: (BuildContext context) => HalamanUtama(
+                            username: "$username", idUser: "$idUser"),
+                      ),
+                    );
+
+                    //  print("username: ${widget.username!}");
+                  },
+                  icon: Icon(Icons.home, size: 32, color: Colors.black87)),
             ],
           ),
         ),
@@ -98,6 +119,7 @@ class _PoinOfSaleState extends State<PoinOfSale> {
         elevation: 0,
         //back button
       ),
+
       body: Row(
         children: [
           Expanded(

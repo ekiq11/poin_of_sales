@@ -34,13 +34,14 @@ class _StrukState extends State<Struk> {
     var result = await http
         .get(Uri.parse(BaseURL.struk + widget.idTransaksi!.toString()));
     var data = json.decode(result.body) as Map<String, dynamic>;
+    print(data);
     return data;
   }
 
   Future<List<dynamic>> _struk() async {
     var result = await http
         .get(Uri.parse(BaseURL.struk + widget.idTransaksi!.toString()));
-    var data = json.decode(result.body)['data'];
+    var data = json.decode(result.body)['data'] as List<dynamic>;
     print(data);
     return data;
   }
@@ -68,7 +69,6 @@ class _StrukState extends State<Struk> {
       body: Column(
         children: [
           Expanded(
-            flex: 3,
             child: FutureBuilder<Map<String, dynamic>?>(
               future: _dataStruk(),
               builder: (BuildContext context, AsyncSnapshot snapshot) {
@@ -76,27 +76,30 @@ class _StrukState extends State<Struk> {
                   return Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.only(top: 20.0),
-                        child: Screenshot(
-                          controller: _screenshotController,
-                          child: TicketWidget(
-                            width: 500,
-                            height: 500,
-                            isCornerRounded: true,
-                            padding: EdgeInsets.all(20),
+                      Screenshot(
+                        controller: _screenshotController,
+                        child: TicketWidget(
+                          width: 550,
+                          height: 600,
+                          isCornerRounded: true,
+                          padding: EdgeInsets.all(20),
+                          child: Padding(
+                            padding:
+                                const EdgeInsets.only(left: 18.0, right: 18.0),
                             child: Column(
                               children: [
                                 Column(
                                   children: const [
                                     Text(
-                                      "Roti Dua Lima",
+                                      "Roti Dua Delima",
                                       style: TextStyle(
                                           fontSize: 32.0,
                                           fontWeight: FontWeight.w600),
                                     ),
                                     Text("Kompleks Pertokoan Istana Plaza",
-                                        style: TextStyle(fontSize: 16.0)),
+                                        style: TextStyle(
+                                          fontSize: 16.0,
+                                        )),
                                     Text("Jln. Panji Tilar No. 48 Jaksel",
                                         style: TextStyle(fontSize: 16.0)),
                                   ],
@@ -111,17 +114,20 @@ class _StrukState extends State<Struk> {
                                   children: [
                                     Text(snapshot.data['waktu'].toString(),
                                         textAlign: TextAlign.left,
-                                        style: TextStyle(fontSize: 16.0)),
+                                        style: TextStyle(
+                                            fontSize: 16.0,
+                                            fontWeight: FontWeight.w600)),
                                     Text(snapshot.data['nama_kasir'].toString(),
                                         textAlign: TextAlign.left,
-                                        style: TextStyle(fontSize: 16.0)),
+                                        style: TextStyle(
+                                            fontSize: 16.0,
+                                            fontWeight: FontWeight.w600)),
                                   ],
                                 ),
                                 Divider(
                                   color: Colors.black,
                                 ),
                                 Expanded(
-                                  flex: 3,
                                   child: SingleChildScrollView(
                                     child: Column(
                                       children: [
@@ -129,8 +135,8 @@ class _StrukState extends State<Struk> {
                                           color: Colors.white,
                                           height: MediaQuery.of(context)
                                                   .size
-                                                  .height /
-                                              1.2,
+                                                  .height *
+                                              0.30,
                                           width:
                                               MediaQuery.of(context).size.width,
                                           child: Column(
@@ -144,75 +150,17 @@ class _StrukState extends State<Struk> {
                                                           AsyncSnapshot snap) {
                                                     if (snap.hasData) {
                                                       return ListView.builder(
-                                                        padding:
-                                                            EdgeInsets.all(10),
                                                         itemCount:
                                                             snap.data.length,
                                                         itemBuilder:
                                                             (BuildContext
                                                                     context,
-                                                                int index) {
+                                                                int x) {
+                                                          print(snap.data[x]
+                                                              ['barang']);
                                                           return Column(
                                                             children: [
-                                                              Row(
-                                                                mainAxisAlignment:
-                                                                    MainAxisAlignment
-                                                                        .spaceBetween,
-                                                                children: [
-                                                                  Text(
-                                                                      snap.data[
-                                                                              index]
-                                                                              [
-                                                                              'barang']
-                                                                          .toString(),
-                                                                      textAlign:
-                                                                          TextAlign
-                                                                              .left,
-                                                                      style: TextStyle(
-                                                                          fontSize:
-                                                                              16.0)),
-                                                                  Text(
-                                                                      snap.data[
-                                                                              index]
-                                                                              [
-                                                                              'banyak']
-                                                                          .toString(),
-                                                                      textAlign:
-                                                                          TextAlign
-                                                                              .left,
-                                                                      style: TextStyle(
-                                                                          fontSize:
-                                                                              16.0)),
-                                                                  Text(
-                                                                      CurrencyFormat.convertToIdr(
-                                                                          int.parse(snap.data[index]
-                                                                              [
-                                                                              'harga']),
-                                                                          2),
-                                                                      textAlign:
-                                                                          TextAlign
-                                                                              .left,
-                                                                      style: TextStyle(
-                                                                          fontSize:
-                                                                              16.0)),
-                                                                  Text(
-                                                                      CurrencyFormat.convertToIdr(
-                                                                          int.parse(snap.data[index]
-                                                                              [
-                                                                              'total']),
-                                                                          2),
-                                                                      textAlign:
-                                                                          TextAlign
-                                                                              .left,
-                                                                      style: TextStyle(
-                                                                          fontSize:
-                                                                              16.0)),
-                                                                ],
-                                                              ),
                                                               Column(
-                                                                mainAxisAlignment:
-                                                                    MainAxisAlignment
-                                                                        .end,
                                                                 children: [
                                                                   Row(
                                                                     mainAxisAlignment:
@@ -221,162 +169,42 @@ class _StrukState extends State<Struk> {
                                                                     children: [
                                                                       SizedBox(
                                                                         width:
-                                                                            1,
-                                                                      ),
-                                                                      SizedBox(
-                                                                        width:
-                                                                            1,
-                                                                      ),
-                                                                      Padding(
-                                                                        padding: const EdgeInsets.only(
-                                                                            top:
-                                                                                8.0,
-                                                                            bottom:
-                                                                                3.0),
+                                                                            100.0,
                                                                         child: Text(
-                                                                            "Diskon",
-                                                                            style:
-                                                                                TextStyle(fontSize: 16.0)),
-                                                                      ),
-                                                                      Text(
-                                                                          snapshot.data['diskon']
-                                                                              .toString(),
-                                                                          textAlign: TextAlign
-                                                                              .left,
-                                                                          style:
-                                                                              TextStyle(fontSize: 16.0)),
-                                                                    ],
-                                                                  ),
-                                                                  Divider(
-                                                                    color: Colors
-                                                                        .black,
-                                                                  ),
-                                                                  Row(
-                                                                    mainAxisAlignment:
-                                                                        MainAxisAlignment
-                                                                            .spaceBetween,
-                                                                    children: [
-                                                                      SizedBox(
-                                                                        width:
-                                                                            1,
+                                                                            snap.data[x][
+                                                                                'barang'],
+                                                                            textAlign:
+                                                                                TextAlign.left,
+                                                                            style: TextStyle(fontSize: 16.0)),
                                                                       ),
                                                                       SizedBox(
                                                                         width:
-                                                                            1,
-                                                                      ),
-                                                                      Padding(
-                                                                        padding:
-                                                                            const EdgeInsets.all(3.0),
+                                                                            10.0,
                                                                         child: Text(
-                                                                            "Total",
-                                                                            style:
-                                                                                TextStyle(fontSize: 16.0)),
-                                                                      ),
-                                                                      Text(
-                                                                          CurrencyFormat.convertToIdr(
-                                                                              int.parse(snapshot.data[
-                                                                                  'total_akhir']),
-                                                                              2),
-                                                                          textAlign: TextAlign
-                                                                              .left,
-                                                                          style:
-                                                                              TextStyle(fontSize: 16.0)),
-                                                                    ],
-                                                                  ),
-                                                                  Row(
-                                                                    mainAxisAlignment:
-                                                                        MainAxisAlignment
-                                                                            .spaceBetween,
-                                                                    children: [
-                                                                      SizedBox(
-                                                                        width:
-                                                                            1,
+                                                                            snap.data[x]['banyak']
+                                                                                .toString(),
+                                                                            textAlign:
+                                                                                TextAlign.right,
+                                                                            style: TextStyle(fontSize: 16.0)),
                                                                       ),
                                                                       SizedBox(
                                                                         width:
-                                                                            1,
-                                                                      ),
-                                                                      Padding(
-                                                                        padding:
-                                                                            const EdgeInsets.all(3.0),
+                                                                            120.0,
                                                                         child: Text(
-                                                                            "Bayar Tunai",
-                                                                            style:
-                                                                                TextStyle(fontSize: 16.0)),
-                                                                      ),
-                                                                      Text(
-                                                                          CurrencyFormat.convertToIdr(
-                                                                              int.parse(snapshot.data[
-                                                                                  'bayar']),
-                                                                              2),
-                                                                          textAlign: TextAlign
-                                                                              .left,
-                                                                          style:
-                                                                              TextStyle(fontSize: 16.0)),
-                                                                    ],
-                                                                  ),
-                                                                  Row(
-                                                                    mainAxisAlignment:
-                                                                        MainAxisAlignment
-                                                                            .spaceBetween,
-                                                                    children: [
-                                                                      SizedBox(
-                                                                        width:
-                                                                            1,
+                                                                            CurrencyFormat.convertToIdr(int.parse(snap.data[x]['harga']),
+                                                                                2),
+                                                                            textAlign: TextAlign.right,
+                                                                            style: TextStyle(fontSize: 16.0)),
                                                                       ),
                                                                       SizedBox(
                                                                         width:
-                                                                            1,
-                                                                      ),
-                                                                      Padding(
-                                                                        padding:
-                                                                            const EdgeInsets.all(3.0),
+                                                                            120.0,
                                                                         child: Text(
-                                                                            "Bayar Kartu",
-                                                                            style:
-                                                                                TextStyle(fontSize: 16.0)),
+                                                                            CurrencyFormat.convertToIdr(int.parse(snap.data[x]['total']),
+                                                                                2),
+                                                                            textAlign: TextAlign.right,
+                                                                            style: TextStyle(fontSize: 16.0)),
                                                                       ),
-                                                                      Text(
-                                                                          CurrencyFormat.convertToIdr(
-                                                                              int.parse(snapshot.data[
-                                                                                  'bayar']),
-                                                                              2),
-                                                                          textAlign: TextAlign
-                                                                              .left,
-                                                                          style:
-                                                                              TextStyle(fontSize: 16.0)),
-                                                                    ],
-                                                                  ),
-                                                                  Row(
-                                                                    mainAxisAlignment:
-                                                                        MainAxisAlignment
-                                                                            .spaceBetween,
-                                                                    children: [
-                                                                      SizedBox(
-                                                                        width:
-                                                                            1,
-                                                                      ),
-                                                                      SizedBox(
-                                                                        width:
-                                                                            1,
-                                                                      ),
-                                                                      Padding(
-                                                                        padding:
-                                                                            const EdgeInsets.all(3.0),
-                                                                        child: Text(
-                                                                            "Kembali",
-                                                                            style:
-                                                                                TextStyle(fontSize: 16.0)),
-                                                                      ),
-                                                                      Text(
-                                                                          CurrencyFormat.convertToIdr(
-                                                                              int.parse(snapshot.data[
-                                                                                  'kembalian']),
-                                                                              2),
-                                                                          textAlign: TextAlign
-                                                                              .left,
-                                                                          style:
-                                                                              TextStyle(fontSize: 16.0)),
                                                                     ],
                                                                   ),
                                                                 ],
@@ -393,6 +221,186 @@ class _StrukState extends State<Struk> {
                                                   },
                                                 ),
                                               ),
+                                              Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: [
+                                                  SizedBox(
+                                                    width: 100.0,
+                                                  ),
+                                                  SizedBox(
+                                                    width: 10.0,
+                                                  ),
+                                                  SizedBox(
+                                                    width: 120.0,
+                                                    child: Text("Diskon",
+                                                        textAlign:
+                                                            TextAlign.right,
+                                                        style: TextStyle(
+                                                            fontSize: 16.0)),
+                                                  ),
+                                                  SizedBox(
+                                                    width: 120.0,
+                                                    child: Text(
+                                                        snapshot.data['diskon']
+                                                            .toString(),
+                                                        textAlign:
+                                                            TextAlign.right,
+                                                        style: TextStyle(
+                                                            fontSize: 16.0)),
+                                                  ),
+                                                ],
+                                              ),
+                                              Padding(
+                                                padding: const EdgeInsets.only(
+                                                    left: 50.0),
+                                                child: Divider(
+                                                  color: Colors.black,
+                                                ),
+                                              ),
+                                              Padding(
+                                                padding: const EdgeInsets.only(
+                                                    left: 20.0),
+                                                child: Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
+                                                  children: [
+                                                    SizedBox(
+                                                      width: 100.0,
+                                                    ),
+                                                    SizedBox(
+                                                      width: 10,
+                                                    ),
+                                                    SizedBox(
+                                                      width: 100.0,
+                                                      child: Text("Total",
+                                                          textAlign:
+                                                              TextAlign.right,
+                                                          style: TextStyle(
+                                                              fontSize: 16.0)),
+                                                    ),
+                                                    SizedBox(
+                                                      width: 120.0,
+                                                      child: Text(
+                                                          CurrencyFormat.convertToIdr(
+                                                              int.parse(snapshot
+                                                                      .data[
+                                                                  'total_akhir']),
+                                                              2),
+                                                          textAlign:
+                                                              TextAlign.right,
+                                                          style: TextStyle(
+                                                              fontSize: 16.0)),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                              Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: [
+                                                  SizedBox(
+                                                    width: 100,
+                                                  ),
+                                                  SizedBox(
+                                                    width: 10,
+                                                  ),
+                                                  SizedBox(
+                                                    width: 120.0,
+                                                    child: Text("Bayar Tunai",
+                                                        textAlign:
+                                                            TextAlign.right,
+                                                        style: TextStyle(
+                                                            fontSize: 16.0)),
+                                                  ),
+                                                  SizedBox(
+                                                    width: 120.0,
+                                                    child: Text(
+                                                        CurrencyFormat
+                                                            .convertToIdr(
+                                                                int.parse(snapshot
+                                                                        .data[
+                                                                    'bayar']),
+                                                                2),
+                                                        textAlign:
+                                                            TextAlign.right,
+                                                        style: TextStyle(
+                                                            fontSize: 16.0)),
+                                                  ),
+                                                ],
+                                              ),
+                                              Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: [
+                                                  SizedBox(
+                                                    width: 100,
+                                                  ),
+                                                  SizedBox(
+                                                    width: 10,
+                                                  ),
+                                                  SizedBox(
+                                                    width: 120.0,
+                                                    child: Text("Bayar Kartu",
+                                                        textAlign:
+                                                            TextAlign.right,
+                                                        style: TextStyle(
+                                                            fontSize: 16.0)),
+                                                  ),
+                                                  SizedBox(
+                                                    width: 120.0,
+                                                    child: Text(
+                                                        CurrencyFormat
+                                                            .convertToIdr(
+                                                                int.parse(snapshot
+                                                                        .data[
+                                                                    'bayar']),
+                                                                2),
+                                                        textAlign:
+                                                            TextAlign.right,
+                                                        style: TextStyle(
+                                                            fontSize: 16.0)),
+                                                  ),
+                                                ],
+                                              ),
+                                              Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: [
+                                                  SizedBox(
+                                                    width: 100,
+                                                  ),
+                                                  SizedBox(
+                                                    width: 10,
+                                                  ),
+                                                  SizedBox(
+                                                    width: 120.0,
+                                                    child: Text("Kembali",
+                                                        textAlign:
+                                                            TextAlign.right,
+                                                        style: TextStyle(
+                                                            fontSize: 16.0)),
+                                                  ),
+                                                  SizedBox(
+                                                    width: 120.0,
+                                                    child: Text(
+                                                        CurrencyFormat.convertToIdr(
+                                                            int.parse(snapshot
+                                                                    .data[
+                                                                'kembalian']),
+                                                            2),
+                                                        textAlign:
+                                                            TextAlign.right,
+                                                        style: TextStyle(
+                                                            fontSize: 16.0)),
+                                                  ),
+                                                ],
+                                              ),
                                             ],
                                           ),
                                         ),
@@ -400,14 +408,11 @@ class _StrukState extends State<Struk> {
                                     ),
                                   ),
                                 ),
-                                Spacer(
-                                  flex: 2,
-                                ),
                                 Column(children: const [
                                   Text("Terimakasih atas kunjungan anda"),
                                   Text("Layanan konsumen dan pemesanan"),
                                   Text("081935152277")
-                                ])
+                                ]),
                               ],
                             ),
                           ),

@@ -120,15 +120,14 @@ class _TransaksiSelesaiState extends State<TransaksiSelesai> {
                               children: [
                                 OutlinedButton(
                                   onPressed: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => Struk(
-                                            idTransaksi: snapshot.data[index]
-                                                    ['no_transaksi']
-                                                .toString()),
-                                      ),
-                                    );
+                                    Navigator.pushReplacement(
+                                        context,
+                                        MaterialPageRoute<void>(
+                                          builder: (context) => Struk(
+                                              idTransaksi: snapshot.data[index]
+                                                      ['no_transaksi']
+                                                  .toString()),
+                                        ));
                                   },
                                   style: OutlinedButton.styleFrom(
                                     backgroundColor: Colors.amber,

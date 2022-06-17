@@ -2,12 +2,14 @@
 
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:poin_of_sales/view/pos/payment/selesai.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:ticket_widget/ticket_widget.dart';
 import 'package:http/http.dart' as http;
 import '../../../api/api.dart';
 import '../../../model/currency_format.dart';
+import 'package:pattern_formatter/pattern_formatter.dart';
 
 class Payment extends StatefulWidget {
   const Payment({Key? key}) : super(key: key);
@@ -115,26 +117,15 @@ class _PaymentState extends State<Payment> {
                                       color: Colors.black87),
                                 ),
                                 // ignore: prefer_interpolation_to_compose_strings
-                                if (result != null)
-                                  kembali == true
-                                      ? Text(
-                                          // ignore: prefer_interpolation_to_compose_strings
-                                          "Kembalian : " +
-                                              CurrencyFormat.convertToIdr(
-                                                  int.parse("0"), 2),
-                                          style: TextStyle(
-                                              fontSize: 20.0,
-                                              color: Colors.black87))
-                                      : Text(
-                                          // ignore: prefer_interpolation_to_compose_strings
-                                          "Kembalian : " +
-                                              CurrencyFormat.convertToIdr(
-                                                  int.parse("$result"), 2),
-                                          style: TextStyle(
-                                              fontSize: 20.0,
-                                              color: Colors.black87))
-                                else
-                                  Text(""),
+                                Text(
+                                  // ignore: prefer_interpolation_to_compose_strings
+                                  "Kembalian : " +
+                                      CurrencyFormat.convertToIdr(
+                                          int.parse("$result"), 2),
+                                  style: TextStyle(
+                                      fontSize: 20.0, color: Colors.black87),
+                                ),
+
                                 Padding(
                                     padding: EdgeInsets.only(
                                   bottom: 25.0,
@@ -363,6 +354,11 @@ class _PaymentState extends State<Payment> {
                                 Visibility(
                                   visible: form!,
                                   child: TextFormField(
+                                    inputFormatters: [
+                                      ThousandsFormatter(),
+                                      LengthLimitingTextInputFormatter(15),
+                                    ],
+                                    keyboardType: TextInputType.number,
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
                                       fontSize: 40.0,
@@ -370,7 +366,24 @@ class _PaymentState extends State<Payment> {
                                       color: Colors.black87,
                                     ),
                                     controller: totalUangController,
+                                    onChanged: (s) {
+                                      // print(CurrencyFormat.convertToIdr(
+                                      //     int.parse(s), 2));
+                                      s == ''
+                                          ? 0
+                                          : num1 = int.parse(totalUangController
+                                              .text
+                                              .replaceAll(",", ""));
+                                      num2 = num2 = int.parse(snapshot
+                                          .data[index]['total_belanja']);
+                                      setState(() {
+                                        result = num1! - num2!;
+                                      });
+
+                                      print(result);
+                                    },
                                     decoration: InputDecoration(
+                                      prefixText: 'Rp.',
                                       border: OutlineInputBorder(),
                                       hintText: "Jumlah Uang",
                                       hintStyle: TextStyle(
