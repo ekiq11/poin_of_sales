@@ -75,13 +75,13 @@ class _LaporanTigaPuluhHariState extends State<LaporanTigaPuluhHari> {
                     child: Text(
                       "Laporan (30) Tiga Puluh Hari",
                       style: TextStyle(
-                          fontSize: 30.0, fontWeight: FontWeight.w600),
+                          fontSize: 24.0, fontWeight: FontWeight.w600),
                     ),
                   ),
                 ),
                 Text(
                   "Berikut adalah laporan selama Tiga Puluh Hari",
-                  style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.w400),
+                  style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.w400),
                 ),
                 Padding(
                   padding: EdgeInsets.only(top: 15.0),

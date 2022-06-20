@@ -38,11 +38,16 @@ class _ScreenState extends State<Screen> /*with ChangeNotifier*/ {
 
   @override
   Widget build(BuildContext context) {
+    final mediaQueryHeight = MediaQuery.of(context).size.height;
+    final mediaQueryWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       body: Container(
+        height: mediaQueryHeight,
+        width: mediaQueryWidth,
         color: Colors.white,
         child: Container(
-          padding: const EdgeInsets.all(16),
+          height: mediaQueryHeight,
+          width: mediaQueryWidth,
           color: data[_currentIndex].backgroundColor,
           alignment: Alignment.center,
           child: Column(
@@ -53,6 +58,8 @@ class _ScreenState extends State<Screen> /*with ChangeNotifier*/ {
                     Expanded(
                       flex: 4,
                       child: Container(
+                        height: mediaQueryHeight,
+                        width: mediaQueryWidth,
                         alignment: Alignment.center,
                         child: PageView(
                           scrollDirection: Axis.horizontal,
@@ -71,17 +78,13 @@ class _ScreenState extends State<Screen> /*with ChangeNotifier*/ {
                       ),
                     ),
                     Expanded(
-                      flex: 1,
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Container(
-                            margin: const EdgeInsets.symmetric(vertical: 24),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: List.generate(data.length,
-                                  (index) => createCircle(index: index)),
-                            ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: List.generate(data.length,
+                                (index) => createCircle(index: index)),
                           ),
                           BottomButtons(
                             currentIndex: _currentIndex,

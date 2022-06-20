@@ -2,9 +2,11 @@
 
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:poin_of_sales/view/pos/payment/struk.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:sizer/sizer.dart';
 import 'package:ticket_widget/ticket_widget.dart';
 import 'package:http/http.dart' as http;
 import '../../../api/api.dart';
@@ -40,162 +42,174 @@ class _TransaksiSelesaiState extends State<TransaksiSelesai> {
   @override
   void initState() {
     getPref();
+
     super.initState();
   }
 
   @override
+  @override
   Widget build(BuildContext context) {
+    final mediaQueryHeight = MediaQuery.of(context).size.height;
+    final mediaQueryWidth = MediaQuery.of(context).size.width;
+    final bodyHeight = mediaQueryHeight - MediaQuery.of(context).padding.top;
+
     return Scaffold(
       backgroundColor: Colors.grey,
-      appBar: AppBar(title: Text("Transaksi Selesai"), elevation: 0),
       body: FutureBuilder<List<dynamic>?>(
         future: _fetchDataKeranjang(),
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           if (snapshot.hasData) {
             return ListView.builder(
-              padding: EdgeInsets.all(10),
               itemCount: 1,
               itemBuilder: (BuildContext context, int index) {
                 return Column(
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.only(top: 8.0),
-                      child: TicketWidget(
-                        width: 500,
-                        height: 500,
-                        isCornerRounded: true,
-                        padding: EdgeInsets.all(20),
-                        child: Column(
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Column(
-                                  children: [
-                                    Chip(
-                                      backgroundColor: Colors.amber,
-                                      label: Text(
-                                        "Nomor Transaksi",
-                                        style: TextStyle(fontSize: 16.0),
-                                      ),
-                                    ),
-                                    Text(
-                                        snapshot.data[index]['no_transaksi']
-                                            .toString(),
-                                        style: TextStyle(fontSize: 16.0)),
-                                  ],
-                                ),
-                              ],
-                            ),
-                            Divider(),
-                            Column(
-                              children: [
-                                Text("Pembayaran Sukses",
-                                    style: TextStyle(fontSize: 16.0)),
-                                Padding(
-                                  padding: const EdgeInsets.only(top: 20.0),
-                                  child: SizedBox(
-                                      width: 100.0,
-                                      height: 100.0,
-                                      child: Image.asset(
-                                          "asset/image/sukses.png")),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(top: 18.0),
-                                  child: Text("Total Kembalian",
-                                      style: TextStyle(fontSize: 16.0)),
-                                ),
-                                Text(
-                                    CurrencyFormat.convertToIdr(
-                                        int.parse(widget.kembalian.toString()),
-                                        2),
-                                    style: TextStyle(fontSize: 35.0))
-                              ],
-                            ),
-                            Spacer(
-                              flex: 2,
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                OutlinedButton(
-                                  onPressed: () {
-                                    Navigator.pushReplacement(
-                                        context,
-                                        MaterialPageRoute<void>(
-                                          builder: (context) => Struk(
-                                              idTransaksi: snapshot.data[index]
-                                                      ['no_transaksi']
-                                                  .toString()),
-                                        ));
-                                  },
-                                  style: OutlinedButton.styleFrom(
+                    TicketWidget(
+                      width: mediaQueryWidth,
+                      height: bodyHeight,
+                      isCornerRounded: false,
+                      padding: EdgeInsets.all(10.0),
+                      child: Column(
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Column(
+                                children: [
+                                  Chip(
                                     backgroundColor: Colors.amber,
-                                    primary: Colors.black87,
-                                    side: BorderSide(color: Colors.amber),
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(20),
+                                    label: Text(
+                                      "Nomor Transaksi",
+                                      style: TextStyle(fontSize: 10.sp),
                                     ),
                                   ),
-                                  child: Row(
-                                    children: const [
-                                      Padding(
-                                        padding: EdgeInsets.only(right: 10.0),
-                                        child: Icon(
-                                            Icons.monetization_on_outlined,
-                                            color: Colors.black87),
+                                  Text(
+                                      snapshot.data[index]['no_transaksi']
+                                          .toString(),
+                                      style: TextStyle(fontSize: 10.sp)),
+                                ],
+                              ),
+                            ],
+                          ),
+                          SizedBox(height: mediaQueryHeight * 0.02),
+                          Column(
+                            children: [
+                              Text("Pembayaran Sukses",
+                                  style: TextStyle(fontSize: 12.sp)),
+                              Padding(
+                                padding: const EdgeInsets.only(top: 20.0),
+                                child: SizedBox(
+                                    width: mediaQueryWidth * 0.10,
+                                    height: mediaQueryHeight * 0.10,
+                                    child:
+                                        Image.asset("asset/image/sukses.png")),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(top: 18.0),
+                                child: Text("Total Kembalian",
+                                    style: TextStyle(fontSize: 12.sp)),
+                              ),
+                              Text(
+                                CurrencyFormat.convertToIdr(
+                                    int.parse(widget.kembalian.toString()), 2),
+                                style: TextStyle(fontSize: 18.sp),
+                              ),
+                              SizedBox(
+                                height: mediaQueryHeight * 0.05,
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  OutlinedButton(
+                                    onPressed: () {
+                                      SystemChrome.setPreferredOrientations([
+                                        DeviceOrientation.portraitUp,
+                                        DeviceOrientation.portraitDown
+                                      ]);
+                                      Navigator.pushReplacement(
+                                          context,
+                                          MaterialPageRoute<void>(
+                                            builder: (context) => Struk(
+                                                idTransaksi: snapshot
+                                                    .data[index]['no_transaksi']
+                                                    .toString()),
+                                          ));
+                                    },
+                                    style: OutlinedButton.styleFrom(
+                                      minimumSize: Size(mediaQueryWidth * 0.01,
+                                          mediaQueryHeight * 0.1 - 4),
+                                      backgroundColor: Colors.amber,
+                                      primary: Colors.black87,
+                                      side: BorderSide(color: Colors.amber),
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(20),
                                       ),
-                                      Text('Cetak Struk',
-                                          style: TextStyle(
-                                              fontSize: 16.0,
-                                              fontWeight: FontWeight.w400)),
-                                    ],
+                                    ),
+                                    child: Row(
+                                      children: [
+                                        Padding(
+                                          padding: EdgeInsets.only(right: 10.0),
+                                          child: Icon(
+                                              Icons.monetization_on_outlined,
+                                              color: Colors.black87,
+                                              size: 14.sp),
+                                        ),
+                                        Text('Cetak Struk',
+                                            style: TextStyle(
+                                                fontSize: 12.sp,
+                                                fontWeight: FontWeight.w400)),
+                                      ],
+                                    ),
                                   ),
-                                ),
-                                OutlinedButton(
-                                  onPressed: () async {
-                                    setState(() {
-                                      isVisible = true;
-                                    });
-                                    final res = await http.get(
-                                      Uri.parse(BaseURL.selesaibelanja),
-                                    );
+                                  Padding(padding: EdgeInsets.all(10.0)),
+                                  OutlinedButton(
+                                    onPressed: () async {
+                                      setState(() {
+                                        isVisible = true;
+                                      });
+                                      final res = await http.get(
+                                        Uri.parse(BaseURL.selesaibelanja),
+                                      );
 
-                                    Navigator.pushReplacement(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              const PoinOfSale()),
-                                    );
-                                  },
-                                  style: OutlinedButton.styleFrom(
-                                    backgroundColor: Colors.lightBlueAccent,
-                                    primary: Colors.black87,
-                                    side: BorderSide(
-                                        color: Colors.lightBlueAccent),
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(20),
+                                      Navigator.pushReplacement(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                const PoinOfSale()),
+                                      );
+                                    },
+                                    style: OutlinedButton.styleFrom(
+                                      minimumSize: Size(mediaQueryWidth * 0.01,
+                                          mediaQueryHeight * 0.1 - 4),
+                                      backgroundColor: Colors.lightBlueAccent,
+                                      primary: Colors.black87,
+                                      side: BorderSide(
+                                          color: Colors.lightBlueAccent),
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(20),
+                                      ),
+                                    ),
+                                    child: Row(
+                                      children: [
+                                        Padding(
+                                          padding: EdgeInsets.only(right: 10.0),
+                                          child: Icon(
+                                              Icons.monetization_on_outlined,
+                                              color: Colors.black87,
+                                              size: 14.sp),
+                                        ),
+                                        Text('Selesai',
+                                            style: TextStyle(
+                                                fontSize: 12.sp,
+                                                fontWeight: FontWeight.w400)),
+                                      ],
                                     ),
                                   ),
-                                  child: Row(
-                                    children: const [
-                                      Padding(
-                                        padding: EdgeInsets.only(right: 10.0),
-                                        child: Icon(
-                                            Icons.monetization_on_outlined,
-                                            color: Colors.black87),
-                                      ),
-                                      Text('Selesai',
-                                          style: TextStyle(
-                                              fontSize: 16.0,
-                                              fontWeight: FontWeight.w400)),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ],
                       ),
                     ),
                   ],

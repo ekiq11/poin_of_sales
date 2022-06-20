@@ -75,13 +75,13 @@ class _LaporanBulananState extends State<LaporanBulanan> {
                     child: Text(
                       "Laporan Bulanan",
                       style: TextStyle(
-                          fontSize: 30.0, fontWeight: FontWeight.w600),
+                          fontSize: 24.0, fontWeight: FontWeight.w600),
                     ),
                   ),
                 ),
                 Text(
                   "Berikut adalah laporan selama satu bulan terakhir",
-                  style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.w400),
+                  style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.w400),
                 ),
                 Padding(
                   padding: EdgeInsets.only(top: 15.0),

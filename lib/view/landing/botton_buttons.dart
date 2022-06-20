@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:poin_of_sales/view/login/login.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:sizer/sizer.dart';
 
 class BottomButtons extends StatelessWidget {
   final int? currentIndex;
@@ -29,44 +30,50 @@ class BottomButtons extends StatelessWidget {
       children: currentIndex == dataLength! - 1
           ? [
               Expanded(
-                child: ConstrainedBox(
-                  constraints: const BoxConstraints(
-                    maxHeight: 50.0,
-                  ),
-                  child: InkWell(
-                    child: Container(
-                      width: MediaQuery.of(context).size.width,
-                      padding: const EdgeInsets.symmetric(vertical: 10),
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(5)),
-                          boxShadow: <BoxShadow>[
-                            BoxShadow(
-                                color: Colors.grey.shade200,
-                                offset: const Offset(2, 4),
-                                blurRadius: 5,
-                                spreadRadius: 2)
-                          ],
-                          gradient: const LinearGradient(
-                              begin: Alignment.centerLeft,
-                              end: Alignment.centerRight,
-                              colors: [Color(0xfffbb448), Color(0xfff7892b)])),
-                      child: const Text(
-                        'G e t   S t a r t e d',
-                        style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.w600,
-                            color: Colors.white),
-                      ),
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: ConstrainedBox(
+                    constraints: const BoxConstraints(
+                      maxHeight: 50.0,
                     ),
-                    onTap: () {
-                      _storeOnboardInfo();
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(builder: (context) => LoginPage()),
-                      );
-                    },
+                    child: InkWell(
+                      child: Container(
+                        width: MediaQuery.of(context).size.width,
+                        padding: const EdgeInsets.symmetric(vertical: 10),
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(50)),
+                            boxShadow: <BoxShadow>[
+                              BoxShadow(
+                                  color: Colors.grey.shade200,
+                                  offset: const Offset(2, 4),
+                                  blurRadius: 5,
+                                  spreadRadius: 2)
+                            ],
+                            gradient: const LinearGradient(
+                                begin: Alignment.centerLeft,
+                                end: Alignment.centerRight,
+                                colors: [
+                                  Color(0xfffbb448),
+                                  Color(0xfff7892b)
+                                ])),
+                        child: Text(
+                          'G e t   S t a r t e d',
+                          style: TextStyle(
+                              fontSize: 14.sp,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.white),
+                        ),
+                      ),
+                      onTap: () {
+                        _storeOnboardInfo();
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(builder: (context) => LoginPage()),
+                        );
+                      },
+                    ),
                   ),
                 ),
               )

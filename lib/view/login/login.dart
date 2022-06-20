@@ -1,5 +1,4 @@
 // ignore_for_file: sort_child_properties_last, use_build_context_synchronously, unused_local_variable, empty_catches
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:poin_of_sales/api/api.dart';
@@ -7,6 +6,7 @@ import 'package:poin_of_sales/view/home.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:sizer/sizer.dart';
 
 class LoginPage extends StatefulWidget {
   // ignore: prefer_const_constructors_in_immutables
@@ -19,6 +19,7 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  ScrollController scrollController = ScrollController();
   final TextEditingController userNameController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   bool visible = false;
@@ -117,6 +118,10 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
+    final mediaQueryHeight = MediaQuery.of(context).size.height;
+    final mediaQueryWidth = MediaQuery.of(context).size.width;
+    final bodyHeight = mediaQueryHeight - MediaQuery.of(context).padding.top;
+    final paddingTop = MediaQuery.of(context).padding.top;
     SystemChrome.setSystemUIOverlayStyle(
       const SystemUiOverlayStyle(
         statusBarColor: Colors.transparent, // status bar color
@@ -124,156 +129,155 @@ class _LoginPageState extends State<LoginPage> {
     );
     return Scaffold(
       body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 100.0),
-          child: SizedBox(
-            height: MediaQuery.of(context).size.height,
-            child: Stack(
-              children: <Widget>[
-                Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: Column(
-                    children: <Widget>[
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          const Text(
-                            "Selamat Datang",
-                            style: TextStyle(
-                              fontSize: 30,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          const Text(
-                            "Roti Dua Delima",
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.w400,
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(top: 10.0),
-                            child: Center(
-                              child: Image.asset(
-                                "asset/login/login.png",
-                                height: 70.0,
-                                width: 200.0,
+        controller: scrollController,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                SizedBox(
+                  width: mediaQueryWidth / 2,
+                  height: mediaQueryHeight,
+                  child: SingleChildScrollView(
+                    controller: scrollController,
+                    child: Column(
+                      children: <Widget>[
+                        Column(
+                          children: <Widget>[
+                            Text(
+                              "Selamat Datang",
+                              style: TextStyle(
+                                fontSize: 16.sp,
+                                fontWeight: FontWeight.bold,
                               ),
                             ),
-                          ),
-                        ],
-                      ),
-                      //CircularProgressIndicator
-
-                      Padding(
-                        padding: const EdgeInsets.only(top: 12.0),
-                        child: Visibility(
-                          maintainSize: true,
-                          maintainAnimation: true,
-                          maintainState: true,
-                          visible: visible,
-                          child: CircularProgressIndicator(
-                            valueColor: AlwaysStoppedAnimation<Color>(
-                              Colors.amber,
+                            Text(
+                              "Roti Dua Delima",
+                              style: TextStyle(
+                                fontSize: 12.sp,
+                                fontWeight: FontWeight.w400,
+                              ),
                             ),
-                            strokeWidth: 5.0,
+                            Padding(
+                              padding: const EdgeInsets.only(top: 10.0),
+                              child: Center(
+                                child: Image.asset(
+                                  "asset/login/login.png",
+                                  height: mediaQueryHeight * 0.1,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        //CircularProgressIndicator
+
+                        Padding(
+                          padding: const EdgeInsets.only(top: 5.0, bottom: 5.0),
+                          child: Visibility(
+                            maintainSize: true,
+                            maintainAnimation: true,
+                            maintainState: true,
+                            visible: visible,
+                            child: CircularProgressIndicator(
+                              valueColor: AlwaysStoppedAnimation<Color>(
+                                Colors.amber,
+                              ),
+                              strokeWidth: 2.0,
+                            ),
                           ),
                         ),
-                      ),
-                      Container(
-                        margin: const EdgeInsets.symmetric(vertical: 10),
-                        child: Column(
+                        Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
-                            const Text(
-                              'Username',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 16),
-                            ),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            TextField(
+                            SizedBox(
+                              height: mediaQueryHeight * 0.12.sp,
+                              child: TextField(
                                 scrollPadding: EdgeInsets.only(
                                     bottom:
                                         MediaQuery.of(context).viewInsets.top),
                                 controller: userNameController,
-                                style: const TextStyle(fontSize: 18),
+                                style: TextStyle(fontSize: 12.sp),
                                 obscureText: false,
-                                decoration: const InputDecoration(
-                                    border: InputBorder.none,
+                                decoration: InputDecoration(
+                                    hintText: 'Username',
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(50),
+                                      borderSide: BorderSide(
+                                          style: BorderStyle.none,
+                                          color: Colors.amber),
+                                    ),
                                     fillColor: Color(0xfff3f3f4),
-                                    filled: true))
+                                    filled: true),
+                              ),
+                            ),
                           ],
                         ),
-                      ),
-                      Container(
-                        margin: const EdgeInsets.symmetric(vertical: 10),
-                        child: Column(
+                        Padding(padding: EdgeInsets.only(top: 10.0)),
+                        Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
-                            const Text(
-                              'Password',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 16),
-                            ),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            TextField(
-                              controller: passwordController,
-                              style: const TextStyle(fontSize: 18),
-                              obscureText: true,
-                              decoration: const InputDecoration(
-                                  border: InputBorder.none,
-                                  fillColor: Color(0xfff3f3f4),
-                                  filled: true),
+                            SizedBox(
+                              height: mediaQueryHeight * 0.12.sp,
+                              child: TextField(
+                                controller: passwordController,
+                                style: TextStyle(fontSize: 12.sp),
+                                obscureText: true,
+                                decoration: InputDecoration(
+                                    hintText: 'Password',
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(50),
+                                    ),
+                                    fillColor: Color(0xfff3f3f4),
+                                    filled: true),
+                              ),
                             ),
                           ],
                         ),
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      InkWell(
-                        child: Container(
-                          width: MediaQuery.of(context).size.width,
-                          padding: const EdgeInsets.symmetric(vertical: 15),
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(
-                            borderRadius: const BorderRadius.all(
-                              Radius.circular(5),
-                            ),
-                            boxShadow: <BoxShadow>[
-                              BoxShadow(
-                                  color: Colors.grey.shade200,
-                                  offset: const Offset(2, 4),
-                                  blurRadius: 5,
-                                  spreadRadius: 2)
-                            ],
-                            gradient: const LinearGradient(
-                              begin: Alignment.centerLeft,
-                              end: Alignment.centerRight,
-                              colors: [Color(0xfffbb448), Color(0xfff7892b)],
-                            ),
-                          ),
-                          child: const Text(
-                            'Login',
-                            style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.w500,
-                                color: Colors.white),
-                          ),
+                        SizedBox(
+                          height: mediaQueryHeight * 0.03.sp,
                         ),
-                        onTap: _cekLogin,
-                      ),
-                    ],
+                        InkWell(
+                          child: Container(
+                            width: mediaQueryWidth,
+                            padding: EdgeInsets.symmetric(vertical: 13.sp),
+                            alignment: Alignment.center,
+                            decoration: BoxDecoration(
+                              borderRadius: const BorderRadius.all(
+                                Radius.circular(50),
+                              ),
+                              boxShadow: <BoxShadow>[
+                                BoxShadow(
+                                    color: Colors.grey.shade200,
+                                    offset: const Offset(2, 4),
+                                    blurRadius: 5,
+                                    spreadRadius: 2)
+                              ],
+                              gradient: const LinearGradient(
+                                begin: Alignment.centerLeft,
+                                end: Alignment.centerRight,
+                                colors: [Color(0xfffbb448), Color(0xfff7892b)],
+                              ),
+                            ),
+                            child: Text(
+                              'L O G I N',
+                              style: TextStyle(
+                                  fontSize: 12.sp,
+                                  fontWeight: FontWeight.w500,
+                                  color: Colors.white),
+                            ),
+                          ),
+                          onTap: _cekLogin,
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ],
             ),
-          ),
+          ],
         ),
       ),
     );

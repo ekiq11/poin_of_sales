@@ -87,13 +87,13 @@ class _LaporanHarianState extends State<LaporanHarian> {
                     child: Text(
                       "Laporan Hari Ini",
                       style: TextStyle(
-                          fontSize: 30.0, fontWeight: FontWeight.w600),
+                          fontSize: 24.0, fontWeight: FontWeight.w600),
                     ),
                   ),
                 ),
                 Text(
                   "Berikut adalah laporan pada hari ini",
-                  style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.w400),
+                  style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.w400),
                 ),
                 Padding(
                   padding: EdgeInsets.only(top: 15.0),

@@ -5,6 +5,7 @@ import 'package:poin_of_sales/view/login/login.dart';
 import 'package:poin_of_sales/view/pos/pos.dart';
 import 'package:poin_of_sales/view/report/laporan_harian.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:sizer/sizer.dart';
 
 class HalamanUtama extends StatefulWidget {
   final String? username;
@@ -38,8 +39,9 @@ class _HalamanUtamaState extends State<HalamanUtama> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text('Roti Dua Delima'),
-              Text('$username - ${widget.idUser}'),
+              Text('Roti Dua Delima', style: TextStyle(fontSize: 12.sp)),
+              Text('$username - ${widget.idUser}',
+                  style: TextStyle(fontSize: 12.sp)),
             ],
           ),
         ),
@@ -48,7 +50,7 @@ class _HalamanUtamaState extends State<HalamanUtama> {
         //back button
       ),
       body: GridView.count(
-        childAspectRatio: (3.1 / 4),
+        childAspectRatio: (3 / 4),
         crossAxisCount: 3,
         children: [
           InkWell(
@@ -70,7 +72,7 @@ class _HalamanUtamaState extends State<HalamanUtama> {
               //print("username: ${widget.username!}");
             },
             child: CustomCard(
-              title: "Report",
+              title: "REPORT",
               image: "asset/icon/report.png",
             ),
           ),
@@ -86,7 +88,7 @@ class _HalamanUtamaState extends State<HalamanUtama> {
               );
             },
             child: CustomCard(
-              title: "Logout",
+              title: "LOGOUT",
               image: "asset/icon/logout.png",
             ),
           ),
@@ -107,30 +109,20 @@ class CustomCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: SizedBox(
-        height: double.infinity,
-        child: Card(
-          elevation: 0,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              Image.asset(
-                image.toString(),
-                fit: BoxFit.fill,
-              ),
-              const SizedBox(
-                height: 5,
-              ),
-              Text(
-                title.toString(),
-                style:
-                    const TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
-              ),
-              const SizedBox(
-                height: 5,
-              ),
-            ],
-          ),
+      child: Card(
+        elevation: 0,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            Image.asset(
+              image.toString(),
+              fit: BoxFit.fill,
+            ),
+            Text(
+              title.toString(),
+              style: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.w500),
+            ),
+          ],
         ),
       ),
     );

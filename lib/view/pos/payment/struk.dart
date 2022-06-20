@@ -5,6 +5,7 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:path_provider/path_provider.dart';
@@ -13,6 +14,7 @@ import 'package:poin_of_sales/view/pos/pos.dart';
 import 'package:screenshot/screenshot.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:sizer/sizer.dart';
 import 'package:ticket_widget/ticket_widget.dart';
 import 'package:http/http.dart' as http;
 import '../../../api/api.dart';
@@ -58,396 +60,412 @@ class _StrukState extends State<Struk> {
   @override
   void initState() {
     getPref();
+
     super.initState();
+  }
+
+  //popScope
+  Future<bool> _onWillPop() async {
+    return (await showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: Text('Warning !'),
+            content: Text('Selesaikan transaksi terlebih dahulu'),
+            actions: <Widget>[
+              TextButton(
+                onPressed: () async {
+                  SystemChrome.setPreferredOrientations([
+                    DeviceOrientation.landscapeLeft,
+                    DeviceOrientation.landscapeRight
+                  ]);
+                  final res = await http.get(
+                    Uri.parse(BaseURL.selesaibelanja),
+                  );
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (context) => const PoinOfSale()),
+                  );
+                }, //<-- SEE HERE
+                child: Text('Ya'),
+              ),
+              TextButton(
+                onPressed: () =>
+                    Navigator.of(context).pop(false), // <-- SEE HERE
+                child: Text('Tidak'),
+              ),
+            ],
+          ),
+        )) ??
+        false;
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.grey,
-      appBar: AppBar(title: Text("Bukti Transaksi"), elevation: 0),
-      body: Column(
-        children: [
-          Expanded(
-            child: FutureBuilder<Map<String, dynamic>?>(
-              future: _dataStruk(),
-              builder: (BuildContext context, AsyncSnapshot snapshot) {
-                if (snapshot.hasData) {
-                  return Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Screenshot(
-                        controller: _screenshotController,
-                        child: TicketWidget(
-                          width: 550,
-                          height: 600,
-                          isCornerRounded: true,
-                          padding: EdgeInsets.all(20),
-                          child: Padding(
-                            padding:
-                                const EdgeInsets.only(left: 18.0, right: 18.0),
-                            child: Column(
-                              children: [
-                                Column(
-                                  children: const [
-                                    Text(
-                                      "Roti Dua Delima",
-                                      style: TextStyle(
-                                          fontSize: 32.0,
-                                          fontWeight: FontWeight.w600),
-                                    ),
-                                    Text("Kompleks Pertokoan Istana Plaza",
+    final mediaQueryHeight = MediaQuery.of(context).size.height;
+    final mediaQueryWidth = MediaQuery.of(context).size.width;
+    final bodyHeight = mediaQueryHeight - MediaQuery.of(context).padding.top;
+    return WillPopScope(
+      onWillPop: _onWillPop,
+      child: Scaffold(
+        backgroundColor: Colors.grey,
+        body: Column(
+          children: [
+            Expanded(
+              child: FutureBuilder<Map<String, dynamic>?>(
+                future: _dataStruk(),
+                builder: (BuildContext context, AsyncSnapshot snapshot) {
+                  if (snapshot.hasData) {
+                    return Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Screenshot(
+                          controller: _screenshotController,
+                          child: TicketWidget(
+                            width: mediaQueryWidth,
+                            height: mediaQueryHeight * 0.7,
+                            isCornerRounded: true,
+                            child: Padding(
+                              padding:
+                                  EdgeInsets.only(left: 18.sp, right: 18.sp),
+                              child: Column(
+                                children: [
+                                  Column(
+                                    children: [
+                                      SizedBox(height: mediaQueryHeight * 0.05),
+                                      Text(
+                                        "Roti Dua Delima",
                                         style: TextStyle(
-                                          fontSize: 16.0,
-                                        )),
-                                    Text("Jln. Panji Tilar No. 48 Jaksel",
-                                        style: TextStyle(fontSize: 16.0)),
-                                  ],
-                                ),
-                                Padding(padding: EdgeInsets.only(top: 20.0)),
-                                Divider(
-                                  color: Colors.black,
-                                ),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(snapshot.data['waktu'].toString(),
-                                        textAlign: TextAlign.left,
-                                        style: TextStyle(
-                                            fontSize: 16.0,
-                                            fontWeight: FontWeight.w600)),
-                                    Text(snapshot.data['nama_kasir'].toString(),
-                                        textAlign: TextAlign.left,
-                                        style: TextStyle(
-                                            fontSize: 16.0,
-                                            fontWeight: FontWeight.w600)),
-                                  ],
-                                ),
-                                Divider(
-                                  color: Colors.black,
-                                ),
-                                Expanded(
-                                  child: SingleChildScrollView(
-                                    child: Column(
-                                      children: [
-                                        Container(
-                                          color: Colors.white,
-                                          height: MediaQuery.of(context)
-                                                  .size
-                                                  .height *
-                                              0.30,
-                                          width:
-                                              MediaQuery.of(context).size.width,
-                                          child: Column(
-                                            children: [
-                                              Expanded(
-                                                child: FutureBuilder<
-                                                    List<dynamic>>(
-                                                  future: _struk(),
-                                                  builder:
-                                                      (BuildContext context,
-                                                          AsyncSnapshot snap) {
-                                                    if (snap.hasData) {
-                                                      return ListView.builder(
-                                                        itemCount:
-                                                            snap.data.length,
-                                                        itemBuilder:
-                                                            (BuildContext
-                                                                    context,
-                                                                int x) {
-                                                          print(snap.data[x]
-                                                              ['barang']);
-                                                          return Column(
+                                            fontSize: 16.sp,
+                                            fontWeight: FontWeight.w600),
+                                      ),
+                                      Text("Kompleks Pertokoan Istana Plaza",
+                                          style: TextStyle(
+                                            fontSize: 10.sp,
+                                          )),
+                                      Text("Jln. Panji Tilar No. 48 Jaksel",
+                                          style: TextStyle(fontSize: 10.0)),
+                                    ],
+                                  ),
+                                  Padding(padding: EdgeInsets.only(top: 20.0)),
+                                  Divider(
+                                    color: Colors.black,
+                                  ),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(snapshot.data['waktu'].toString(),
+                                          textAlign: TextAlign.left,
+                                          style: TextStyle(
+                                              fontSize: 10.sp,
+                                              fontWeight: FontWeight.w600)),
+                                      Text(
+                                          snapshot.data['nama_kasir']
+                                              .toString(),
+                                          textAlign: TextAlign.left,
+                                          style: TextStyle(
+                                              fontSize: 10.sp,
+                                              fontWeight: FontWeight.w600)),
+                                    ],
+                                  ),
+                                  Divider(
+                                    color: Colors.black,
+                                  ),
+                                  Column(
+                                    children: [
+                                      Container(
+                                        color: Colors.white,
+                                        height:
+                                            MediaQuery.of(context).size.height *
+                                                0.25,
+                                        width:
+                                            MediaQuery.of(context).size.width,
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Expanded(
+                                              child:
+                                                  FutureBuilder<List<dynamic>>(
+                                                future: _struk(),
+                                                builder: (BuildContext context,
+                                                    AsyncSnapshot snap) {
+                                                  if (snap.hasData) {
+                                                    return ListView.builder(
+                                                      itemCount:
+                                                          snap.data.length,
+                                                      itemBuilder:
+                                                          (BuildContext context,
+                                                              int x) {
+                                                        return SizedBox(
+                                                          height:
+                                                              mediaQueryHeight *
+                                                                  0.025,
+                                                          child: Column(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .start,
                                                             children: [
-                                                              Column(
+                                                              Row(
+                                                                crossAxisAlignment:
+                                                                    CrossAxisAlignment
+                                                                        .start,
+                                                                mainAxisAlignment:
+                                                                    MainAxisAlignment
+                                                                        .spaceBetween,
                                                                 children: [
-                                                                  Row(
-                                                                    mainAxisAlignment:
-                                                                        MainAxisAlignment
-                                                                            .spaceBetween,
-                                                                    children: [
-                                                                      SizedBox(
-                                                                        width:
-                                                                            100.0,
-                                                                        child: Text(
-                                                                            snap.data[x][
-                                                                                'barang'],
-                                                                            textAlign:
-                                                                                TextAlign.left,
-                                                                            style: TextStyle(fontSize: 16.0)),
-                                                                      ),
-                                                                      SizedBox(
-                                                                        width:
-                                                                            10.0,
-                                                                        child: Text(
-                                                                            snap.data[x]['banyak']
-                                                                                .toString(),
-                                                                            textAlign:
-                                                                                TextAlign.right,
-                                                                            style: TextStyle(fontSize: 16.0)),
-                                                                      ),
-                                                                      SizedBox(
-                                                                        width:
-                                                                            120.0,
-                                                                        child: Text(
-                                                                            CurrencyFormat.convertToIdr(int.parse(snap.data[x]['harga']),
-                                                                                2),
-                                                                            textAlign: TextAlign.right,
-                                                                            style: TextStyle(fontSize: 16.0)),
-                                                                      ),
-                                                                      SizedBox(
-                                                                        width:
-                                                                            120.0,
-                                                                        child: Text(
-                                                                            CurrencyFormat.convertToIdr(int.parse(snap.data[x]['total']),
-                                                                                2),
-                                                                            textAlign: TextAlign.right,
-                                                                            style: TextStyle(fontSize: 16.0)),
-                                                                      ),
-                                                                    ],
+                                                                  SizedBox(
+                                                                    width:
+                                                                        mediaQueryWidth *
+                                                                            0.2,
+                                                                    child: Text(
+                                                                        snap.data[x]
+                                                                            [
+                                                                            'barang'],
+                                                                        textAlign:
+                                                                            TextAlign
+                                                                                .left,
+                                                                        style: TextStyle(
+                                                                            fontSize:
+                                                                                10.sp)),
+                                                                  ),
+                                                                  SizedBox(
+                                                                    width:
+                                                                        mediaQueryWidth *
+                                                                            0.01,
+                                                                    child: Text(
+                                                                        snap.data[x]['banyak']
+                                                                            .toString(),
+                                                                        textAlign:
+                                                                            TextAlign
+                                                                                .right,
+                                                                        style: TextStyle(
+                                                                            fontSize:
+                                                                                10.sp)),
+                                                                  ),
+                                                                  SizedBox(
+                                                                    width:
+                                                                        mediaQueryWidth *
+                                                                            0.3,
+                                                                    child: Text(
+                                                                        CurrencyFormat.convertToIdr(
+                                                                            int.parse(snap.data[x][
+                                                                                'harga']),
+                                                                            2),
+                                                                        textAlign:
+                                                                            TextAlign
+                                                                                .right,
+                                                                        style: TextStyle(
+                                                                            fontSize:
+                                                                                10.sp)),
+                                                                  ),
+                                                                  SizedBox(
+                                                                    width:
+                                                                        mediaQueryWidth *
+                                                                            0.3,
+                                                                    child: Text(
+                                                                        CurrencyFormat.convertToIdr(
+                                                                            int.parse(snap.data[x][
+                                                                                'total']),
+                                                                            2),
+                                                                        textAlign:
+                                                                            TextAlign
+                                                                                .right,
+                                                                        style: TextStyle(
+                                                                            fontSize:
+                                                                                10.sp)),
                                                                   ),
                                                                 ],
                                                               ),
                                                             ],
-                                                          );
-                                                        },
-                                                      );
-                                                    } else {
-                                                      return Center(
-                                                          child:
-                                                              CircularProgressIndicator());
-                                                    }
-                                                  },
+                                                          ),
+                                                        );
+                                                      },
+                                                    );
+                                                  } else {
+                                                    return Center(
+                                                        child:
+                                                            CircularProgressIndicator());
+                                                  }
+                                                },
+                                              ),
+                                            ),
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                SizedBox(
+                                                  width: mediaQueryWidth * 0.55,
+                                                  child: Text("Diskon",
+                                                      textAlign:
+                                                          TextAlign.right,
+                                                      style: TextStyle(
+                                                          fontSize: 10.sp)),
                                                 ),
-                                              ),
-                                              Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
-                                                children: [
-                                                  SizedBox(
-                                                    width: 100.0,
-                                                  ),
-                                                  SizedBox(
-                                                    width: 10.0,
-                                                  ),
-                                                  SizedBox(
-                                                    width: 120.0,
-                                                    child: Text("Diskon",
-                                                        textAlign:
-                                                            TextAlign.right,
-                                                        style: TextStyle(
-                                                            fontSize: 16.0)),
-                                                  ),
-                                                  SizedBox(
-                                                    width: 120.0,
-                                                    child: Text(
-                                                        snapshot.data['diskon']
-                                                            .toString(),
-                                                        textAlign:
-                                                            TextAlign.right,
-                                                        style: TextStyle(
-                                                            fontSize: 16.0)),
-                                                  ),
-                                                ],
-                                              ),
-                                              Padding(
-                                                padding: const EdgeInsets.only(
-                                                    left: 50.0),
-                                                child: Divider(
-                                                  color: Colors.black,
+                                                SizedBox(
+                                                  width: 10,
+                                                  child: Text(
+                                                      snapshot.data['diskon']
+                                                          .toString(),
+                                                      textAlign:
+                                                          TextAlign.right,
+                                                      style: TextStyle(
+                                                          fontSize: 10.sp)),
                                                 ),
+                                              ],
+                                            ),
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                  left: 50.0),
+                                              child: Divider(
+                                                color: Colors.black,
                                               ),
-                                              Padding(
-                                                padding: const EdgeInsets.only(
-                                                    left: 20.0),
-                                                child: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
-                                                  children: [
-                                                    SizedBox(
-                                                      width: 100.0,
-                                                    ),
-                                                    SizedBox(
-                                                      width: 10,
-                                                    ),
-                                                    SizedBox(
-                                                      width: 100.0,
-                                                      child: Text("Total",
-                                                          textAlign:
-                                                              TextAlign.right,
-                                                          style: TextStyle(
-                                                              fontSize: 16.0)),
-                                                    ),
-                                                    SizedBox(
-                                                      width: 120.0,
-                                                      child: Text(
-                                                          CurrencyFormat.convertToIdr(
-                                                              int.parse(snapshot
-                                                                      .data[
-                                                                  'total_akhir']),
-                                                              2),
-                                                          textAlign:
-                                                              TextAlign.right,
-                                                          style: TextStyle(
-                                                              fontSize: 16.0)),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                              Row(
+                                            ),
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                  left: 20.0),
+                                              child: Row(
                                                 mainAxisAlignment:
                                                     MainAxisAlignment
                                                         .spaceBetween,
                                                 children: [
                                                   SizedBox(
-                                                    width: 100,
-                                                  ),
-                                                  SizedBox(
-                                                    width: 10,
-                                                  ),
-                                                  SizedBox(
-                                                    width: 120.0,
-                                                    child: Text("Bayar Tunai",
+                                                    width:
+                                                        mediaQueryWidth * 0.5,
+                                                    child: Text("Total",
                                                         textAlign:
                                                             TextAlign.right,
                                                         style: TextStyle(
-                                                            fontSize: 16.0)),
+                                                            fontSize: 10.sp)),
                                                   ),
                                                   SizedBox(
-                                                    width: 120.0,
-                                                    child: Text(
-                                                        CurrencyFormat
-                                                            .convertToIdr(
-                                                                int.parse(snapshot
-                                                                        .data[
-                                                                    'bayar']),
-                                                                2),
-                                                        textAlign:
-                                                            TextAlign.right,
-                                                        style: TextStyle(
-                                                            fontSize: 16.0)),
-                                                  ),
-                                                ],
-                                              ),
-                                              Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
-                                                children: [
-                                                  SizedBox(
-                                                    width: 100,
-                                                  ),
-                                                  SizedBox(
-                                                    width: 10,
-                                                  ),
-                                                  SizedBox(
-                                                    width: 120.0,
-                                                    child: Text("Bayar Kartu",
-                                                        textAlign:
-                                                            TextAlign.right,
-                                                        style: TextStyle(
-                                                            fontSize: 16.0)),
-                                                  ),
-                                                  SizedBox(
-                                                    width: 120.0,
-                                                    child: Text(
-                                                        CurrencyFormat
-                                                            .convertToIdr(
-                                                                int.parse(snapshot
-                                                                        .data[
-                                                                    'bayar']),
-                                                                2),
-                                                        textAlign:
-                                                            TextAlign.right,
-                                                        style: TextStyle(
-                                                            fontSize: 16.0)),
-                                                  ),
-                                                ],
-                                              ),
-                                              Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
-                                                children: [
-                                                  SizedBox(
-                                                    width: 100,
-                                                  ),
-                                                  SizedBox(
-                                                    width: 10,
-                                                  ),
-                                                  SizedBox(
-                                                    width: 120.0,
-                                                    child: Text("Kembali",
-                                                        textAlign:
-                                                            TextAlign.right,
-                                                        style: TextStyle(
-                                                            fontSize: 16.0)),
-                                                  ),
-                                                  SizedBox(
-                                                    width: 120.0,
+                                                    width:
+                                                        mediaQueryWidth * 0.3,
                                                     child: Text(
                                                         CurrencyFormat.convertToIdr(
                                                             int.parse(snapshot
                                                                     .data[
-                                                                'kembalian']),
+                                                                'total_akhir']),
                                                             2),
                                                         textAlign:
                                                             TextAlign.right,
                                                         style: TextStyle(
-                                                            fontSize: 16.0)),
+                                                            fontSize: 10.sp)),
                                                   ),
                                                 ],
                                               ),
-                                            ],
-                                          ),
+                                            ),
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                SizedBox(
+                                                  width: mediaQueryWidth * 0.55,
+                                                  child: Text("Bayar Tunai",
+                                                      textAlign:
+                                                          TextAlign.right,
+                                                      style: TextStyle(
+                                                          fontSize: 10.sp)),
+                                                ),
+                                                SizedBox(
+                                                  width: mediaQueryWidth * 0.3,
+                                                  child: Text(
+                                                      CurrencyFormat
+                                                          .convertToIdr(
+                                                              int.parse(
+                                                                  snapshot.data[
+                                                                      'bayar']),
+                                                              2),
+                                                      textAlign:
+                                                          TextAlign.right,
+                                                      style: TextStyle(
+                                                          fontSize: 10.sp)),
+                                                ),
+                                              ],
+                                            ),
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                SizedBox(
+                                                  width: mediaQueryWidth * 0.55,
+                                                  child: Text("Kembali",
+                                                      textAlign:
+                                                          TextAlign.right,
+                                                      style: TextStyle(
+                                                          fontSize: 10.sp)),
+                                                ),
+                                                SizedBox(
+                                                  width: mediaQueryWidth * 0.3,
+                                                  child: Text(
+                                                      CurrencyFormat
+                                                          .convertToIdr(
+                                                              int.parse(snapshot
+                                                                      .data[
+                                                                  'kembalian']),
+                                                              2),
+                                                      textAlign:
+                                                          TextAlign.right,
+                                                      style: TextStyle(
+                                                          fontSize: 10.sp)),
+                                                ),
+                                              ],
+                                            ),
+                                          ],
                                         ),
-                                      ],
-                                    ),
+                                      ),
+                                    ],
                                   ),
-                                ),
-                                Column(children: const [
-                                  Text("Terimakasih atas kunjungan anda"),
-                                  Text("Layanan konsumen dan pemesanan"),
-                                  Text("081935152277")
-                                ]),
-                              ],
+                                  SizedBox(
+                                    height: mediaQueryHeight * 0.1,
+                                  ),
+                                  Column(children: [
+                                    Text("Terimakasih atas kunjungan anda",
+                                        style: TextStyle(fontSize: 10.sp)),
+                                    Text("Layanan konsumen dan pemesanan",
+                                        style: TextStyle(fontSize: 10.sp)),
+                                    Text("081935152277",
+                                        style: TextStyle(fontSize: 10.sp))
+                                  ]),
+                                ],
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                    ],
-                  );
-                } else {
-                  return Column(
-                    children: const [
-                      Center(
-                        child: Padding(
-                          padding: EdgeInsets.only(top: 50.0),
-                          child: Image(
-                            image:
-                                AssetImage("asset/image/keranjang_kosong.png"),
-                            width: 100,
+                      ],
+                    );
+                  } else {
+                    return Column(
+                      children: const [
+                        Center(
+                          child: Padding(
+                            padding: EdgeInsets.only(top: 50.0),
+                            child: Image(
+                              image: AssetImage(
+                                  "asset/image/keranjang_kosong.png"),
+                              width: 100,
+                            ),
                           ),
                         ),
-                      ),
-                      Text(
-                        "Belum ada Produk yang di beli",
-                        style: TextStyle(
-                          fontSize: 18.0,
+                        Text(
+                          "Belum ada Produk yang di beli",
+                          style: TextStyle(
+                            fontSize: 18.0,
+                          ),
                         ),
-                      ),
-                    ],
-                  );
-                }
-              },
+                      ],
+                    );
+                  }
+                },
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
+        floatingActionButton: _getFAB(),
       ),
-      floatingActionButton: _getFAB(),
     );
   }
 
@@ -473,13 +491,17 @@ class _StrukState extends State<Struk> {
             labelStyle: TextStyle(
                 fontWeight: FontWeight.w500,
                 color: Colors.white,
-                fontSize: 16.0),
+                fontSize: 14.0),
             labelBackgroundColor: Colors.black87),
         // FAB 2
         SpeedDialChild(
             child: Icon(Icons.arrow_back_ios_new_rounded),
             backgroundColor: Colors.amber,
             onTap: () async {
+              SystemChrome.setPreferredOrientations([
+                DeviceOrientation.landscapeRight,
+                DeviceOrientation.landscapeLeft
+              ]);
               final res = await http.get(
                 Uri.parse(BaseURL.selesaibelanja),
               );
@@ -492,7 +514,7 @@ class _StrukState extends State<Struk> {
             labelStyle: TextStyle(
                 fontWeight: FontWeight.w500,
                 color: Colors.white,
-                fontSize: 16.0),
+                fontSize: 14.0),
             labelBackgroundColor: Colors.black87)
       ],
     );

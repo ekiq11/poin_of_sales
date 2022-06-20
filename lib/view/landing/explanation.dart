@@ -23,14 +23,17 @@ class ExplanationPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final mediaQueryHeight = MediaQuery.of(context).size.height;
+    final mediaQueryWidth = MediaQuery.of(context).size.width;
+    final bodyHeight = mediaQueryHeight - MediaQuery.of(context).padding.top;
     return Column(
       children: [
         Container(
-            height: 300,
+            height: bodyHeight * 0.3,
+            width: mediaQueryWidth * 0.3,
             margin: const EdgeInsets.only(top: 40.0),
             child: Image.asset(data!.localImageSrc.toString(),
-                height: MediaQuery.of(context).size.height * 0.30,
-                alignment: Alignment.center)),
+                height: mediaQueryHeight * 0.30, alignment: Alignment.center)),
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -62,13 +65,11 @@ class ExplanationPage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 48),
-                  child: Text(
-                    data!.description.toString(),
-                    style: Theme.of(context).textTheme.bodyText2,
-                    textAlign: TextAlign.center,
-                  ))
+              Text(
+                data!.description.toString(),
+                style: Theme.of(context).textTheme.bodyText2,
+                textAlign: TextAlign.center,
+              )
             ],
           ),
         ),
