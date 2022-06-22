@@ -1,4 +1,4 @@
-// ignore_for_file: sized_box_for_whitespace, unused_local_variable, use_build_context_synchronously
+// ignore_for_file: sized_box_for_whitespace, unused_local_variable, use_build_context_synchronously, sort_child_properties_last
 
 import 'dart:async';
 import 'dart:convert';
@@ -94,40 +94,42 @@ class _PoinOfSaleState extends State<PoinOfSale> {
     final mediaQueryWidth = MediaQuery.of(context).size.width;
 
     final paddingTop = MediaQuery.of(context).padding.top;
-    final myappBar = AppBar(
-      automaticallyImplyLeading: false,
-      title: Center(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text('Roti Dua Lima', style: TextStyle(fontSize: 12.sp)),
-            IconButton(
-                onPressed: () async {
-                  // Add your onPressed code here!
-                  SharedPreferences preferences =
-                      await SharedPreferences.getInstance();
-                  setState(() {
-                    username = preferences.getString("username");
-                    idUser = preferences.getString("idUser");
-                  });
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute<void>(
-                      builder: (BuildContext context) => HalamanUtama(
-                          username: "$username", idUser: "$idUser"),
-                    ),
-                  );
+    final myappBar = PreferredSize(
+        preferredSize: Size.fromHeight(30.sp),
+        child: AppBar(
+          automaticallyImplyLeading: false,
+          title: Center(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text('Roti Dua Lima', style: TextStyle(fontSize: 10.sp)),
+                IconButton(
+                    onPressed: () async {
+                      // Add your onPressed code here!
+                      SharedPreferences preferences =
+                          await SharedPreferences.getInstance();
+                      setState(() {
+                        username = preferences.getString("username");
+                        idUser = preferences.getString("idUser");
+                      });
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute<void>(
+                          builder: (BuildContext context) => HalamanUtama(
+                              username: "$username", idUser: "$idUser"),
+                        ),
+                      );
 
-                  //  print("username: ${widget.username!}");
-                },
-                icon: Icon(Icons.home, size: 18.sp, color: Colors.black87)),
-          ],
-        ),
-      ),
-      //shadow
-      elevation: 0,
-      //back button
-    );
+                      //  print("username: ${widget.username!}");
+                    },
+                    icon: Icon(Icons.home, size: 14.sp, color: Colors.black87)),
+              ],
+            ),
+          ),
+          //shadow
+          elevation: 0,
+        ) //back button
+        );
     final bodyHeight = mediaQueryHeight -
         MediaQuery.of(context).padding.top -
         myappBar.preferredSize.height;
@@ -145,7 +147,7 @@ class _PoinOfSaleState extends State<PoinOfSale> {
                 builder: (BuildContext context, AsyncSnapshot snapshot) {
                   if (snapshot.hasData) {
                     return ListView.builder(
-                      padding: EdgeInsets.all(10),
+                      padding: EdgeInsets.all(8),
                       itemCount: snapshot.data.length,
                       itemBuilder: (BuildContext context, int index) {
                         return Card(
@@ -156,14 +158,14 @@ class _PoinOfSaleState extends State<PoinOfSale> {
                                 child: ListTile(
                                   title: Text(
                                       snapshot.data[index]['nama_barang'],
-                                      style: TextStyle(fontSize: 12.sp)),
+                                      style: TextStyle(fontSize: 10.sp)),
                                   subtitle: Text(
                                       CurrencyFormat.convertToIdr(
                                           int.parse(
                                             snapshot.data[index]['harga_jual'],
                                           ),
                                           2),
-                                      style: TextStyle(fontSize: 12.sp)),
+                                      style: TextStyle(fontSize: 10.sp)),
                                   leading: CircleAvatar(
                                     backgroundImage: NetworkImage(
                                         "http://kbu-cdn.com/dk/wp-content/uploads/roti-goreng-madu.jpg"),
@@ -183,12 +185,12 @@ class _PoinOfSaleState extends State<PoinOfSale> {
                                       children: [
                                         Padding(
                                           padding: EdgeInsets.only(right: 10.0),
-                                          child: Text("ADD",
+                                          child: Text("+ Add",
                                               style:
-                                                  TextStyle(fontSize: 12.sp)),
+                                                  TextStyle(fontSize: 10.sp)),
                                         ),
                                         Icon(Icons.add_shopping_cart_rounded,
-                                            size: 18.sp),
+                                            size: 12.sp),
                                       ],
                                     ),
                                     onPressed: () async {
@@ -231,21 +233,28 @@ class _PoinOfSaleState extends State<PoinOfSale> {
                 child: Column(
                   children: [
                     Padding(
-                      padding: EdgeInsets.all(5.sp),
+                      padding: const EdgeInsets.all(9.5),
                       child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Icon(Icons.shopping_cart_rounded, size: 24.0),
-                          Text(" Keranjang Belanja",
-                              style: TextStyle(
-                                  fontSize: 12.sp,
-                                  fontWeight: FontWeight.w600)),
+                          Row(
+                            children: [
+                              Icon(Icons.shopping_cart_rounded, size: 14.sp),
+                              Text(" Keranjang Belanja",
+                                  style: TextStyle(
+                                      fontSize: 10.sp,
+                                      fontWeight: FontWeight.w600)),
+                            ],
+                          ),
                         ],
                       ),
                     ),
                     Container(
                       color: Color.fromARGB(255, 230, 230, 230),
-                      height: mediaQueryHeight / 1.2,
+                      height: mediaQueryHeight -
+                          myappBar.preferredSize.height -
+                          MediaQuery.of(context).padding.top * 1.7 -
+                          16.5.sp,
                       width: mediaQueryWidth,
                       child: Column(
                         children: [
@@ -265,148 +274,141 @@ class _PoinOfSaleState extends State<PoinOfSale> {
                                           itemCount: snapshot.data.length,
                                           itemBuilder: (BuildContext context,
                                               int index) {
-                                            return SingleChildScrollView(
-                                              child: Column(
-                                                children: [
-                                                  Card(
-                                                    elevation: 0,
-                                                    child: Row(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .spaceBetween,
-                                                      children: [
-                                                        Expanded(
-                                                          child: ListTile(
-                                                            title: Text(
-                                                                snapshot.data[
-                                                                        index]
-                                                                    ['barang'],
-                                                                style: TextStyle(
-                                                                    fontSize:
-                                                                        12.sp)),
-                                                            subtitle: Text(
-                                                                CurrencyFormat
-                                                                    .convertToIdr(
-                                                                        int
-                                                                            .parse(
-                                                                          snapshot.data[index]
-                                                                              [
-                                                                              'harga'],
-                                                                        ),
-                                                                        2),
-                                                                style: TextStyle(
-                                                                    fontSize:
-                                                                        12.sp)),
-                                                            leading:
-                                                                CircleAvatar(
-                                                              backgroundImage:
-                                                                  NetworkImage(
-                                                                      "http://kbu-cdn.com/dk/wp-content/uploads/roti-goreng-madu.jpg"),
-                                                            ),
+                                            return Column(
+                                              children: [
+                                                Card(
+                                                  elevation: 0,
+                                                  child: Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    children: [
+                                                      Expanded(
+                                                        child: ListTile(
+                                                          title: Text(
+                                                              snapshot.data[
+                                                                      index]
+                                                                  ['barang'],
+                                                              style: TextStyle(
+                                                                  fontSize:
+                                                                      10.sp)),
+                                                          subtitle: Text(
+                                                              CurrencyFormat
+                                                                  .convertToIdr(
+                                                                      int.parse(
+                                                                        snapshot.data[index]
+                                                                            [
+                                                                            'harga'],
+                                                                      ),
+                                                                      2),
+                                                              style: TextStyle(
+                                                                  fontSize:
+                                                                      10.sp)),
+                                                          leading: CircleAvatar(
+                                                            backgroundImage:
+                                                                NetworkImage(
+                                                                    "http://kbu-cdn.com/dk/wp-content/uploads/roti-goreng-madu.jpg"),
                                                           ),
                                                         ),
-                                                        Row(
-                                                          children: [
-                                                            IconButton(
-                                                              onPressed:
-                                                                  () async {
-                                                                int counter = int.parse(
-                                                                    snapshot.data[
-                                                                            index]
-                                                                        ['id']);
-                                                                setState(() {
-                                                                  counter--;
-                                                                });
-                                                                final res =
-                                                                    await http
-                                                                        .get(
-                                                                  Uri.parse(BaseURL
-                                                                          .kurangi +
-                                                                      snapshot.data[
-                                                                              index]
-                                                                          [
-                                                                          'id']),
-                                                                );
-                                                              },
-                                                              icon: Icon(
-                                                                  Icons.remove),
-                                                            ),
-                                                            Badge(
-                                                              toAnimate: false,
-                                                              shape: BadgeShape
-                                                                  .square,
-                                                              badgeColor:
-                                                                  Colors.white,
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          4),
-                                                              badgeContent: Text(
-                                                                  snapshot.data[
-                                                                          index]
-                                                                      [
-                                                                      'banyak'],
-                                                                  style: TextStyle(
-                                                                      fontSize:
-                                                                          14.0,
-                                                                      color: Colors
-                                                                          .black87)),
-                                                            ),
-                                                            IconButton(
-                                                              onPressed:
-                                                                  () async {
-                                                                int counter = int.parse(
-                                                                    snapshot.data[
-                                                                            index]
-                                                                        ['id']);
-                                                                setState(() {
-                                                                  counter++;
-                                                                });
-                                                                final res =
-                                                                    await http
-                                                                        .get(
-                                                                  Uri.parse(BaseURL
-                                                                          .add +
-                                                                      snapshot.data[
-                                                                              index]
-                                                                          [
-                                                                          'id']),
-                                                                );
-                                                              },
-                                                              icon: Icon(
-                                                                  Icons.add),
-                                                            ),
-                                                          ],
-                                                        ),
-                                                        SizedBox(
-                                                          width:
-                                                              mediaQueryWidth *
-                                                                  0.06,
-                                                          child: IconButton(
+                                                      ),
+                                                      Row(
+                                                        children: [
+                                                          IconButton(
                                                             onPressed:
                                                                 () async {
+                                                              int counter = int
+                                                                  .parse(snapshot
+                                                                          .data[
+                                                                      index]['id']);
+                                                              setState(() {
+                                                                counter--;
+                                                              });
                                                               final res =
                                                                   await http
                                                                       .get(
                                                                 Uri.parse(BaseURL
-                                                                        .hapus +
+                                                                        .kurangi +
                                                                     snapshot.data[
                                                                             index]
                                                                         ['id']),
                                                               );
                                                             },
                                                             icon: Icon(
-                                                                Icons
-                                                                    .delete_forever_rounded,
-                                                                color: Colors
-                                                                    .redAccent),
+                                                                Icons.remove,
+                                                                size: 14.sp),
                                                           ),
-                                                        )
-                                                      ],
-                                                    ),
+                                                          Badge(
+                                                            toAnimate: false,
+                                                            shape: BadgeShape
+                                                                .square,
+                                                            badgeColor:
+                                                                Colors.white,
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        4),
+                                                            badgeContent: Text(
+                                                                snapshot.data[
+                                                                        index]
+                                                                    ['banyak'],
+                                                                style: TextStyle(
+                                                                    fontSize:
+                                                                        14.0,
+                                                                    color: Colors
+                                                                        .black87)),
+                                                          ),
+                                                          IconButton(
+                                                            onPressed:
+                                                                () async {
+                                                              int counter = int
+                                                                  .parse(snapshot
+                                                                          .data[
+                                                                      index]['id']);
+                                                              setState(() {
+                                                                counter++;
+                                                              });
+                                                              final res =
+                                                                  await http
+                                                                      .get(
+                                                                Uri.parse(BaseURL
+                                                                        .add +
+                                                                    snapshot.data[
+                                                                            index]
+                                                                        ['id']),
+                                                              );
+                                                            },
+                                                            icon: Icon(
+                                                                Icons.add,
+                                                                size: 14.sp),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                      SizedBox(
+                                                        width: mediaQueryWidth *
+                                                            0.06,
+                                                        child: IconButton(
+                                                          onPressed: () async {
+                                                            final res =
+                                                                await http.get(
+                                                              Uri.parse(BaseURL
+                                                                      .hapus +
+                                                                  snapshot.data[
+                                                                          index]
+                                                                      ['id']),
+                                                            );
+                                                          },
+                                                          icon: Icon(
+                                                              Icons
+                                                                  .delete_forever_rounded,
+                                                              size: 14.sp,
+                                                              color: Colors
+                                                                  .redAccent),
+                                                        ),
+                                                      )
+                                                    ],
                                                   ),
-                                                ],
-                                              ),
+                                                ),
+                                              ],
                                             );
                                           },
                                         );
@@ -419,14 +421,14 @@ class _PoinOfSaleState extends State<PoinOfSale> {
                                                 child: Image(
                                                   image: AssetImage(
                                                       "asset/image/keranjang_kosong.png"),
-                                                  width: mediaQueryHeight * 0.4,
+                                                  width: mediaQueryHeight * 0.2,
                                                 ),
                                               ),
                                             ),
                                             Text(
                                               "Belum ada Produk yang di beli",
                                               style: TextStyle(
-                                                fontSize: 12.sp,
+                                                fontSize: 10.sp,
                                               ),
                                             ),
                                           ],
@@ -443,18 +445,128 @@ class _PoinOfSaleState extends State<PoinOfSale> {
                                           child: Image(
                                             image: AssetImage(
                                                 "asset/image/keranjang_kosong.png"),
-                                            width: 100,
+                                            width: mediaQueryHeight * 0.2,
                                           ),
                                         ),
                                       ),
                                       Text(
                                         "Belum ada Produk yang di beli",
                                         style: TextStyle(
-                                          fontSize: 12.sp,
+                                          fontSize: 10.sp,
                                         ),
                                       ),
                                     ],
                                   );
+                                }
+                              },
+                            ),
+                          ),
+                          Container(
+                            height: mediaQueryHeight * 0.1,
+                            child: StreamBuilder(
+                              stream: streamctrl!.stream,
+                              builder: (context, snapshot) {
+                                if (snapshot.hasData) {
+                                  return FutureBuilder<List<dynamic>?>(
+                                    future: _fetchDataTotal(),
+                                    builder: (BuildContext context,
+                                        AsyncSnapshot snapshot) {
+                                      if (snapshot.hasData) {
+                                        return ListView.builder(
+                                            padding: EdgeInsets.all(3.0),
+                                            itemCount: 1,
+                                            itemBuilder: (BuildContext context,
+                                                int index) {
+                                              return Container(
+                                                height: mediaQueryHeight *
+                                                    0.1, //set your height here
+                                                width: double
+                                                    .maxFinite, //set your width here
+                                                decoration: BoxDecoration(
+                                                  color: Colors.amber,
+                                                ),
+                                                child: Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          left: 10.0),
+                                                  child: Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    children: [
+                                                      Text(
+                                                          // ignore: prefer_interpolation_to_compose_strings
+                                                          "Total : " +
+                                                              CurrencyFormat.convertToIdr(
+                                                                  int.parse(snapshot
+                                                                              .data[
+                                                                          index]
+                                                                      [
+                                                                      'total_belanja']),
+                                                                  2),
+                                                          style: TextStyle(
+                                                              fontSize: 12.sp,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w600)),
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                    .only(
+                                                                right: 10.0),
+                                                        child: OutlinedButton(
+                                                          onPressed: () {
+                                                            Navigator.push(
+                                                              context,
+                                                              MaterialPageRoute(
+                                                                builder:
+                                                                    (context) =>
+                                                                        Payment(),
+                                                              ),
+                                                            );
+                                                          },
+                                                          style: ButtonStyle(
+                                                            backgroundColor:
+                                                                MaterialStateProperty
+                                                                    .all<Color>(
+                                                                        Colors
+                                                                            .black87),
+                                                            shape: MaterialStateProperty.all(
+                                                                RoundedRectangleBorder(
+                                                                    borderRadius:
+                                                                        BorderRadius.circular(
+                                                                            30.0))),
+                                                          ),
+                                                          child: Row(
+                                                            children: [
+                                                              Icon(
+                                                                  Icons
+                                                                      .check_circle,
+                                                                  size: 10.sp,
+                                                                  color: Colors
+                                                                      .amber),
+                                                              Text(" Check Out",
+                                                                  style: TextStyle(
+                                                                      fontSize:
+                                                                          10.sp,
+                                                                      color: Colors
+                                                                          .amber)),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              );
+                                            });
+                                      } else {
+                                        return Text("");
+                                      }
+                                    },
+                                  );
+                                } else {
+                                  return Text("");
                                 }
                               },
                             ),
@@ -468,14 +580,15 @@ class _PoinOfSaleState extends State<PoinOfSale> {
             ),
           ],
         ),
-        floatingActionButton: FloatingActionButton.extended(
-          onPressed: () {
-            Navigator.push(
-                context, MaterialPageRoute(builder: (context) => Payment()));
-          },
-          label: Text(" Checkout", style: TextStyle(fontSize: 12.sp)),
-          icon: Icon(Icons.check, size: 18.sp),
-        ),
+        // floatingActionButton: FloatingActionButton.extended(
+        //   onPressed: () {
+        //     Navigator.push(
+        //         context, MaterialPageRoute(builder: (context) => Payment()));
+        //   },
+        //   label: Text(" Checkout",
+        //       style: TextStyle(fontSize: 10.sp, fontWeight: FontWeight.bold)),
+        //   icon: Icon(Icons.check, size: 14.sp),
+        // ),
       ),
     );
   }

@@ -131,11 +131,11 @@ class _StrukState extends State<Struk> {
                                 children: [
                                   Column(
                                     children: [
-                                      SizedBox(height: mediaQueryHeight * 0.05),
+                                      SizedBox(height: mediaQueryHeight * 0.03),
                                       Text(
                                         "Roti Dua Delima",
                                         style: TextStyle(
-                                            fontSize: 16.sp,
+                                            fontSize: 14.sp,
                                             fontWeight: FontWeight.w600),
                                       ),
                                       Text("Kompleks Pertokoan Istana Plaza",
@@ -143,7 +143,7 @@ class _StrukState extends State<Struk> {
                                             fontSize: 10.sp,
                                           )),
                                       Text("Jln. Panji Tilar No. 48 Jaksel",
-                                          style: TextStyle(fontSize: 10.0)),
+                                          style: TextStyle(fontSize: 10.sp)),
                                     ],
                                   ),
                                   Padding(padding: EdgeInsets.only(top: 20.0)),
@@ -177,14 +177,15 @@ class _StrukState extends State<Struk> {
                                         color: Colors.white,
                                         height:
                                             MediaQuery.of(context).size.height *
-                                                0.25,
+                                                0.28,
                                         width:
                                             MediaQuery.of(context).size.width,
                                         child: Column(
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
                                           children: [
-                                            Expanded(
+                                            Container(
+                                              height: mediaQueryHeight * 0.13,
                                               child:
                                                   FutureBuilder<List<dynamic>>(
                                                 future: _struk(),
@@ -197,88 +198,89 @@ class _StrukState extends State<Struk> {
                                                       itemBuilder:
                                                           (BuildContext context,
                                                               int x) {
-                                                        return SizedBox(
-                                                          height:
-                                                              mediaQueryHeight *
-                                                                  0.025,
-                                                          child: Column(
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment
-                                                                    .start,
-                                                            children: [
-                                                              Row(
-                                                                crossAxisAlignment:
-                                                                    CrossAxisAlignment
-                                                                        .start,
-                                                                mainAxisAlignment:
-                                                                    MainAxisAlignment
-                                                                        .spaceBetween,
-                                                                children: [
-                                                                  SizedBox(
-                                                                    width:
-                                                                        mediaQueryWidth *
-                                                                            0.2,
-                                                                    child: Text(
-                                                                        snap.data[x]
-                                                                            [
-                                                                            'barang'],
-                                                                        textAlign:
-                                                                            TextAlign
-                                                                                .left,
-                                                                        style: TextStyle(
-                                                                            fontSize:
-                                                                                10.sp)),
-                                                                  ),
-                                                                  SizedBox(
-                                                                    width:
-                                                                        mediaQueryWidth *
-                                                                            0.01,
-                                                                    child: Text(
-                                                                        snap.data[x]['banyak']
-                                                                            .toString(),
-                                                                        textAlign:
-                                                                            TextAlign
-                                                                                .right,
-                                                                        style: TextStyle(
-                                                                            fontSize:
-                                                                                10.sp)),
-                                                                  ),
-                                                                  SizedBox(
-                                                                    width:
-                                                                        mediaQueryWidth *
-                                                                            0.3,
-                                                                    child: Text(
-                                                                        CurrencyFormat.convertToIdr(
-                                                                            int.parse(snap.data[x][
-                                                                                'harga']),
-                                                                            2),
-                                                                        textAlign:
-                                                                            TextAlign
-                                                                                .right,
-                                                                        style: TextStyle(
-                                                                            fontSize:
-                                                                                10.sp)),
-                                                                  ),
-                                                                  SizedBox(
-                                                                    width:
-                                                                        mediaQueryWidth *
-                                                                            0.3,
-                                                                    child: Text(
-                                                                        CurrencyFormat.convertToIdr(
-                                                                            int.parse(snap.data[x][
-                                                                                'total']),
-                                                                            2),
-                                                                        textAlign:
-                                                                            TextAlign
-                                                                                .right,
-                                                                        style: TextStyle(
-                                                                            fontSize:
-                                                                                10.sp)),
-                                                                  ),
-                                                                ],
-                                                              ),
-                                                            ],
-                                                          ),
+                                                        return Column(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .start,
+                                                          children: [
+                                                            Row(
+                                                              crossAxisAlignment:
+                                                                  CrossAxisAlignment
+                                                                      .start,
+                                                              mainAxisAlignment:
+                                                                  MainAxisAlignment
+                                                                      .spaceBetween,
+                                                              children: [
+                                                                SizedBox(
+                                                                  width:
+                                                                      mediaQueryWidth *
+                                                                          0.2,
+                                                                  child: Text(
+                                                                      snap.data[
+                                                                              x]
+                                                                          [
+                                                                          'barang'],
+                                                                      textAlign:
+                                                                          TextAlign
+                                                                              .left,
+                                                                      style: TextStyle(
+                                                                          fontSize:
+                                                                              10.sp)),
+                                                                ),
+                                                                SizedBox(
+                                                                  width:
+                                                                      mediaQueryWidth *
+                                                                          0.01,
+                                                                  child: Text(
+                                                                      snap.data[
+                                                                              x]
+                                                                              [
+                                                                              'banyak']
+                                                                          .toString(),
+                                                                      textAlign:
+                                                                          TextAlign
+                                                                              .right,
+                                                                      style: TextStyle(
+                                                                          fontSize:
+                                                                              10.sp)),
+                                                                ),
+                                                                SizedBox(
+                                                                  width:
+                                                                      mediaQueryWidth *
+                                                                          0.3,
+                                                                  child: Text(
+                                                                      CurrencyFormat.convertToIdr(
+                                                                          int.parse(snap.data[x]
+                                                                              [
+                                                                              'harga']),
+                                                                          2),
+                                                                      textAlign:
+                                                                          TextAlign
+                                                                              .right,
+                                                                      style: TextStyle(
+                                                                          fontSize:
+                                                                              10.sp)),
+                                                                ),
+                                                                SizedBox(
+                                                                  width:
+                                                                      mediaQueryWidth *
+                                                                          0.3,
+                                                                  child: Text(
+                                                                      CurrencyFormat.convertToIdr(
+                                                                          int.parse(snap.data[x]
+                                                                              [
+                                                                              'total']),
+                                                                          2),
+                                                                      textAlign:
+                                                                          TextAlign
+                                                                              .right,
+                                                                      style: TextStyle(
+                                                                          fontSize:
+                                                                              10.sp)),
+                                                                ),
+                                                              ],
+                                                            ),
+                                                          ],
                                                         );
                                                       },
                                                     );
@@ -532,7 +534,7 @@ class _StrukState extends State<Struk> {
     directory.absolute.path;
     final image = File('/storage/emulated/0/Pictures/$name.jpg');
 
-    const text = "Share From Roti Dua Lima";
+    const text = "Share From Roti Dua Delima";
     await Share.shareFiles([image.path], text: text);
     image.writeAsBytes(bytes);
 

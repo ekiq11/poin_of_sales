@@ -85,6 +85,9 @@ class _PaymentState extends State<Payment> {
                             children: [
                               Column(
                                 children: [
+                                  Padding(
+                                    padding: EdgeInsets.all(10),
+                                  ),
                                   Chip(
                                     backgroundColor: Colors.amber,
                                     label: Text(
@@ -101,7 +104,6 @@ class _PaymentState extends State<Payment> {
                             ],
                           ),
                           SizedBox(
-                            height: mediaQueryHeight * 0.6,
                             width: mediaQueryWidth * 0.7,
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.center,
@@ -125,7 +127,7 @@ class _PaymentState extends State<Payment> {
                                           style: OutlinedButton.styleFrom(
                                             minimumSize: Size(
                                                 mediaQueryWidth * 0.01,
-                                                mediaQueryHeight * 0.1 - 4),
+                                                mediaQueryHeight * 0.1 - 10.0),
                                             backgroundColor:
                                                 Colors.lightBlueAccent,
                                             primary: Colors.black87,
@@ -133,7 +135,7 @@ class _PaymentState extends State<Payment> {
                                                 color: Colors.lightBlueAccent),
                                             shape: RoundedRectangleBorder(
                                               borderRadius:
-                                                  BorderRadius.circular(20),
+                                                  BorderRadius.circular(50),
                                             ),
                                           ),
                                           child: Row(
@@ -155,7 +157,7 @@ class _PaymentState extends State<Payment> {
                                           children: [
                                             Text(
                                               "Total Tagihan",
-                                              style: TextStyle(fontSize: 12.sp),
+                                              style: TextStyle(fontSize: 10.sp),
                                             ),
                                             Text(
                                               CurrencyFormat.convertToIdr(
@@ -174,7 +176,7 @@ class _PaymentState extends State<Payment> {
                                                   CurrencyFormat.convertToIdr(
                                                       int.parse("$result"), 2),
                                               style: TextStyle(
-                                                  fontSize: 12.sp,
+                                                  fontSize: 10.sp,
                                                   color: Colors.black87),
                                             ),
                                           ],
@@ -192,14 +194,14 @@ class _PaymentState extends State<Payment> {
                                           style: OutlinedButton.styleFrom(
                                             minimumSize: Size(
                                                 mediaQueryWidth * 0.01,
-                                                mediaQueryHeight * 0.1 - 4),
+                                                mediaQueryHeight * 0.1 - 10.0),
                                             backgroundColor: Colors.amber,
                                             primary: Colors.black87,
                                             side:
                                                 BorderSide(color: Colors.amber),
                                             shape: RoundedRectangleBorder(
                                               borderRadius:
-                                                  BorderRadius.circular(20),
+                                                  BorderRadius.circular(50),
                                             ),
                                           ),
                                           child: Row(
@@ -219,7 +221,7 @@ class _PaymentState extends State<Payment> {
                                     ),
                                   ],
                                 ),
-                                SizedBox(height: mediaQueryHeight * 0.04),
+                                SizedBox(height: mediaQueryHeight * 0.05),
                                 Row(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
@@ -247,12 +249,12 @@ class _PaymentState extends State<Payment> {
                                         style: OutlinedButton.styleFrom(
                                           minimumSize: Size(
                                               mediaQueryWidth * 0.01,
-                                              mediaQueryHeight * 0.1 - 4),
+                                              mediaQueryHeight * 0.1 - 10.0),
                                           primary: Colors.black,
                                           side: BorderSide(color: Colors.green),
                                           shape: RoundedRectangleBorder(
                                             borderRadius:
-                                                BorderRadius.circular(20),
+                                                BorderRadius.circular(50),
                                           ),
                                         ),
                                         child: Row(
@@ -277,15 +279,37 @@ class _PaymentState extends State<Payment> {
                                       OutlinedButton(
                                         onPressed: () {
                                           num1 = 50000;
+
                                           if (num1! <
                                               int.parse(snapshot.data[index]
                                                   ['total_belanja'])) {
+                                            showDialog(
+                                              context: context,
+                                              builder: (_) => AlertDialog(
+                                                title: Text('Warning'),
+                                                content:
+                                                    Text('Uang anda kurang'),
+                                                actions: <Widget>[
+                                                  TextButton(
+                                                    onPressed: () => Navigator
+                                                            .of(context)
+                                                        .pop(
+                                                            false), // <-- SEE HERE
+                                                    child: Text('Ya',
+                                                        style: TextStyle(
+                                                            color: Colors
+                                                                .black87)),
+                                                  ),
+                                                ],
+                                              ),
+                                            );
+                                          } else {
                                             showDialog(
                                                 context: context,
                                                 builder: (_) => AlertDialog(
                                                       title: Text('Warning'),
                                                       content: Text(
-                                                          'Uang anda kurang'),
+                                                          'Jumlah uang Rp. 50.000'),
                                                       actions: <Widget>[
                                                         TextButton(
                                                           onPressed: () =>
@@ -315,12 +339,12 @@ class _PaymentState extends State<Payment> {
                                         style: OutlinedButton.styleFrom(
                                           minimumSize: Size(
                                               mediaQueryWidth * 0.01,
-                                              mediaQueryHeight * 0.1 - 4),
+                                              mediaQueryHeight * 0.1 - 10.0),
                                           primary: Colors.black,
                                           side: BorderSide(color: Colors.blue),
                                           shape: RoundedRectangleBorder(
                                             borderRadius:
-                                                BorderRadius.circular(20),
+                                                BorderRadius.circular(50),
                                           ),
                                         ),
                                         child: Row(
@@ -349,11 +373,32 @@ class _PaymentState extends State<Payment> {
                                               int.parse(snapshot.data[index]
                                                   ['total_belanja'])) {
                                             showDialog(
+                                              context: context,
+                                              builder: (_) => AlertDialog(
+                                                title: Text('Warning'),
+                                                content:
+                                                    Text('Uang anda kurang'),
+                                                actions: <Widget>[
+                                                  TextButton(
+                                                    onPressed: () => Navigator
+                                                            .of(context)
+                                                        .pop(
+                                                            false), // <-- SEE HERE
+                                                    child: Text('Ya',
+                                                        style: TextStyle(
+                                                            color: Colors
+                                                                .black87)),
+                                                  ),
+                                                ],
+                                              ),
+                                            );
+                                          } else {
+                                            showDialog(
                                                 context: context,
                                                 builder: (_) => AlertDialog(
                                                       title: Text('Warning'),
                                                       content: Text(
-                                                          'Uang anda kurang'),
+                                                          'Jumlah uang Rp. 100.000'),
                                                       actions: <Widget>[
                                                         TextButton(
                                                           onPressed: () =>
@@ -384,12 +429,12 @@ class _PaymentState extends State<Payment> {
                                         style: OutlinedButton.styleFrom(
                                           minimumSize: Size(
                                               mediaQueryWidth * 0.01,
-                                              mediaQueryHeight * 0.1 - 4),
+                                              mediaQueryHeight * 0.1 - 10.0),
                                           primary: Colors.black,
                                           side: BorderSide(color: Colors.red),
                                           shape: RoundedRectangleBorder(
                                             borderRadius:
-                                                BorderRadius.circular(20),
+                                                BorderRadius.circular(50),
                                           ),
                                         ),
                                         child: Row(
@@ -400,7 +445,8 @@ class _PaymentState extends State<Payment> {
                                               child: Icon(
                                                   Icons
                                                       .monetization_on_outlined,
-                                                  color: Colors.black87),
+                                                  color: Colors.black87,
+                                                  size: 14.sp),
                                             ),
                                             Text('Rp.100.000,00',
                                                 style: TextStyle(
@@ -467,199 +513,261 @@ class _PaymentState extends State<Payment> {
                                     },
                                   ),
                                 ),
+                                SizedBox(height: 12.sp),
+                                Visibility(
+                                  visible: tunai!,
+                                  child: InkWell(
+                                    child: Container(
+                                      height: mediaQueryHeight * 0.10,
+                                      width: mediaQueryWidth * 0.7,
+                                      alignment: Alignment.center,
+                                      decoration: BoxDecoration(
+                                        borderRadius: const BorderRadius.all(
+                                          Radius.circular(50),
+                                        ),
+                                        boxShadow: <BoxShadow>[
+                                          BoxShadow(
+                                              color: Colors.grey.shade200,
+                                              offset: const Offset(2, 4),
+                                              blurRadius: 50,
+                                              spreadRadius: 2)
+                                        ],
+                                        gradient: const LinearGradient(
+                                          begin: Alignment.centerLeft,
+                                          end: Alignment.centerRight,
+                                          colors: [
+                                            Color(0xfffbb448),
+                                            Color(0xfff7892b)
+                                          ],
+                                        ),
+                                      ),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Icon(Icons.monetization_on_sharp,
+                                              color: Colors.black87,
+                                              size: 13.sp),
+                                          Text(
+                                            ' Bayar',
+                                            style: TextStyle(
+                                                fontSize: 10.sp,
+                                                fontWeight: FontWeight.w500,
+                                                color: Colors.black87),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    onTap: () async {
+                                      //navigasi
+                                      if (num1 == null) {
+                                        showDialog(
+                                            context: context,
+                                            builder: (_) => AlertDialog(
+                                                  title: Text('Warning'),
+                                                  content: Text(
+                                                      'Anda belum memasukkan jumlah uang'),
+                                                  actions: <Widget>[
+                                                    TextButton(
+                                                      onPressed: () => Navigator
+                                                              .of(context)
+                                                          .pop(
+                                                              false), // <-- SEE HERE
+                                                      child: Text('Ya',
+                                                          style: TextStyle(
+                                                              color: Colors
+                                                                  .black87)),
+                                                    ),
+                                                  ],
+                                                ));
+                                      }
+                                      if (result! < 0) {
+                                        showDialog(
+                                            context: context,
+                                            builder: (_) => AlertDialog(
+                                                  title: Text('Warning'),
+                                                  content: Text(
+                                                      'Jumlah uang kurang'),
+                                                  actions: <Widget>[
+                                                    TextButton(
+                                                      onPressed: () => Navigator
+                                                              .of(context)
+                                                          .pop(
+                                                              false), // <-- SEE HERE
+                                                      child: Text('Ya',
+                                                          style: TextStyle(
+                                                              color: Colors
+                                                                  .black87)),
+                                                    ),
+                                                  ],
+                                                ));
+                                      } else {
+                                        num1 = num1 = int.parse(
+                                            totalUangController.text
+                                                .replaceAll(",", ""));
+                                        num2 = int.parse(snapshot.data[index]
+                                            ['total_belanja']);
+                                        result = num1! - num2!;
+                                        print(result);
+                                        final res = await http.post(
+                                          Uri.parse(BaseURL.transaksi),
+                                          body: {
+                                            "kd_bank": "$kdBank".toString(),
+                                            "id_kasir": "$idUser".toString(),
+                                            "subtotal": snapshot.data[index]
+                                                    ['total_belanja']
+                                                .toString(),
+                                            "diskon": snapshot.data[index]
+                                                    ['diskon']
+                                                .toString(),
+                                            "total_akhir": snapshot.data[index]
+                                                    ['total_belanja']
+                                                .toString(),
+                                            "bayar": "$num1".toString(),
+                                            "kembalian": "$result".toString(),
+                                            "kd_barang": snapshot.data[index]
+                                                    ['kd_barang']
+                                                .toString(),
+                                            "barang": snapshot.data[index]
+                                                    ['barang']
+                                                .toString(),
+                                            "harga": snapshot.data[index]
+                                                    ['harga']
+                                                .toString(),
+                                            "banyak": snapshot.data[index]
+                                                    ['banyak']
+                                                .toString(),
+                                            "total": snapshot.data[index]
+                                                    ['total']
+                                                .toString(),
+                                          },
+                                        );
+
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    TransaksiSelesai(
+                                                        kembalian: result)));
+                                      }
+                                    },
+                                  ),
+                                ),
+                                Visibility(
+                                  visible: nonTunai!,
+                                  child: InkWell(
+                                    child: Container(
+                                      height: mediaQueryHeight * 0.10,
+                                      width: mediaQueryWidth * 0.7,
+                                      alignment: Alignment.center,
+                                      decoration: BoxDecoration(
+                                        borderRadius: const BorderRadius.all(
+                                          Radius.circular(50),
+                                        ),
+                                        boxShadow: <BoxShadow>[
+                                          BoxShadow(
+                                              color: Colors.grey.shade200,
+                                              offset: const Offset(2, 4),
+                                              blurRadius: 50,
+                                              spreadRadius: 2)
+                                        ],
+                                        gradient: const LinearGradient(
+                                          begin: Alignment.centerLeft,
+                                          end: Alignment.centerRight,
+                                          colors: [
+                                            Color(0xfffbb448),
+                                            Color(0xfff7892b)
+                                          ],
+                                        ),
+                                      ),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Icon(Icons.monetization_on_sharp,
+                                              color: Colors.black87,
+                                              size: 13.sp),
+                                          Text(
+                                            ' Bayar',
+                                            style: TextStyle(
+                                                fontSize: 10.sp,
+                                                fontWeight: FontWeight.w500,
+                                                color: Colors.black87),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    onTap: () async {
+                                      //navigasi
+                                      if (result! < 0) {
+                                        showDialog(
+                                            context: context,
+                                            builder: (_) => AlertDialog(
+                                                  title: Text('Warning'),
+                                                  content: Text(
+                                                      'Jumlah uang kurang'),
+                                                  actions: <Widget>[
+                                                    TextButton(
+                                                      onPressed: () => Navigator
+                                                              .of(context)
+                                                          .pop(
+                                                              false), // <-- SEE HERE
+                                                      child: Text('Ya',
+                                                          style: TextStyle(
+                                                              color: Colors
+                                                                  .black87)),
+                                                    ),
+                                                  ],
+                                                ));
+                                      } else {
+                                        print("$result");
+                                        final res = await http.post(
+                                          Uri.parse(BaseURL.transaksi),
+                                          body: {
+                                            "kd_bank": "$kdBank".toString(),
+                                            "id_kasir": "$idUser".toString(),
+                                            "subtotal": snapshot.data[index]
+                                                    ['total_belanja']
+                                                .toString(),
+                                            "diskon": snapshot.data[index]
+                                                    ['diskon']
+                                                .toString(),
+                                            "total_akhir": snapshot.data[index]
+                                                    ['total_belanja']
+                                                .toString(),
+                                            "bayar": "$num1".toString(),
+                                            "kembalian": "$result".toString(),
+                                            "kd_barang": snapshot.data[index]
+                                                    ['kd_barang']
+                                                .toString(),
+                                            "barang": snapshot.data[index]
+                                                    ['barang']
+                                                .toString(),
+                                            "harga": snapshot.data[index]
+                                                    ['harga']
+                                                .toString(),
+                                            "banyak": snapshot.data[index]
+                                                    ['banyak']
+                                                .toString(),
+                                            "total": snapshot.data[index]
+                                                    ['total']
+                                                .toString(),
+                                          },
+                                        );
+
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    TransaksiSelesai(
+                                                        kembalian: result)));
+                                      }
+                                    },
+                                  ),
+                                )
                               ],
                             ),
                           ),
-                          Visibility(
-                            visible: tunai!,
-                            child: InkWell(
-                              child: Container(
-                                height: mediaQueryHeight * 0.13,
-                                width: mediaQueryWidth * 0.5,
-                                padding: EdgeInsets.symmetric(vertical: 10.sp),
-                                alignment: Alignment.center,
-                                decoration: BoxDecoration(
-                                  borderRadius: const BorderRadius.all(
-                                    Radius.circular(50),
-                                  ),
-                                  boxShadow: <BoxShadow>[
-                                    BoxShadow(
-                                        color: Colors.grey.shade200,
-                                        offset: const Offset(2, 4),
-                                        blurRadius: 50,
-                                        spreadRadius: 2)
-                                  ],
-                                  gradient: const LinearGradient(
-                                    begin: Alignment.centerLeft,
-                                    end: Alignment.centerRight,
-                                    colors: [
-                                      Color(0xfffbb448),
-                                      Color(0xfff7892b)
-                                    ],
-                                  ),
-                                ),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Icon(Icons.monetization_on_sharp,
-                                        color: Colors.black87, size: 13.sp),
-                                    Text(
-                                      ' Bayar',
-                                      style: TextStyle(
-                                          fontSize: 12.sp,
-                                          fontWeight: FontWeight.w500,
-                                          color: Colors.black87),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              onTap: () async {
-                                //navigasi
-                                if (num1 == null) {
-                                  showDialog(
-                                      context: context,
-                                      builder: (_) => AlertDialog(
-                                            title: Text('Warning'),
-                                            content: Text(
-                                                'Anda belum memasukkan jumlah uang'),
-                                            actions: <Widget>[
-                                              TextButton(
-                                                onPressed: () =>
-                                                    Navigator.of(context).pop(
-                                                        false), // <-- SEE HERE
-                                                child: Text('Ya',
-                                                    style: TextStyle(
-                                                        color: Colors.black87)),
-                                              ),
-                                            ],
-                                          ));
-                                }
-                                num1 = num1 = int.parse(totalUangController.text
-                                    .replaceAll(",", ""));
-                                num2 = int.parse(
-                                    snapshot.data[index]['total_belanja']);
-                                result = num1! - num2!;
-                                print(result);
-                                final res = await http.post(
-                                  Uri.parse(BaseURL.transaksi),
-                                  body: {
-                                    "kd_bank": "$kdBank".toString(),
-                                    "id_kasir": "$idUser".toString(),
-                                    "subtotal": snapshot.data[index]
-                                            ['total_belanja']
-                                        .toString(),
-                                    "diskon": snapshot.data[index]['diskon']
-                                        .toString(),
-                                    "total_akhir": snapshot.data[index]
-                                            ['total_belanja']
-                                        .toString(),
-                                    "bayar": "$num1".toString(),
-                                    "kembalian": "$result".toString(),
-                                    "kd_barang": snapshot.data[index]
-                                            ['kd_barang']
-                                        .toString(),
-                                    "barang": snapshot.data[index]['barang']
-                                        .toString(),
-                                    "harga": snapshot.data[index]['harga']
-                                        .toString(),
-                                    "banyak": snapshot.data[index]['banyak']
-                                        .toString(),
-                                    "total": snapshot.data[index]['total']
-                                        .toString(),
-                                  },
-                                );
-
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => TransaksiSelesai(
-                                            kembalian: result)));
-                              },
-                            ),
-                          ),
-                          Visibility(
-                            visible: nonTunai!,
-                            child: InkWell(
-                              child: Container(
-                                height: mediaQueryHeight * 0.12,
-                                width: mediaQueryWidth * 0.5,
-                                padding: EdgeInsets.symmetric(vertical: 10.sp),
-                                alignment: Alignment.center,
-                                decoration: BoxDecoration(
-                                  borderRadius: const BorderRadius.all(
-                                    Radius.circular(50),
-                                  ),
-                                  boxShadow: <BoxShadow>[
-                                    BoxShadow(
-                                        color: Colors.grey.shade200,
-                                        offset: const Offset(2, 4),
-                                        blurRadius: 50,
-                                        spreadRadius: 2)
-                                  ],
-                                  gradient: const LinearGradient(
-                                    begin: Alignment.centerLeft,
-                                    end: Alignment.centerRight,
-                                    colors: [
-                                      Color(0xfffbb448),
-                                      Color(0xfff7892b)
-                                    ],
-                                  ),
-                                ),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Icon(Icons.monetization_on_sharp,
-                                        color: Colors.black87, size: 12.sp),
-                                    Text(
-                                      ' Bayar',
-                                      style: TextStyle(
-                                          fontSize: 12.sp,
-                                          fontWeight: FontWeight.w500,
-                                          color: Colors.black87),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              onTap: () async {
-                                //navigasi
-                                print("$result");
-                                final res = await http.post(
-                                  Uri.parse(BaseURL.transaksi),
-                                  body: {
-                                    "kd_bank": "$kdBank".toString(),
-                                    "id_kasir": "$idUser".toString(),
-                                    "subtotal": snapshot.data[index]
-                                            ['total_belanja']
-                                        .toString(),
-                                    "diskon": snapshot.data[index]['diskon']
-                                        .toString(),
-                                    "total_akhir": snapshot.data[index]
-                                            ['total_belanja']
-                                        .toString(),
-                                    "bayar": "$num1".toString(),
-                                    "kembalian": "$result".toString(),
-                                    "kd_barang": snapshot.data[index]
-                                            ['kd_barang']
-                                        .toString(),
-                                    "barang": snapshot.data[index]['barang']
-                                        .toString(),
-                                    "harga": snapshot.data[index]['harga']
-                                        .toString(),
-                                    "banyak": snapshot.data[index]['banyak']
-                                        .toString(),
-                                    "total": snapshot.data[index]['total']
-                                        .toString(),
-                                  },
-                                );
-
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => TransaksiSelesai(
-                                            kembalian: result)));
-                              },
-                            ),
-                          )
                         ],
                       ),
                     ),

@@ -36,27 +36,27 @@ class HomePage extends StatelessWidget {
           primarySwatch: Colors.amber,
           textTheme: TextTheme(
             headline1: TextStyle(
-                fontSize: 16.sp,
+                fontSize: 12.sp,
                 color: Colors.amber,
                 fontFamily: 'Raleway',
                 fontWeight: FontWeight.w600),
             headline2: TextStyle(
-                fontSize: 14.sp,
+                fontSize: 10.sp,
                 fontWeight: FontWeight.w300,
                 color: Colors.black87,
                 fontFamily: 'Raleway'),
             bodyText1: TextStyle(
-                fontSize: 12.sp,
+                fontSize: 10.sp,
                 color: Colors.black87,
                 fontFamily: 'Raleway',
                 fontWeight: FontWeight.w700),
             bodyText2: TextStyle(
-                fontSize: 12.sp,
+                fontSize: 10.sp,
                 height: 1.3,
                 color: Colors.black87,
                 fontWeight: FontWeight.w300),
             button: TextStyle(
-                fontSize: 14.sp,
+                fontSize: 10.sp,
                 color: Colors.black87,
                 fontWeight: FontWeight.w700),
           ),

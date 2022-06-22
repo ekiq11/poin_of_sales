@@ -34,23 +34,27 @@ class _HalamanUtamaState extends State<HalamanUtama> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Center(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text('Roti Dua Delima', style: TextStyle(fontSize: 12.sp)),
-              Text('$username - ${widget.idUser}',
-                  style: TextStyle(fontSize: 12.sp)),
-            ],
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(30.sp),
+        child: AppBar(
+          automaticallyImplyLeading: false,
+          title: Center(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text('Roti Dua Delima', style: TextStyle(fontSize: 10.sp)),
+                Text('$username - ${widget.idUser}',
+                    style: TextStyle(fontSize: 10.sp)),
+              ],
+            ),
           ),
+          //shadow
+          elevation: 0,
+          //back button
         ),
-        //shadow
-        elevation: 0,
-        //back button
       ),
       body: GridView.count(
-        childAspectRatio: (3 / 4),
+        childAspectRatio: (3 / 3.4),
         crossAxisCount: 3,
         children: [
           InkWell(
@@ -110,7 +114,15 @@ class CustomCard extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Card(
-        elevation: 0,
+        elevation: 3,
+        clipBehavior: Clip.antiAliasWithSaveLayer,
+        shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(20.0),
+          topRight: Radius.circular(20.0),
+          bottomRight: Radius.circular(20.0),
+          bottomLeft: Radius.circular(20.0),
+        )),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
@@ -120,7 +132,7 @@ class CustomCard extends StatelessWidget {
             ),
             Text(
               title.toString(),
-              style: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.w500),
+              style: TextStyle(fontSize: 10.sp, fontWeight: FontWeight.w500),
             ),
           ],
         ),

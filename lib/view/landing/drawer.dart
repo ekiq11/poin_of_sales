@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:sizer/sizer.dart';
 import '../report/laporan_bulanan.dart';
 import '../report/laporan_harian.dart';
 import '../report/laporan_kemarin.dart';
@@ -134,7 +135,7 @@ class _DrawerFlutterState extends State<DrawerFlutter> {
             child: Center(
               child: Text(
                 "Laporan Penjualan",
-                style: TextStyle(fontSize: 30.0),
+                style: TextStyle(fontSize: 12.sp),
               ),
             ),
           ),
@@ -143,7 +144,8 @@ class _DrawerFlutterState extends State<DrawerFlutter> {
               Icons.calendar_today_rounded,
               color: Colors.black87,
             ),
-            title: Text("Hari Ini"),
+            title: Text("Hari Ini",
+                style: TextStyle(fontSize: 10.sp, fontWeight: FontWeight.w400)),
             onTap: () {
               Navigator.pushReplacement(
                 context,
@@ -155,7 +157,8 @@ class _DrawerFlutterState extends State<DrawerFlutter> {
           ),
           ListTile(
             trailing: Icon(Icons.calendar_view_day, color: Colors.black87),
-            title: Text("Kemarin"),
+            title: Text("Kemarin",
+                style: TextStyle(fontSize: 10.sp, fontWeight: FontWeight.w400)),
             onTap: () {
               Navigator.pushReplacement(
                 context,
@@ -167,7 +170,8 @@ class _DrawerFlutterState extends State<DrawerFlutter> {
           ),
           ListTile(
             trailing: Icon(Icons.calendar_view_week, color: Colors.black87),
-            title: Text("7 Hari"),
+            title: Text("7 Hari",
+                style: TextStyle(fontSize: 10.sp, fontWeight: FontWeight.w400)),
             onTap: () {
               Navigator.pushReplacement(
                 context,
@@ -180,7 +184,8 @@ class _DrawerFlutterState extends State<DrawerFlutter> {
           ListTile(
             trailing:
                 Icon(Icons.calendar_month_outlined, color: Colors.black87),
-            title: Text("Bulan Ini"),
+            title: Text("Bulan Ini",
+                style: TextStyle(fontSize: 10.sp, fontWeight: FontWeight.w400)),
             onTap: () {
               Navigator.pushReplacement(
                 context,
@@ -193,7 +198,8 @@ class _DrawerFlutterState extends State<DrawerFlutter> {
           ListTile(
             trailing:
                 Icon(Icons.calendar_month_outlined, color: Colors.black87),
-            title: Text("30 Hari"),
+            title: Text("30 Hari",
+                style: TextStyle(fontSize: 10.sp, fontWeight: FontWeight.w400)),
             onTap: () {
               Navigator.pushReplacement(
                 context,
@@ -214,7 +220,8 @@ class _DrawerFlutterState extends State<DrawerFlutter> {
             trailing: isVisible == false
                 ? Icon(Icons.arrow_drop_down_outlined, color: Colors.black87)
                 : Icon(Icons.arrow_drop_up_outlined, color: Colors.black87),
-            title: Text("Laporan Periode"),
+            title: Text("Laporan Periode",
+                style: TextStyle(fontSize: 10.sp, fontWeight: FontWeight.w400)),
           ),
           Visibility(
             visible: isVisible,
@@ -233,8 +240,8 @@ class _DrawerFlutterState extends State<DrawerFlutter> {
                         await showDatePicker(
                           context: context,
                           initialDate: DateTime.now(),
-                          firstDate: DateTime(2015),
-                          lastDate: DateTime(2025),
+                          firstDate: DateTime(2022),
+                          lastDate: DateTime(2030),
                         ).then((selectedDate) {
                           if (selectedDate != null) {
                             daritglController.text =
@@ -263,8 +270,8 @@ class _DrawerFlutterState extends State<DrawerFlutter> {
                         await showDatePicker(
                           context: context,
                           initialDate: DateTime.now(),
-                          firstDate: DateTime(2015),
-                          lastDate: DateTime(2025),
+                          firstDate: DateTime(2022),
+                          lastDate: DateTime(2030),
                         ).then((selectedDate) {
                           if (selectedDate != null) {
                             smptglController.text =
@@ -284,7 +291,7 @@ class _DrawerFlutterState extends State<DrawerFlutter> {
                         alignment: Alignment.center,
                         decoration: BoxDecoration(
                           borderRadius: const BorderRadius.all(
-                            Radius.circular(5),
+                            Radius.circular(50.0),
                           ),
                           boxShadow: <BoxShadow>[
                             BoxShadow(

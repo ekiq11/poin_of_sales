@@ -2,12 +2,13 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:poin_of_sales/view/landing/drawer.dart';
+import 'package:sizer/sizer.dart';
 import '../../../api/api.dart';
 import '../../../model/currency_format.dart';
 import '../../../model/detail/model_detail_lap_harian.dart';
 
 class DetLapHarian extends StatefulWidget {
-  const DetLapHarian({Key? key}) : super(key: key);
+  DetLapHarian({Key? key}) : super(key: key);
 
   @override
   State<DetLapHarian> createState() => _DetLapHarianState();
@@ -27,32 +28,41 @@ class _DetLapHarianState extends State<DetLapHarian> {
   Widget build(BuildContext context) {
     return Scaffold(
       //buat Appbar
-      appBar: AppBar(
-        title: Row(
-          // ignore: prefer_const_literals_to_create_immutables
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text("Detail Laporan Hari Ini"),
-            ElevatedButton(
-              onPressed: () async {
-                Navigator.pop(context);
-              },
-              style: ElevatedButton.styleFrom(
-                primary: Colors.black87,
-              ),
-              child: Row(
-                children: const [
-                  Padding(
-                    padding: EdgeInsets.only(right: 25.0),
-                    child: Icon(Icons.arrow_back, color: Colors.amber),
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(30.sp),
+        child: AppBar(
+          title: Row(
+            // ignore: prefer__literals_to_create_immutables
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text("Detail Laporan Hari Ini",
+                  style: TextStyle(fontSize: 10.sp)),
+              ElevatedButton(
+                onPressed: () async {
+                  Navigator.pop(context);
+                },
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.black87,
+                  onPrimary: Colors.amber,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(50.0),
                   ),
-                  Text("Kembali", style: TextStyle(color: Colors.amber)),
-                ],
+                ),
+                child: Row(
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.only(right: 25.0),
+                      child: Icon(Icons.arrow_back, color: Colors.amber),
+                    ),
+                    Text("Kembali",
+                        style: TextStyle(color: Colors.amber, fontSize: 10.sp)),
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
+          elevation: 0,
         ),
-        elevation: 0,
       ),
       //buatkan drawer
       drawer: DrawerFlutter(),
@@ -66,21 +76,21 @@ class _DetLapHarianState extends State<DetLapHarian> {
                 children: [
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
-                    children: const [
+                    children: [
                       Center(
                         child: FittedBox(
                           fit: BoxFit.scaleDown,
                           child: Text(
                             "Detail Laporan Hari Ini",
                             style: TextStyle(
-                                fontSize: 24.0, fontWeight: FontWeight.w600),
+                                fontSize: 12.sp, fontWeight: FontWeight.w600),
                           ),
                         ),
                       ),
                       Text(
                         "Berikut adalah laporan selama satu bulan terakhir",
                         style: TextStyle(
-                            fontSize: 16.0, fontWeight: FontWeight.w400),
+                            fontSize: 10.sp, fontWeight: FontWeight.w400),
                       ),
                       Padding(
                         padding: EdgeInsets.only(top: 15.0),
@@ -109,12 +119,12 @@ class _DetLapHarianState extends State<DetLapHarian> {
                                                   (states) => Colors.amber),
                                           sortColumnIndex: 1,
                                           sortAscending: true,
-                                          columns: const <DataColumn>[
+                                          columns: <DataColumn>[
                                             DataColumn(
                                               label: Text(
                                                 "Nama ",
                                                 style: TextStyle(
-                                                    fontSize: 20.0,
+                                                    fontSize: 10.sp,
                                                     fontWeight:
                                                         FontWeight.w600),
                                               ),
@@ -123,7 +133,7 @@ class _DetLapHarianState extends State<DetLapHarian> {
                                               label: Text(
                                                 "Jenis ",
                                                 style: TextStyle(
-                                                    fontSize: 20.0,
+                                                    fontSize: 10.sp,
                                                     fontWeight:
                                                         FontWeight.w600),
                                               ),
@@ -132,7 +142,16 @@ class _DetLapHarianState extends State<DetLapHarian> {
                                               label: Text(
                                                 "Qty ",
                                                 style: TextStyle(
-                                                    fontSize: 20.0,
+                                                    fontSize: 10.sp,
+                                                    fontWeight:
+                                                        FontWeight.w600),
+                                              ),
+                                            ),
+                                            DataColumn(
+                                              label: Text(
+                                                "No Transaksi ",
+                                                style: TextStyle(
+                                                    fontSize: 10.sp,
                                                     fontWeight:
                                                         FontWeight.w600),
                                               ),
@@ -141,7 +160,7 @@ class _DetLapHarianState extends State<DetLapHarian> {
                                               label: Text(
                                                 "Total (Rp)",
                                                 style: TextStyle(
-                                                    fontSize: 20.0,
+                                                    fontSize: 10.sp,
                                                     fontWeight:
                                                         FontWeight.w600),
                                               ),
@@ -153,11 +172,31 @@ class _DetLapHarianState extends State<DetLapHarian> {
                                                 cells: <DataCell>[
                                                   DataCell(
                                                     SizedBox(
-                                                      width: 250,
+                                                      width: 150,
                                                       child: Text(
                                                         "${e.barang}",
                                                         style: TextStyle(
-                                                            fontSize: 20.0),
+                                                            fontSize: 10.sp),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  DataCell(
+                                                    SizedBox(
+                                                      width: 150,
+                                                      child: Text(
+                                                        "${e.jenis}",
+                                                        style: TextStyle(
+                                                            fontSize: 10.sp),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  DataCell(
+                                                    SizedBox(
+                                                      width: 50,
+                                                      child: Text(
+                                                        " ${e.banyak}",
+                                                        style: TextStyle(
+                                                            fontSize: 10.sp),
                                                       ),
                                                     ),
                                                   ),
@@ -165,29 +204,19 @@ class _DetLapHarianState extends State<DetLapHarian> {
                                                     SizedBox(
                                                       width: 200,
                                                       child: Text(
-                                                        "${e.jenis}",
+                                                        " ${e.no_transaksi}",
                                                         style: TextStyle(
-                                                            fontSize: 20.0),
+                                                            fontSize: 10.sp),
                                                       ),
                                                     ),
                                                   ),
                                                   DataCell(
                                                     SizedBox(
-                                                      width: 170,
-                                                      child: Text(
-                                                        " ${e.banyak}",
-                                                        style: TextStyle(
-                                                            fontSize: 20.0),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  DataCell(
-                                                    SizedBox(
-                                                      width: 180,
+                                                      width: 200,
                                                       child: Text(
                                                         " ${CurrencyFormat.convertToIdr(int.parse(e.total), 2)}",
                                                         style: TextStyle(
-                                                            fontSize: 20.0),
+                                                            fontSize: 10.sp),
                                                       ),
                                                     ),
                                                   ),
@@ -200,11 +229,11 @@ class _DetLapHarianState extends State<DetLapHarian> {
                                     ),
                                     Divider(),
                                     Padding(
-                                      padding: const EdgeInsets.all(15.0),
+                                      padding: EdgeInsets.all(15.0),
                                       child: Text(
                                         "Total : ${CurrencyFormat.convertToIdr(snapshot.data.map((e) => int.parse(e.total)).reduce((a, b) => a + b), 2)}",
                                         style: TextStyle(
-                                            fontSize: 20.0,
+                                            fontSize: 10.sp,
                                             fontWeight: FontWeight.w600),
                                       ),
                                     ),
@@ -214,10 +243,10 @@ class _DetLapHarianState extends State<DetLapHarian> {
                       } else {
                         return Column(
                           mainAxisAlignment: MainAxisAlignment.center,
-                          children: const [
+                          children: [
                             Center(
                               child: Padding(
-                                padding: EdgeInsets.all(20.0),
+                                padding: EdgeInsets.all(10.sp),
                                 child: Image(
                                   image: AssetImage("asset/icon/no_data.png"),
                                   width: 100,
@@ -226,7 +255,7 @@ class _DetLapHarianState extends State<DetLapHarian> {
                             ),
                             Text("Tidak Ada Transaksi",
                                 style: TextStyle(
-                                  fontSize: 20.0,
+                                  fontSize: 10.sp,
                                 )),
                           ],
                         );

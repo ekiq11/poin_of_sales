@@ -31,7 +31,7 @@ class BottomButtons extends StatelessWidget {
           ? [
               Expanded(
                 child: Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.all(10.0),
                   child: ConstrainedBox(
                     constraints: const BoxConstraints(
                       maxHeight: 50.0,
@@ -39,7 +39,6 @@ class BottomButtons extends StatelessWidget {
                     child: InkWell(
                       child: Container(
                         width: MediaQuery.of(context).size.width,
-                        padding: const EdgeInsets.symmetric(vertical: 10),
                         alignment: Alignment.center,
                         decoration: BoxDecoration(
                             borderRadius:
@@ -60,10 +59,8 @@ class BottomButtons extends StatelessWidget {
                                 ])),
                         child: Text(
                           'G e t   S t a r t e d',
-                          style: TextStyle(
-                              fontSize: 14.sp,
-                              fontWeight: FontWeight.w600,
-                              color: Colors.white),
+                          style:
+                              TextStyle(fontSize: 10.sp, color: Colors.white),
                         ),
                       ),
                       onTap: () {

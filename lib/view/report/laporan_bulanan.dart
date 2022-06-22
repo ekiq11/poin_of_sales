@@ -1,10 +1,11 @@
-// ignore_for_file: use_key_in_widget_constructors, use_build_context_synchronously
+// ignore_for_file: use_key_in_widget_ructors, use_build_context_synchronously
 
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:poin_of_sales/view/landing/drawer.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:sizer/sizer.dart';
 import '../../api/api.dart';
 import '../../model/currency_format.dart';
 import '../../model/model_lap_bulanan.dart';
@@ -12,7 +13,7 @@ import '../home.dart';
 import 'detail/detail_lap_bulanan.dart';
 
 class LaporanBulanan extends StatefulWidget {
-  const LaporanBulanan({Key? key}) : super(key: key);
+  LaporanBulanan({Key? key}) : super(key: key);
   @override
   State<LaporanBulanan> createState() => _LaporanBulananState();
 }
@@ -32,9 +33,15 @@ class _LaporanBulananState extends State<LaporanBulanan> {
   Widget build(BuildContext context) {
     return Scaffold(
       //buat Appbar
-      appBar: AppBar(
-        title: Text("Laporan Bulanan"),
-        elevation: 0,
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(30.sp),
+        child: AppBar(
+          title: Text(
+            "Laporan Bulanan",
+            style: TextStyle(fontSize: 10.sp),
+          ),
+          elevation: 0,
+        ),
       ),
       //buatkan drawer
       drawer: DrawerFlutter(),
@@ -58,30 +65,31 @@ class _LaporanBulananState extends State<LaporanBulanan> {
 
           //print("username: ${widget.username!}");
         },
-        label: const Text('Home'),
-        icon: const Icon(Icons.home),
+        label: Text('Home', style: TextStyle(fontSize: 10.sp)),
+        icon: Icon(Icons.home),
         backgroundColor: Colors.amber,
       ),
       body: Stack(
         children: [
           Padding(
-            padding: const EdgeInsets.only(top: 15.0),
+            padding: EdgeInsets.only(top: 15.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
-              children: const [
+              children: [
                 Center(
                   child: FittedBox(
                     fit: BoxFit.scaleDown,
                     child: Text(
                       "Laporan Bulanan",
                       style: TextStyle(
-                          fontSize: 24.0, fontWeight: FontWeight.w600),
+                          fontSize: 12.sp, fontWeight: FontWeight.w600),
                     ),
                   ),
                 ),
                 Text(
                   "Berikut adalah laporan selama satu bulan terakhir",
-                  style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.w400),
+                  style:
+                      TextStyle(fontSize: 10.sp, fontWeight: FontWeight.w400),
                 ),
                 Padding(
                   padding: EdgeInsets.only(top: 15.0),
@@ -108,12 +116,12 @@ class _LaporanBulananState extends State<LaporanBulanan> {
                                   (states) => Colors.amber),
                               sortColumnIndex: 1,
                               sortAscending: true,
-                              columns: const <DataColumn>[
+                              columns: <DataColumn>[
                                 DataColumn(
                                   label: Text(
                                     "Total Penjualan ",
                                     style: TextStyle(
-                                        fontSize: 20.0,
+                                        fontSize: 10.sp,
                                         fontWeight: FontWeight.w600),
                                   ),
                                 ),
@@ -121,7 +129,7 @@ class _LaporanBulananState extends State<LaporanBulanan> {
                                   label: Text(
                                     "Total Transaksi ",
                                     style: TextStyle(
-                                        fontSize: 20.0,
+                                        fontSize: 10.sp,
                                         fontWeight: FontWeight.w600),
                                   ),
                                 ),
@@ -129,7 +137,7 @@ class _LaporanBulananState extends State<LaporanBulanan> {
                                   label: Text(
                                     "Rata-Rata ",
                                     style: TextStyle(
-                                        fontSize: 20.0,
+                                        fontSize: 10.sp,
                                         fontWeight: FontWeight.w600),
                                   ),
                                 ),
@@ -137,7 +145,7 @@ class _LaporanBulananState extends State<LaporanBulanan> {
                                   label: Text(
                                     "Aksi",
                                     style: TextStyle(
-                                        fontSize: 20.0,
+                                        fontSize: 10.sp,
                                         fontWeight: FontWeight.w600),
                                   ),
                                 ),
@@ -150,7 +158,7 @@ class _LaporanBulananState extends State<LaporanBulanan> {
                                         width: 300,
                                         child: Text(
                                           " ${CurrencyFormat.convertToIdr(int.parse(e.totalTransaksi), 2)}",
-                                          style: TextStyle(fontSize: 20.0),
+                                          style: TextStyle(fontSize: 10.sp),
                                         ),
                                       ),
                                     ),
@@ -159,7 +167,7 @@ class _LaporanBulananState extends State<LaporanBulanan> {
                                         width: 200,
                                         child: Text(
                                           "${e.totalPenjualan}",
-                                          style: TextStyle(fontSize: 20.0),
+                                          style: TextStyle(fontSize: 10.sp),
                                         ),
                                       ),
                                     ),
@@ -168,7 +176,7 @@ class _LaporanBulananState extends State<LaporanBulanan> {
                                         width: 250,
                                         child: Text(
                                           " ${CurrencyFormat.convertToIdr(int.parse(e.rataRata), 2)}",
-                                          style: TextStyle(fontSize: 20.0),
+                                          style: TextStyle(fontSize: 10.sp),
                                         ),
                                       ),
                                     ),
@@ -198,10 +206,10 @@ class _LaporanBulananState extends State<LaporanBulanan> {
               } else {
                 return Column(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: const [
+                  children: [
                     Center(
                       child: Padding(
-                        padding: EdgeInsets.all(20.0),
+                        padding: EdgeInsets.all(10.sp),
                         child: Image(
                           image: AssetImage("asset/icon/no_data.png"),
                           width: 100,
@@ -210,7 +218,7 @@ class _LaporanBulananState extends State<LaporanBulanan> {
                     ),
                     Text("Tidak Ada Transaksi",
                         style: TextStyle(
-                          fontSize: 20.0,
+                          fontSize: 10.sp,
                         )),
                   ],
                 );

@@ -2,12 +2,13 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:poin_of_sales/view/landing/drawer.dart';
+import 'package:sizer/sizer.dart';
 import '../../../api/api.dart';
 import '../../../model/currency_format.dart';
 import '../../../model/detail/model_detail_lap_tiga_puluh_hari.dart';
 
 class DetLapTigaPuluhHari extends StatefulWidget {
-  const DetLapTigaPuluhHari({Key? key}) : super(key: key);
+  DetLapTigaPuluhHari({Key? key}) : super(key: key);
 
   @override
   State<DetLapTigaPuluhHari> createState() => _DetLapTigaPuluhHariState();
@@ -29,31 +30,39 @@ class _DetLapTigaPuluhHariState extends State<DetLapTigaPuluhHari> {
   Widget build(BuildContext context) {
     return Scaffold(
       //buat Appbar
-      appBar: AppBar(
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text("Detail Laporan Tiga Puluh Hari"),
-            ElevatedButton(
-              onPressed: () async {
-                Navigator.pop(context);
-              },
-              style: ElevatedButton.styleFrom(
-                primary: Colors.black87,
-              ),
-              child: Row(
-                children: const [
-                  Padding(
-                    padding: EdgeInsets.only(right: 25.0),
-                    child: Icon(Icons.arrow_back, color: Colors.amber),
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(30.sp),
+        child: AppBar(
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text("Detail Laporan Tiga Puluh Hari"),
+              ElevatedButton(
+                onPressed: () async {
+                  Navigator.pop(context);
+                },
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.black87,
+                  onPrimary: Colors.amber,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(50.0),
                   ),
-                  Text("Kembali", style: TextStyle(color: Colors.amber)),
-                ],
+                ),
+                child: Row(
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.only(right: 25.0),
+                      child: Icon(Icons.arrow_back, color: Colors.amber),
+                    ),
+                    Text("Kembali",
+                        style: TextStyle(color: Colors.amber, fontSize: 10.sp)),
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
+          elevation: 0,
         ),
-        elevation: 0,
       ),
       //buatkan drawer
       drawer: DrawerFlutter(),
@@ -66,24 +75,24 @@ class _DetLapTigaPuluhHariState extends State<DetLapTigaPuluhHari> {
               child: Column(
                 children: [
                   Padding(
-                    padding: const EdgeInsets.only(top: 15.0),
+                    padding: EdgeInsets.only(top: 15.0),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
-                      children: const [
+                      children: [
                         Center(
                           child: FittedBox(
                             fit: BoxFit.scaleDown,
                             child: Text(
                               "Detail Laporan Tiga Puluh Hari",
                               style: TextStyle(
-                                  fontSize: 24.0, fontWeight: FontWeight.w600),
+                                  fontSize: 12.sp, fontWeight: FontWeight.w600),
                             ),
                           ),
                         ),
                         Text(
                           "Berikut adalah Detail laporan Selama (30) Tiga Puluh Hari",
                           style: TextStyle(
-                              fontSize: 16.0, fontWeight: FontWeight.w400),
+                              fontSize: 10.sp, fontWeight: FontWeight.w400),
                         ),
                         Padding(
                           padding: EdgeInsets.only(top: 15.0),
@@ -113,12 +122,12 @@ class _DetLapTigaPuluhHariState extends State<DetLapTigaPuluhHari> {
                                                   (states) => Colors.amber),
                                           sortColumnIndex: 1,
                                           sortAscending: true,
-                                          columns: const <DataColumn>[
+                                          columns: <DataColumn>[
                                             DataColumn(
                                               label: Text(
                                                 "Nama ",
                                                 style: TextStyle(
-                                                    fontSize: 20.0,
+                                                    fontSize: 10.sp,
                                                     fontWeight:
                                                         FontWeight.w600),
                                               ),
@@ -127,7 +136,7 @@ class _DetLapTigaPuluhHariState extends State<DetLapTigaPuluhHari> {
                                               label: Text(
                                                 "Jenis ",
                                                 style: TextStyle(
-                                                    fontSize: 20.0,
+                                                    fontSize: 10.sp,
                                                     fontWeight:
                                                         FontWeight.w600),
                                               ),
@@ -136,7 +145,16 @@ class _DetLapTigaPuluhHariState extends State<DetLapTigaPuluhHari> {
                                               label: Text(
                                                 "Qty ",
                                                 style: TextStyle(
-                                                    fontSize: 20.0,
+                                                    fontSize: 10.sp,
+                                                    fontWeight:
+                                                        FontWeight.w600),
+                                              ),
+                                            ),
+                                            DataColumn(
+                                              label: Text(
+                                                "No Transaksi ",
+                                                style: TextStyle(
+                                                    fontSize: 10.sp,
                                                     fontWeight:
                                                         FontWeight.w600),
                                               ),
@@ -145,7 +163,7 @@ class _DetLapTigaPuluhHariState extends State<DetLapTigaPuluhHari> {
                                               label: Text(
                                                 "Total (Rp)",
                                                 style: TextStyle(
-                                                    fontSize: 20.0,
+                                                    fontSize: 10.sp,
                                                     fontWeight:
                                                         FontWeight.w600),
                                               ),
@@ -157,11 +175,31 @@ class _DetLapTigaPuluhHariState extends State<DetLapTigaPuluhHari> {
                                                 cells: <DataCell>[
                                                   DataCell(
                                                     SizedBox(
-                                                      width: 250,
+                                                      width: 150,
                                                       child: Text(
                                                         "${e.barang}",
                                                         style: TextStyle(
-                                                            fontSize: 20.0),
+                                                            fontSize: 10.sp),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  DataCell(
+                                                    SizedBox(
+                                                      width: 150,
+                                                      child: Text(
+                                                        "${e.jenis}",
+                                                        style: TextStyle(
+                                                            fontSize: 10.sp),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  DataCell(
+                                                    SizedBox(
+                                                      width: 50,
+                                                      child: Text(
+                                                        " ${e.banyak}",
+                                                        style: TextStyle(
+                                                            fontSize: 10.sp),
                                                       ),
                                                     ),
                                                   ),
@@ -169,29 +207,19 @@ class _DetLapTigaPuluhHariState extends State<DetLapTigaPuluhHari> {
                                                     SizedBox(
                                                       width: 200,
                                                       child: Text(
-                                                        "${e.jenis}",
+                                                        " ${e.no_transaksi}",
                                                         style: TextStyle(
-                                                            fontSize: 20.0),
+                                                            fontSize: 10.sp),
                                                       ),
                                                     ),
                                                   ),
                                                   DataCell(
                                                     SizedBox(
-                                                      width: 170,
-                                                      child: Text(
-                                                        " ${e.banyak}",
-                                                        style: TextStyle(
-                                                            fontSize: 20.0),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  DataCell(
-                                                    SizedBox(
-                                                      width: 180,
+                                                      width: 200,
                                                       child: Text(
                                                         " ${CurrencyFormat.convertToIdr(int.parse(e.total), 2)}",
                                                         style: TextStyle(
-                                                            fontSize: 20.0),
+                                                            fontSize: 10.sp),
                                                       ),
                                                     ),
                                                   ),
@@ -204,11 +232,11 @@ class _DetLapTigaPuluhHariState extends State<DetLapTigaPuluhHari> {
                                     ),
                                     Divider(),
                                     Padding(
-                                      padding: const EdgeInsets.all(15.0),
+                                      padding: EdgeInsets.all(15.0),
                                       child: Text(
                                         "Total : ${CurrencyFormat.convertToIdr(snapshot.data.map((e) => int.parse(e.total)).reduce((a, b) => a + b), 2)}",
                                         style: TextStyle(
-                                            fontSize: 20.0,
+                                            fontSize: 10.sp,
                                             fontWeight: FontWeight.w600),
                                       ),
                                     ),
@@ -218,10 +246,10 @@ class _DetLapTigaPuluhHariState extends State<DetLapTigaPuluhHari> {
                       } else {
                         return Column(
                           mainAxisAlignment: MainAxisAlignment.center,
-                          children: const [
+                          children: [
                             Center(
                               child: Padding(
-                                padding: EdgeInsets.all(20.0),
+                                padding: EdgeInsets.all(10.sp),
                                 child: Image(
                                   image: AssetImage("asset/icon/no_data.png"),
                                   width: 100,
@@ -230,7 +258,7 @@ class _DetLapTigaPuluhHariState extends State<DetLapTigaPuluhHari> {
                             ),
                             Text("Tidak Ada Transaksi",
                                 style: TextStyle(
-                                  fontSize: 20.0,
+                                  fontSize: 10.sp,
                                 )),
                           ],
                         );
