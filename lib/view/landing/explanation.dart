@@ -65,7 +65,7 @@ class ExplanationPage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              Container(
+              SizedBox(
                 width: mediaQueryWidth * 0.5,
                 child: Text(
                   data!.description.toString(),

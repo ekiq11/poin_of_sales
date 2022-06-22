@@ -1,4 +1,4 @@
-// ignore_for_file: unrelated_type_equality_checks, use_build_context_synchronously, avoid_print
+// ignore_for_file: unrelated_type_equality_checks, use_build_context_synchronously, avoid_print, prefer_interpolation_to_compose_strings, duplicate_ignore, unused_local_variable
 
 import 'dart:convert';
 import 'package:flutter/material.dart';

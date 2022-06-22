@@ -1,4 +1,4 @@
-// ignore_for_file: sort_child_properties_last, use_build_context_synchronously, unused_local_variable, empty_catches
+// ignore_for_file: sort_child_properties_last, use_build_context_synchronously, unused_local_variable, empty_catches, avoid_print, duplicate_ignore, avoid_unnecessary_containers
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:poin_of_sales/api/api.dart';
@@ -133,7 +133,7 @@ class _LoginPageState extends State<LoginPage> {
       onWillPop: _onWillPop,
       child: Scaffold(
           body: SingleChildScrollView(
-              child: Container(
+              child: SizedBox(
         height: MediaQuery.of(context).size.height,
         child: Stack(
           children: <Widget>[

@@ -85,7 +85,7 @@ class _DetLapTigaPuluhHariState extends State<DetLapTigaPuluhHari> {
                             child: Text(
                               "Detail Laporan Tiga Puluh Hari",
                               style: TextStyle(
-                                  fontSize: 12.sp, fontWeight: FontWeight.w600),
+                                  fontSize: 10.sp, fontWeight: FontWeight.w600),
                             ),
                           ),
                         ),

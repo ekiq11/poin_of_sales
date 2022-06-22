@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors_in_immutables
+
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
@@ -83,7 +85,7 @@ class _DetLapKemarinState extends State<DetLapKemarin> {
                             child: Text(
                               "Detail Laporan Kemarin",
                               style: TextStyle(
-                                  fontSize: 12.sp, fontWeight: FontWeight.w600),
+                                  fontSize: 10.sp, fontWeight: FontWeight.w600),
                             ),
                           ),
                         ),

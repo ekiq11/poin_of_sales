@@ -1,4 +1,4 @@
-// ignore_for_file: use_key_in_widget_ructors, use_build_context_synchronously
+// ignore_for_file: use_key_in_widget_ructors, use_build_context_synchronously, prefer_const_constructors_in_immutables
 
 import 'dart:convert';
 import 'package:http/http.dart' as http;
@@ -94,7 +94,7 @@ class _LaporanHarianState extends State<LaporanHarian> {
                     child: Text(
                       "Laporan Hari Ini",
                       style: TextStyle(
-                          fontSize: 12.sp, fontWeight: FontWeight.w600),
+                          fontSize: 10.sp, fontWeight: FontWeight.w600),
                     ),
                   ),
                 ),

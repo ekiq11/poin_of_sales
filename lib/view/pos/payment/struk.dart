@@ -1,4 +1,4 @@
-// ignore_for_file: must_be_immutable, use_key_in_widget_constructors, unrelated_type_equality_checks, use_build_context_synchronously
+// ignore_for_file: must_be_immutable, use_key_in_widget_constructors, unrelated_type_equality_checks, use_build_context_synchronously, avoid_print, unused_local_variable
 
 import 'dart:convert';
 import 'dart:io';
@@ -184,7 +184,7 @@ class _StrukState extends State<Struk> {
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
                                           children: [
-                                            Container(
+                                            SizedBox(
                                               height: mediaQueryHeight * 0.13,
                                               child:
                                                   FutureBuilder<List<dynamic>>(
