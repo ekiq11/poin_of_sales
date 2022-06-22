@@ -205,7 +205,7 @@ class _DetLapBulananState extends State<DetLapBulanan> {
                                                   ),
                                                   DataCell(
                                                     SizedBox(
-                                                      width: 200,
+                                                      width: 150,
                                                       child: Text(
                                                         " ${e.no_transaksi}",
                                                         style: TextStyle(
@@ -215,7 +215,7 @@ class _DetLapBulananState extends State<DetLapBulanan> {
                                                   ),
                                                   DataCell(
                                                     SizedBox(
-                                                      width: 200,
+                                                      width: 150,
                                                       child: Text(
                                                         " ${CurrencyFormat.convertToIdr(int.parse(e.total), 2)}",
                                                         style: TextStyle(

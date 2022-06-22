@@ -80,12 +80,15 @@ class _DetLapHarianState extends State<DetLapHarian> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Center(
-                        child: FittedBox(
-                          fit: BoxFit.scaleDown,
-                          child: Text(
-                            "Detail Laporan Hari Ini",
-                            style: TextStyle(
-                                fontSize: 10.sp, fontWeight: FontWeight.w600),
+                        child: Padding(
+                          padding: EdgeInsets.only(top: 15.0),
+                          child: FittedBox(
+                            fit: BoxFit.scaleDown,
+                            child: Text(
+                              "Detail Laporan Hari Ini",
+                              style: TextStyle(
+                                  fontSize: 10.sp, fontWeight: FontWeight.w600),
+                            ),
                           ),
                         ),
                       ),
@@ -204,7 +207,7 @@ class _DetLapHarianState extends State<DetLapHarian> {
                                                   ),
                                                   DataCell(
                                                     SizedBox(
-                                                      width: 200,
+                                                      width: 150,
                                                       child: Text(
                                                         " ${e.no_transaksi}",
                                                         style: TextStyle(
@@ -214,7 +217,7 @@ class _DetLapHarianState extends State<DetLapHarian> {
                                                   ),
                                                   DataCell(
                                                     SizedBox(
-                                                      width: 200,
+                                                      width: 150,
                                                       child: Text(
                                                         " ${CurrencyFormat.convertToIdr(int.parse(e.total), 2)}",
                                                         style: TextStyle(
