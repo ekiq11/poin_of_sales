@@ -479,7 +479,7 @@ class _PoinOfSaleState extends State<PoinOfSale> {
                                                 int index) {
                                               return Container(
                                                 height: mediaQueryHeight *
-                                                    0.1, //set your height here
+                                                    0.09, //set your height here
                                                 width: double
                                                     .maxFinite, //set your width here
                                                 decoration: BoxDecoration(
