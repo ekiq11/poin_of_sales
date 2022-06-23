@@ -7,6 +7,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:sizer/sizer.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 class LoginPage extends StatefulWidget {
   // ignore: prefer_const_constructors_in_immutables
@@ -28,7 +31,16 @@ class _LoginPageState extends State<LoginPage> {
     setState(() {
       visible = true;
     });
-
+    var connectivityResult = await (Connectivity().checkConnectivity());
+    if (connectivityResult != ConnectivityResult.mobile &&
+        connectivityResult != ConnectivityResult.wifi) {
+      showTopSnackBar(
+        context,
+        CustomSnackBar.error(
+          message: "Terjadi kesalahan, cek koneksi internet anda !",
+        ),
+      );
+    }
     // print(params);
     if (userNameController.text.isNotEmpty &&
         passwordController.text.isNotEmpty) {
@@ -71,20 +83,63 @@ class _LoginPageState extends State<LoginPage> {
             //alertdialog
             showDialog(
               context: context,
-              builder: (BuildContext context) {
-                return AlertDialog(
-                  title: const Text("Login Gagal"),
-                  content: const Text("Username atau Password Salah"),
-                  actions: <Widget>[
-                    TextButton(
-                      child: const Text("OK"),
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                      },
-                    )
-                  ],
-                );
-              },
+              builder: (_) => Dialog(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(4)),
+                child: SizedBox(
+                  height: 300,
+                  width: 300,
+                  child: Column(
+                    children: [
+                      Expanded(
+                        child: Container(
+                          color: Colors.white70,
+                          child: Icon(
+                            Icons.password_rounded,
+                            size: 60,
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        child: Container(
+                          color: Colors.redAccent,
+                          child: SizedBox.expand(
+                            child: Padding(
+                              padding: const EdgeInsets.all(15.0),
+                              child: Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    "Username dan password salah",
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                    ),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(
+                                            50), // <-- Radius
+                                      ),
+                                      primary: Colors.white,
+                                    ),
+                                    child: Text('Ok',
+                                        style: TextStyle(fontSize: 10.sp)),
+                                    onPressed: () =>
+                                        {Navigator.of(context).pop()},
+                                  )
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              ),
             );
           }
         }
@@ -98,20 +153,60 @@ class _LoginPageState extends State<LoginPage> {
       //alertdialog
       showDialog(
         context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: const Text("Login Gagal"),
-            content: const Text("Username atau Password Tidak Boleh Kosong!"),
-            actions: <Widget>[
-              TextButton(
-                child: const Text("OK"),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-              )
-            ],
-          );
-        },
+        builder: (_) => Dialog(
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
+          child: SizedBox(
+            height: 300,
+            width: 300,
+            child: Column(
+              children: [
+                Expanded(
+                  child: Container(
+                    color: Colors.white70,
+                    child: Icon(
+                      Icons.password_rounded,
+                      size: 60,
+                    ),
+                  ),
+                ),
+                Expanded(
+                  child: Container(
+                    color: Colors.redAccent,
+                    child: SizedBox.expand(
+                      child: Padding(
+                        padding: const EdgeInsets.all(15.0),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              "Username dan password kosong !",
+                              style: TextStyle(
+                                color: Colors.white,
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                            ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius:
+                                      BorderRadius.circular(50), // <-- Radius
+                                ),
+                                primary: Colors.white,
+                              ),
+                              child:
+                                  Text('Ok', style: TextStyle(fontSize: 10.sp)),
+                              onPressed: () => {Navigator.of(context).pop()},
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                )
+              ],
+            ),
+          ),
+        ),
       );
     }
   }

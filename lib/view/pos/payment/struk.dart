@@ -68,32 +68,93 @@ class _StrukState extends State<Struk> {
   Future<bool> _onWillPop() async {
     return (await showDialog(
           context: context,
-          builder: (context) => AlertDialog(
-            title: Text('Warning !'),
-            content: Text('Selesaikan transaksi terlebih dahulu'),
-            actions: <Widget>[
-              TextButton(
-                onPressed: () async {
-                  SystemChrome.setPreferredOrientations([
-                    DeviceOrientation.landscapeLeft,
-                    DeviceOrientation.landscapeRight
-                  ]);
-                  final res = await http.get(
-                    Uri.parse(BaseURL.selesaibelanja),
-                  );
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(builder: (context) => const PoinOfSale()),
-                  );
-                }, //<-- SEE HERE
-                child: Text('Ya'),
+          builder: (_) => Dialog(
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
+            child: SizedBox(
+              height: 230,
+              width: 300,
+              child: Column(
+                children: [
+                  Expanded(
+                    child: Container(
+                      color: Colors.white70,
+                      child: Icon(
+                        Icons.warning_rounded,
+                        size: 60,
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    child: Container(
+                      color: Colors.redAccent,
+                      child: SizedBox.expand(
+                        child: Padding(
+                          padding: const EdgeInsets.all(15.0),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                "Selesaikan transaksi ?",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                ),
+                                textAlign: TextAlign.center,
+                              ),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(
+                                            50), // <-- Radius
+                                      ),
+                                      primary: Colors.white,
+                                    ),
+                                    child: Text('Tidak',
+                                        style: TextStyle(fontSize: 10.sp)),
+                                    onPressed: () =>
+                                        {Navigator.of(context).pop(false)},
+                                  ),
+                                  ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(
+                                            50), // <-- Radius
+                                      ),
+                                      primary: Colors.white,
+                                    ),
+                                    child: Text('Ya',
+                                        style: TextStyle(fontSize: 10.sp)),
+                                    onPressed: () async {
+                                      SystemChrome.setPreferredOrientations([
+                                        DeviceOrientation.landscapeLeft,
+                                        DeviceOrientation.landscapeRight
+                                      ]);
+                                      final res = await http.get(
+                                        Uri.parse(BaseURL.selesaibelanja),
+                                      );
+                                      Navigator.pushReplacement(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                const PoinOfSale()),
+                                      );
+                                    }, //<-- SEE HERE
+                                  ),
+                                ],
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  )
+                ],
               ),
-              TextButton(
-                onPressed: () =>
-                    Navigator.of(context).pop(false), // <-- SEE HERE
-                child: Text('Tidak'),
-              ),
-            ],
+            ),
           ),
         )) ??
         false;

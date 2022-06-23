@@ -1,4 +1,4 @@
-// ignore_for_file: unrelated_type_equality_checks, use_build_context_synchronously, avoid_print, prefer_interpolation_to_compose_strings, duplicate_ignore, unused_local_variable
+// ignore_for_file: unrelated_type_equality_checks, use_build_context_synchronously, avoid_print, prefer_interpolation_to_compose_strings, duplicate_ignore, unused_local_variable, sized_box_for_whitespace
 
 import 'dart:convert';
 import 'package:flutter/material.dart';
@@ -234,6 +234,105 @@ class _PaymentState extends State<Payment> {
                                     children: [
                                       OutlinedButton(
                                         onPressed: () {
+                                          showDialog(
+                                            context: context,
+                                            builder: (_) => Dialog(
+                                              shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(4)),
+                                              child: Container(
+                                                height: 230,
+                                                width: 300,
+                                                child: Column(
+                                                  children: [
+                                                    Expanded(
+                                                      child: Container(
+                                                          color: Colors.white70,
+                                                          child: Column(
+                                                            children: [
+                                                              Padding(
+                                                                  padding:
+                                                                      EdgeInsets
+                                                                          .only(
+                                                                              top: 10.0)),
+                                                              Image(
+                                                                  image: AssetImage(
+                                                                      "asset/image/sukses.png"),
+                                                                  width: 60),
+                                                              Text("Berhasil",
+                                                                  style: TextStyle(
+                                                                      fontSize:
+                                                                          10.sp))
+                                                            ],
+                                                          )),
+                                                    ),
+                                                    Expanded(
+                                                      child: Container(
+                                                        color: Color.fromARGB(
+                                                            255, 95, 183, 98),
+                                                        child: SizedBox.expand(
+                                                          child: Padding(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                    .all(15.0),
+                                                            child: Column(
+                                                              mainAxisAlignment:
+                                                                  MainAxisAlignment
+                                                                      .spaceBetween,
+                                                              children: [
+                                                                Text(
+                                                                  CurrencyFormat.convertToIdr(
+                                                                      int.parse(
+                                                                          snapshot.data[index]
+                                                                              [
+                                                                              'total_belanja']),
+                                                                      2),
+                                                                  style:
+                                                                      TextStyle(
+                                                                    fontSize:
+                                                                        10.sp,
+                                                                    color: Colors
+                                                                        .white,
+                                                                  ),
+                                                                  textAlign:
+                                                                      TextAlign
+                                                                          .center,
+                                                                ),
+                                                                ElevatedButton(
+                                                                  style: ElevatedButton
+                                                                      .styleFrom(
+                                                                    shape:
+                                                                        RoundedRectangleBorder(
+                                                                      borderRadius:
+                                                                          BorderRadius.circular(
+                                                                              50), // <-- Radius
+                                                                    ),
+                                                                    primary: Colors
+                                                                        .white,
+                                                                  ),
+                                                                  child: Text(
+                                                                      'O k e',
+                                                                      style: TextStyle(
+                                                                          fontSize:
+                                                                              10.sp)),
+                                                                  onPressed:
+                                                                      () => {
+                                                                    Navigator.of(
+                                                                            context)
+                                                                        .pop()
+                                                                  },
+                                                                )
+                                                              ],
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    )
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
+                                          );
                                           setState(() {
                                             kembali = false;
                                             nonTunai = true;
@@ -285,45 +384,187 @@ class _PaymentState extends State<Payment> {
                                                   ['total_belanja'])) {
                                             showDialog(
                                               context: context,
-                                              builder: (_) => AlertDialog(
-                                                title: Text('Warning'),
-                                                content:
-                                                    Text('Uang anda kurang'),
-                                                actions: <Widget>[
-                                                  TextButton(
-                                                    onPressed: () => Navigator
-                                                            .of(context)
-                                                        .pop(
-                                                            false), // <-- SEE HERE
-                                                    child: Text('Ya',
-                                                        style: TextStyle(
-                                                            color: Colors
-                                                                .black87)),
+                                              builder: (_) => Dialog(
+                                                shape: RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            4)),
+                                                child: Container(
+                                                  height: 210,
+                                                  width: 300,
+                                                  child: Column(
+                                                    children: [
+                                                      Expanded(
+                                                        child: Container(
+                                                          color: Colors.white70,
+                                                          child: Icon(
+                                                            Icons
+                                                                .account_balance_wallet,
+                                                            size: 60,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      Expanded(
+                                                        child: Container(
+                                                          color:
+                                                              Colors.redAccent,
+                                                          child:
+                                                              SizedBox.expand(
+                                                            child: Padding(
+                                                              padding:
+                                                                  const EdgeInsets
+                                                                          .all(
+                                                                      15.0),
+                                                              child: Column(
+                                                                mainAxisAlignment:
+                                                                    MainAxisAlignment
+                                                                        .spaceBetween,
+                                                                children: [
+                                                                  Text(
+                                                                    "Uang anda kurang !",
+                                                                    style:
+                                                                        TextStyle(
+                                                                      color: Colors
+                                                                          .white,
+                                                                    ),
+                                                                    textAlign:
+                                                                        TextAlign
+                                                                            .center,
+                                                                  ),
+                                                                  ElevatedButton(
+                                                                    style: ElevatedButton
+                                                                        .styleFrom(
+                                                                      shape:
+                                                                          RoundedRectangleBorder(
+                                                                        borderRadius:
+                                                                            BorderRadius.circular(50), // <-- Radius
+                                                                      ),
+                                                                      primary:
+                                                                          Colors
+                                                                              .white,
+                                                                    ),
+                                                                    child: Text(
+                                                                        'Ok',
+                                                                        style: TextStyle(
+                                                                            fontSize:
+                                                                                10.sp)),
+                                                                    onPressed:
+                                                                        () => {
+                                                                      Navigator.of(
+                                                                              context)
+                                                                          .pop()
+                                                                    },
+                                                                  )
+                                                                ],
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      )
+                                                    ],
                                                   ),
-                                                ],
+                                                ),
                                               ),
                                             );
                                           } else {
                                             showDialog(
-                                                context: context,
-                                                builder: (_) => AlertDialog(
-                                                      title: Text('Warning'),
-                                                      content: Text(
-                                                          'Jumlah uang Rp. 50.000'),
-                                                      actions: <Widget>[
-                                                        TextButton(
-                                                          onPressed: () =>
-                                                              Navigator.of(
-                                                                      context)
-                                                                  .pop(
-                                                                      false), // <-- SEE HERE
-                                                          child: Text('Ya',
-                                                              style: TextStyle(
-                                                                  color: Colors
-                                                                      .black87)),
+                                              context: context,
+                                              builder: (_) => Dialog(
+                                                shape: RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            4)),
+                                                child: Container(
+                                                  height: 230,
+                                                  width: 300,
+                                                  child: Column(
+                                                    children: [
+                                                      Expanded(
+                                                        child: Container(
+                                                            color:
+                                                                Colors.white70,
+                                                            child: Column(
+                                                              children: [
+                                                                Padding(
+                                                                    padding: EdgeInsets
+                                                                        .only(
+                                                                            top:
+                                                                                10.0)),
+                                                                Image(
+                                                                    image: AssetImage(
+                                                                        "asset/image/sukses.png"),
+                                                                    width: 60),
+                                                                Text("Berhasil",
+                                                                    style: TextStyle(
+                                                                        fontSize:
+                                                                            10.sp))
+                                                              ],
+                                                            )),
+                                                      ),
+                                                      Expanded(
+                                                        child: Container(
+                                                          color: Color.fromARGB(
+                                                              255, 95, 183, 98),
+                                                          child:
+                                                              SizedBox.expand(
+                                                            child: Padding(
+                                                              padding:
+                                                                  const EdgeInsets
+                                                                          .all(
+                                                                      15.0),
+                                                              child: Column(
+                                                                mainAxisAlignment:
+                                                                    MainAxisAlignment
+                                                                        .spaceBetween,
+                                                                children: [
+                                                                  Text(
+                                                                    "Rp. 50.000,00",
+                                                                    style:
+                                                                        TextStyle(
+                                                                      fontSize:
+                                                                          10.sp,
+                                                                      color: Colors
+                                                                          .white,
+                                                                    ),
+                                                                    textAlign:
+                                                                        TextAlign
+                                                                            .center,
+                                                                  ),
+                                                                  ElevatedButton(
+                                                                    style: ElevatedButton
+                                                                        .styleFrom(
+                                                                      shape:
+                                                                          RoundedRectangleBorder(
+                                                                        borderRadius:
+                                                                            BorderRadius.circular(50), // <-- Radius
+                                                                      ),
+                                                                      primary:
+                                                                          Colors
+                                                                              .white,
+                                                                    ),
+                                                                    child: Text(
+                                                                        'O k e',
+                                                                        style: TextStyle(
+                                                                            fontSize:
+                                                                                10.sp)),
+                                                                    onPressed:
+                                                                        () => {
+                                                                      Navigator.of(
+                                                                              context)
+                                                                          .pop()
+                                                                    },
+                                                                  )
+                                                                ],
+                                                              ),
+                                                            ),
+                                                          ),
                                                         ),
-                                                      ],
-                                                    ));
+                                                      )
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
+                                            );
                                           }
                                           setState(() {
                                             kembali = false;
@@ -374,45 +615,187 @@ class _PaymentState extends State<Payment> {
                                                   ['total_belanja'])) {
                                             showDialog(
                                               context: context,
-                                              builder: (_) => AlertDialog(
-                                                title: Text('Warning'),
-                                                content:
-                                                    Text('Uang anda kurang'),
-                                                actions: <Widget>[
-                                                  TextButton(
-                                                    onPressed: () => Navigator
-                                                            .of(context)
-                                                        .pop(
-                                                            false), // <-- SEE HERE
-                                                    child: Text('Ya',
-                                                        style: TextStyle(
-                                                            color: Colors
-                                                                .black87)),
+                                              builder: (_) => Dialog(
+                                                shape: RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            4)),
+                                                child: Container(
+                                                  height: 210,
+                                                  width: 300,
+                                                  child: Column(
+                                                    children: [
+                                                      Expanded(
+                                                        child: Container(
+                                                          color: Colors.white70,
+                                                          child: Icon(
+                                                            Icons
+                                                                .account_balance_wallet,
+                                                            size: 60,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      Expanded(
+                                                        child: Container(
+                                                          color:
+                                                              Colors.redAccent,
+                                                          child:
+                                                              SizedBox.expand(
+                                                            child: Padding(
+                                                              padding:
+                                                                  const EdgeInsets
+                                                                          .all(
+                                                                      15.0),
+                                                              child: Column(
+                                                                mainAxisAlignment:
+                                                                    MainAxisAlignment
+                                                                        .spaceBetween,
+                                                                children: [
+                                                                  Text(
+                                                                    "Uang anda kurang !",
+                                                                    style:
+                                                                        TextStyle(
+                                                                      color: Colors
+                                                                          .white,
+                                                                    ),
+                                                                    textAlign:
+                                                                        TextAlign
+                                                                            .center,
+                                                                  ),
+                                                                  ElevatedButton(
+                                                                    style: ElevatedButton
+                                                                        .styleFrom(
+                                                                      shape:
+                                                                          RoundedRectangleBorder(
+                                                                        borderRadius:
+                                                                            BorderRadius.circular(50), // <-- Radius
+                                                                      ),
+                                                                      primary:
+                                                                          Colors
+                                                                              .white,
+                                                                    ),
+                                                                    child: Text(
+                                                                        'Ok',
+                                                                        style: TextStyle(
+                                                                            fontSize:
+                                                                                10.sp)),
+                                                                    onPressed:
+                                                                        () => {
+                                                                      Navigator.of(
+                                                                              context)
+                                                                          .pop()
+                                                                    },
+                                                                  )
+                                                                ],
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      )
+                                                    ],
                                                   ),
-                                                ],
+                                                ),
                                               ),
                                             );
                                           } else {
                                             showDialog(
-                                                context: context,
-                                                builder: (_) => AlertDialog(
-                                                      title: Text('Warning'),
-                                                      content: Text(
-                                                          'Jumlah uang Rp. 100.000'),
-                                                      actions: <Widget>[
-                                                        TextButton(
-                                                          onPressed: () =>
-                                                              Navigator.of(
-                                                                      context)
-                                                                  .pop(
-                                                                      false), // <-- SEE HERE
-                                                          child: Text('Ya',
-                                                              style: TextStyle(
-                                                                  color: Colors
-                                                                      .black87)),
+                                              context: context,
+                                              builder: (_) => Dialog(
+                                                shape: RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            4)),
+                                                child: Container(
+                                                  height: 230,
+                                                  width: 300,
+                                                  child: Column(
+                                                    children: [
+                                                      Expanded(
+                                                        child: Container(
+                                                            color:
+                                                                Colors.white70,
+                                                            child: Column(
+                                                              children: [
+                                                                Padding(
+                                                                    padding: EdgeInsets
+                                                                        .only(
+                                                                            top:
+                                                                                10.0)),
+                                                                Image(
+                                                                    image: AssetImage(
+                                                                        "asset/image/sukses.png"),
+                                                                    width: 60),
+                                                                Text("Berhasil",
+                                                                    style: TextStyle(
+                                                                        fontSize:
+                                                                            10.sp))
+                                                              ],
+                                                            )),
+                                                      ),
+                                                      Expanded(
+                                                        child: Container(
+                                                          color: Color.fromARGB(
+                                                              255, 95, 183, 98),
+                                                          child:
+                                                              SizedBox.expand(
+                                                            child: Padding(
+                                                              padding:
+                                                                  const EdgeInsets
+                                                                          .all(
+                                                                      15.0),
+                                                              child: Column(
+                                                                mainAxisAlignment:
+                                                                    MainAxisAlignment
+                                                                        .spaceBetween,
+                                                                children: [
+                                                                  Text(
+                                                                    "Rp. 100.000,00",
+                                                                    style:
+                                                                        TextStyle(
+                                                                      fontSize:
+                                                                          10.sp,
+                                                                      color: Colors
+                                                                          .white,
+                                                                    ),
+                                                                    textAlign:
+                                                                        TextAlign
+                                                                            .center,
+                                                                  ),
+                                                                  ElevatedButton(
+                                                                    style: ElevatedButton
+                                                                        .styleFrom(
+                                                                      shape:
+                                                                          RoundedRectangleBorder(
+                                                                        borderRadius:
+                                                                            BorderRadius.circular(50), // <-- Radius
+                                                                      ),
+                                                                      primary:
+                                                                          Colors
+                                                                              .white,
+                                                                    ),
+                                                                    child: Text(
+                                                                        'Ok',
+                                                                        style: TextStyle(
+                                                                            fontSize:
+                                                                                10.sp)),
+                                                                    onPressed:
+                                                                        () => {
+                                                                      Navigator.of(
+                                                                              context)
+                                                                          .pop()
+                                                                    },
+                                                                  )
+                                                                ],
+                                                              ),
+                                                            ),
+                                                          ),
                                                         ),
-                                                      ],
-                                                    ));
+                                                      )
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
+                                            );
                                           }
 
                                           kembali = false;
@@ -562,45 +945,167 @@ class _PaymentState extends State<Payment> {
                                       //navigasi
                                       if (num1 == null) {
                                         showDialog(
-                                            context: context,
-                                            builder: (_) => AlertDialog(
-                                                  title: Text('Warning'),
-                                                  content: Text(
-                                                      'Anda belum memasukkan jumlah uang'),
-                                                  actions: <Widget>[
-                                                    TextButton(
-                                                      onPressed: () => Navigator
-                                                              .of(context)
-                                                          .pop(
-                                                              false), // <-- SEE HERE
-                                                      child: Text('Ya',
-                                                          style: TextStyle(
-                                                              color: Colors
-                                                                  .black87)),
+                                          context: context,
+                                          builder: (_) => Dialog(
+                                            shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(4)),
+                                            child: Container(
+                                              height: 210,
+                                              width: 300,
+                                              child: Column(
+                                                children: [
+                                                  Expanded(
+                                                    child: Container(
+                                                      color: Colors.white70,
+                                                      child: Icon(
+                                                        Icons
+                                                            .account_balance_wallet,
+                                                        size: 60,
+                                                      ),
                                                     ),
-                                                  ],
-                                                ));
+                                                  ),
+                                                  Expanded(
+                                                    child: Container(
+                                                      color: Colors.redAccent,
+                                                      child: SizedBox.expand(
+                                                        child: Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                  .all(15.0),
+                                                          child: Column(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .spaceBetween,
+                                                            children: [
+                                                              Text(
+                                                                "Masukkan nominal",
+                                                                style:
+                                                                    TextStyle(
+                                                                  color: Colors
+                                                                      .white,
+                                                                ),
+                                                                textAlign:
+                                                                    TextAlign
+                                                                        .center,
+                                                              ),
+                                                              ElevatedButton(
+                                                                style: ElevatedButton
+                                                                    .styleFrom(
+                                                                  shape:
+                                                                      RoundedRectangleBorder(
+                                                                    borderRadius:
+                                                                        BorderRadius.circular(
+                                                                            50), // <-- Radius
+                                                                  ),
+                                                                  primary: Colors
+                                                                      .white,
+                                                                ),
+                                                                child: Text(
+                                                                    'Ok',
+                                                                    style: TextStyle(
+                                                                        fontSize:
+                                                                            10.sp)),
+                                                                onPressed: () =>
+                                                                    {
+                                                                  Navigator.of(
+                                                                          context)
+                                                                      .pop()
+                                                                },
+                                                              )
+                                                            ],
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  )
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                        );
                                       }
                                       if (result! < 0) {
                                         showDialog(
-                                            context: context,
-                                            builder: (_) => AlertDialog(
-                                                  title: Text('Warning'),
-                                                  content: Text(
-                                                      'Jumlah uang kurang'),
-                                                  actions: <Widget>[
-                                                    TextButton(
-                                                      onPressed: () => Navigator
-                                                              .of(context)
-                                                          .pop(
-                                                              false), // <-- SEE HERE
-                                                      child: Text('Ya',
-                                                          style: TextStyle(
-                                                              color: Colors
-                                                                  .black87)),
+                                          context: context,
+                                          builder: (_) => Dialog(
+                                            shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(4)),
+                                            child: Container(
+                                              height: 210,
+                                              width: 300,
+                                              child: Column(
+                                                children: [
+                                                  Expanded(
+                                                    child: Container(
+                                                      color: Colors.white70,
+                                                      child: Icon(
+                                                        Icons
+                                                            .account_balance_wallet,
+                                                        size: 60,
+                                                      ),
                                                     ),
-                                                  ],
-                                                ));
+                                                  ),
+                                                  Expanded(
+                                                    child: Container(
+                                                      color: Colors.redAccent,
+                                                      child: SizedBox.expand(
+                                                        child: Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                  .all(15.0),
+                                                          child: Column(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .spaceBetween,
+                                                            children: [
+                                                              Text(
+                                                                "Masukkan nominal",
+                                                                style:
+                                                                    TextStyle(
+                                                                  color: Colors
+                                                                      .white,
+                                                                ),
+                                                                textAlign:
+                                                                    TextAlign
+                                                                        .center,
+                                                              ),
+                                                              ElevatedButton(
+                                                                style: ElevatedButton
+                                                                    .styleFrom(
+                                                                  shape:
+                                                                      RoundedRectangleBorder(
+                                                                    borderRadius:
+                                                                        BorderRadius.circular(
+                                                                            50), // <-- Radius
+                                                                  ),
+                                                                  primary: Colors
+                                                                      .white,
+                                                                ),
+                                                                child: Text(
+                                                                    'Ok',
+                                                                    style: TextStyle(
+                                                                        fontSize:
+                                                                            10.sp)),
+                                                                onPressed: () =>
+                                                                    {
+                                                                  Navigator.of(
+                                                                          context)
+                                                                      .pop()
+                                                                },
+                                                              )
+                                                            ],
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  )
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                        );
                                       } else {
                                         num1 = num1 = int.parse(
                                             totalUangController.text
@@ -701,24 +1206,85 @@ class _PaymentState extends State<Payment> {
                                       //navigasi
                                       if (result! < 0) {
                                         showDialog(
-                                            context: context,
-                                            builder: (_) => AlertDialog(
-                                                  title: Text('Warning'),
-                                                  content: Text(
-                                                      'Jumlah uang kurang'),
-                                                  actions: <Widget>[
-                                                    TextButton(
-                                                      onPressed: () => Navigator
-                                                              .of(context)
-                                                          .pop(
-                                                              false), // <-- SEE HERE
-                                                      child: Text('Ya',
-                                                          style: TextStyle(
-                                                              color: Colors
-                                                                  .black87)),
+                                          context: context,
+                                          builder: (_) => Dialog(
+                                            shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(4)),
+                                            child: Container(
+                                              height: 210,
+                                              width: 300,
+                                              child: Column(
+                                                children: [
+                                                  Expanded(
+                                                    child: Container(
+                                                      color: Colors.white70,
+                                                      child: Icon(
+                                                        Icons
+                                                            .account_balance_wallet,
+                                                        size: 60,
+                                                      ),
                                                     ),
-                                                  ],
-                                                ));
+                                                  ),
+                                                  Expanded(
+                                                    child: Container(
+                                                      color: Colors.redAccent,
+                                                      child: SizedBox.expand(
+                                                        child: Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                  .all(15.0),
+                                                          child: Column(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .spaceBetween,
+                                                            children: [
+                                                              Text(
+                                                                "Masukan nominal",
+                                                                style:
+                                                                    TextStyle(
+                                                                  color: Colors
+                                                                      .white,
+                                                                ),
+                                                                textAlign:
+                                                                    TextAlign
+                                                                        .center,
+                                                              ),
+                                                              ElevatedButton(
+                                                                style: ElevatedButton
+                                                                    .styleFrom(
+                                                                  shape:
+                                                                      RoundedRectangleBorder(
+                                                                    borderRadius:
+                                                                        BorderRadius.circular(
+                                                                            50), // <-- Radius
+                                                                  ),
+                                                                  primary: Colors
+                                                                      .white,
+                                                                ),
+                                                                child: Text(
+                                                                    'Ok',
+                                                                    style: TextStyle(
+                                                                        fontSize:
+                                                                            10.sp)),
+                                                                onPressed: () =>
+                                                                    {
+                                                                  Navigator.of(
+                                                                          context)
+                                                                      .pop()
+                                                                },
+                                                              )
+                                                            ],
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  )
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                        );
                                       } else {
                                         print("$result");
                                         final res = await http.post(

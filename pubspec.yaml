@@ -49,6 +49,8 @@ dependencies:
   pattern_formatter: ^2.0.0
   auto_size_text_field: ^2.1.0
   sizer: ^2.0.15
+  connectivity_plus: ^2.3.5
+  top_snackbar_flutter: ^2.0.0
 
 dev_dependencies:
   flutter_test:
