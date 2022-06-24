@@ -57,6 +57,7 @@ class _LaporanHarianState extends State<LaporanHarian> {
   @override
   void initState() {
     topSnackBar();
+    getPref();
     super.initState();
   }
 
