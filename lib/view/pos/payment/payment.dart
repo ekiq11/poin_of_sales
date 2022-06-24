@@ -1,6 +1,7 @@
 // ignore_for_file: unrelated_type_equality_checks, use_build_context_synchronously, avoid_print, prefer_interpolation_to_compose_strings, duplicate_ignore, unused_local_variable, sized_box_for_whitespace
 
 import 'dart:convert';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:poin_of_sales/view/pos/payment/selesai.dart';
@@ -8,6 +9,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sizer/sizer.dart';
 import 'package:ticket_widget/ticket_widget.dart';
 import 'package:http/http.dart' as http;
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
 import '../../../api/api.dart';
 import '../../../model/currency_format.dart';
 import 'package:pattern_formatter/pattern_formatter.dart';
@@ -48,8 +51,23 @@ class _PaymentState extends State<Payment> {
     });
   }
 
+  topSnackBar() async {
+    var connectivityResult = await (Connectivity().checkConnectivity());
+    if (connectivityResult != ConnectivityResult.mobile &&
+        connectivityResult != ConnectivityResult.wifi) {
+      // ignore: use_build_context_synchronously
+      showTopSnackBar(
+        context,
+        CustomSnackBar.error(
+          message: "Terjadi kesalahan, cek koneksi internet anda !",
+        ),
+      );
+    }
+  }
+
   @override
   void initState() {
+    topSnackBar();
     super.initState();
     getPref();
   }

@@ -1,11 +1,14 @@
 // ignore_for_file: use_key_in_widget_constructors
 
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:poin_of_sales/view/login/login.dart';
 import 'package:poin_of_sales/view/pos/pos.dart';
 import 'package:poin_of_sales/view/report/laporan_harian.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sizer/sizer.dart';
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 class HalamanUtama extends StatefulWidget {
   final String? username;
@@ -25,8 +28,23 @@ class _HalamanUtamaState extends State<HalamanUtama> {
     });
   }
 
+  topSnackBar() async {
+    var connectivityResult = await (Connectivity().checkConnectivity());
+    if (connectivityResult != ConnectivityResult.mobile &&
+        connectivityResult != ConnectivityResult.wifi) {
+      // ignore: use_build_context_synchronously
+      showTopSnackBar(
+        context,
+        CustomSnackBar.error(
+          message: "Terjadi kesalahan, cek koneksi internet anda !",
+        ),
+      );
+    }
+  }
+
   @override
   void initState() {
+    topSnackBar();
     super.initState();
     getPref();
   }

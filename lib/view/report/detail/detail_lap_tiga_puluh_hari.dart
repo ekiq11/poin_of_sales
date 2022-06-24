@@ -1,8 +1,13 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:convert';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:poin_of_sales/view/landing/drawer.dart';
 import 'package:sizer/sizer.dart';
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
 import '../../../api/api.dart';
 import '../../../model/currency_format.dart';
 import '../../../model/detail/model_detail_lap_tiga_puluh_hari.dart';
@@ -24,6 +29,26 @@ class _DetLapTigaPuluhHariState extends State<DetLapTigaPuluhHari> {
         .map<LapDataTigaPuluhHari>(
             (json) => LapDataTigaPuluhHari.fromJson(json))
         .toList();
+  }
+
+  topSnackBar() async {
+    var connectivityResult = await (Connectivity().checkConnectivity());
+    if (connectivityResult != ConnectivityResult.mobile &&
+        connectivityResult != ConnectivityResult.wifi) {
+      // ignore: use_build_context_synchronously
+      showTopSnackBar(
+        context,
+        CustomSnackBar.error(
+          message: "Terjadi kesalahan, cek koneksi internet anda !",
+        ),
+      );
+    }
+  }
+
+  @override
+  void initState() {
+    topSnackBar();
+    super.initState();
   }
 
   @override
@@ -175,7 +200,7 @@ class _DetLapTigaPuluhHariState extends State<DetLapTigaPuluhHari> {
                                                 cells: <DataCell>[
                                                   DataCell(
                                                     SizedBox(
-                                                      width: 150,
+                                                      width: 170,
                                                       child: Text(
                                                         "${e.barang}",
                                                         style: TextStyle(
@@ -185,7 +210,7 @@ class _DetLapTigaPuluhHariState extends State<DetLapTigaPuluhHari> {
                                                   ),
                                                   DataCell(
                                                     SizedBox(
-                                                      width: 150,
+                                                      width: 170,
                                                       child: Text(
                                                         "${e.jenis}",
                                                         style: TextStyle(
@@ -205,7 +230,7 @@ class _DetLapTigaPuluhHariState extends State<DetLapTigaPuluhHari> {
                                                   ),
                                                   DataCell(
                                                     SizedBox(
-                                                      width: 150,
+                                                      width: 170,
                                                       child: Text(
                                                         " ${e.no_transaksi}",
                                                         style: TextStyle(
@@ -215,7 +240,7 @@ class _DetLapTigaPuluhHariState extends State<DetLapTigaPuluhHari> {
                                                   ),
                                                   DataCell(
                                                     SizedBox(
-                                                      width: 150,
+                                                      width: 170,
                                                       child: Text(
                                                         " ${CurrencyFormat.convertToIdr(int.parse(e.total), 2)}",
                                                         style: TextStyle(

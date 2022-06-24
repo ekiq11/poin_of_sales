@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
@@ -17,6 +18,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sizer/sizer.dart';
 import 'package:ticket_widget/ticket_widget.dart';
 import 'package:http/http.dart' as http;
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
 import '../../../api/api.dart';
 import '../../../model/currency_format.dart';
 
@@ -57,11 +60,25 @@ class _StrukState extends State<Struk> {
     });
   }
 
+  topSnackBar() async {
+    var connectivityResult = await (Connectivity().checkConnectivity());
+    if (connectivityResult != ConnectivityResult.mobile &&
+        connectivityResult != ConnectivityResult.wifi) {
+      // ignore: use_build_context_synchronously
+      showTopSnackBar(
+        context,
+        CustomSnackBar.error(
+          message: "Terjadi kesalahan, cek koneksi internet anda !",
+        ),
+      );
+    }
+  }
+
   @override
   void initState() {
-    getPref();
-
+    topSnackBar();
     super.initState();
+    getPref();
   }
 
   //popScope

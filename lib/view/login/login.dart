@@ -31,16 +31,7 @@ class _LoginPageState extends State<LoginPage> {
     setState(() {
       visible = true;
     });
-    var connectivityResult = await (Connectivity().checkConnectivity());
-    if (connectivityResult != ConnectivityResult.mobile &&
-        connectivityResult != ConnectivityResult.wifi) {
-      showTopSnackBar(
-        context,
-        CustomSnackBar.error(
-          message: "Terjadi kesalahan, cek koneksi internet anda !",
-        ),
-      );
-    }
+
     // print(params);
     if (userNameController.text.isNotEmpty &&
         passwordController.text.isNotEmpty) {
@@ -213,6 +204,33 @@ class _LoginPageState extends State<LoginPage> {
 
   Future<bool> _onWillPop() async {
     return false; //<-- SEE HERE
+  }
+
+  topSnackBar() async {
+    var connectivityResult = await (Connectivity().checkConnectivity());
+    if (connectivityResult != ConnectivityResult.mobile &&
+        connectivityResult != ConnectivityResult.wifi) {
+      // ignore: use_build_context_synchronously
+      showTopSnackBar(
+        context,
+        CustomSnackBar.error(
+          message: "Terjadi kesalahan, cek koneksi internet anda !",
+        ),
+      );
+    } else {
+      showTopSnackBar(
+        context,
+        CustomSnackBar.info(
+          message: "Anda telah terhubung ke jaringan",
+        ),
+      );
+    }
+  }
+
+  @override
+  void initState() {
+    topSnackBar();
+    super.initState();
   }
 
   @override

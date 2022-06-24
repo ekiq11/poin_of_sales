@@ -1,11 +1,14 @@
 // ignore_for_file: use_key_in_widget_ructors, use_build_context_synchronously, prefer_const_constructors_in_immutables, use_key_in_widget_constructors
 
 import 'dart:convert';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:poin_of_sales/view/landing/drawer.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sizer/sizer.dart';
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
 import '../../api/api.dart';
 import '../../model/currency_format.dart';
 import '../../model/model_lap_periode.dart';
@@ -32,6 +35,26 @@ class _LapPeriodeState extends State<LapPeriode> {
     return await list
         .map<DataLapPeriode>((json) => DataLapPeriode.fromJson(json))
         .toList();
+  }
+
+  topSnackBar() async {
+    var connectivityResult = await (Connectivity().checkConnectivity());
+    if (connectivityResult != ConnectivityResult.mobile &&
+        connectivityResult != ConnectivityResult.wifi) {
+      // ignore: use_build_context_synchronously
+      showTopSnackBar(
+        context,
+        CustomSnackBar.error(
+          message: "Terjadi kesalahan, cek koneksi internet anda !",
+        ),
+      );
+    }
+  }
+
+  @override
+  void initState() {
+    topSnackBar();
+    super.initState();
   }
 
   @override
