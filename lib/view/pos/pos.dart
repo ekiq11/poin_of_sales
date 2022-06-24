@@ -2,18 +2,15 @@
 
 import 'dart:async';
 import 'dart:convert';
-
 import 'package:badges/badges.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
-
 import 'package:http/http.dart' as http;
 import 'package:poin_of_sales/view/pos/payment/payment.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sizer/sizer.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
-
 import '../../api/api.dart';
 import '../../model/currency_format.dart';
 import '../home.dart';
@@ -184,6 +181,7 @@ class _PoinOfSaleState extends State<PoinOfSale> {
                                           2),
                                       style: TextStyle(fontSize: 10.sp)),
                                   leading: CircleAvatar(
+                                    radius: 30.0,
                                     backgroundImage: NetworkImage(
                                         "http://kbu-cdn.com/dk/wp-content/uploads/roti-goreng-madu.jpg"),
                                   ),
@@ -203,8 +201,9 @@ class _PoinOfSaleState extends State<PoinOfSale> {
                                         Padding(
                                           padding: EdgeInsets.only(right: 10.0),
                                           child: Text("+ Add",
-                                              style:
-                                                  TextStyle(fontSize: 10.sp)),
+                                              style: TextStyle(
+                                                  fontSize: 10.sp,
+                                                  fontWeight: FontWeight.w400)),
                                         ),
                                         Icon(Icons.add_shopping_cart_rounded,
                                             size: 12.sp),
@@ -322,6 +321,7 @@ class _PoinOfSaleState extends State<PoinOfSale> {
                                                                   fontSize:
                                                                       10.sp)),
                                                           leading: CircleAvatar(
+                                                            radius: 30.0,
                                                             backgroundImage:
                                                                 NetworkImage(
                                                                     "http://kbu-cdn.com/dk/wp-content/uploads/roti-goreng-madu.jpg"),
