@@ -13,7 +13,7 @@ import '../../../model/currency_format.dart';
 import '../../../model/detail/model_detail_lap_tiga_puluh_hari.dart';
 
 class DetLapTigaPuluhHari extends StatefulWidget {
-  DetLapTigaPuluhHari({Key? key}) : super(key: key);
+  const DetLapTigaPuluhHari({Key? key}) : super(key: key);
 
   @override
   State<DetLapTigaPuluhHari> createState() => _DetLapTigaPuluhHariState();
@@ -35,7 +35,6 @@ class _DetLapTigaPuluhHariState extends State<DetLapTigaPuluhHari> {
     var connectivityResult = await (Connectivity().checkConnectivity());
     if (connectivityResult != ConnectivityResult.mobile &&
         connectivityResult != ConnectivityResult.wifi) {
-      // ignore: use_build_context_synchronously
       showTopSnackBar(
         context,
         CustomSnackBar.error(

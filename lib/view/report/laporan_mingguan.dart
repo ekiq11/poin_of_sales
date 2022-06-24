@@ -37,7 +37,6 @@ class _LaporanMingguanState extends State<LaporanMingguan> {
     var connectivityResult = await (Connectivity().checkConnectivity());
     if (connectivityResult != ConnectivityResult.mobile &&
         connectivityResult != ConnectivityResult.wifi) {
-      // ignore: use_build_context_synchronously
       showTopSnackBar(
         context,
         CustomSnackBar.error(
