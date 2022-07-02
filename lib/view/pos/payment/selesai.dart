@@ -116,7 +116,7 @@ class _TransaksiSelesaiState extends State<TransaksiSelesai> {
                                 ),
                               ],
                             ),
-                            SizedBox(height: mediaQueryHeight * 0.02),
+                            SizedBox(height: mediaQueryHeight * 0.00),
                             Column(
                               children: [
                                 Text("Pembayaran Sukses",
@@ -137,7 +137,7 @@ class _TransaksiSelesaiState extends State<TransaksiSelesai> {
                                 Text(
                                   CurrencyFormat.convertToIdr(
                                       int.parse(widget.kembalian.toString()),
-                                      2),
+                                      0),
                                   style: TextStyle(fontSize: 18.sp),
                                 ),
                                 SizedBox(

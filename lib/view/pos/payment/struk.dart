@@ -330,7 +330,7 @@ class _StrukState extends State<Struk> {
                                                                           int.parse(snap.data[x]
                                                                               [
                                                                               'harga']),
-                                                                          2),
+                                                                          0),
                                                                       textAlign:
                                                                           TextAlign
                                                                               .right,
@@ -347,7 +347,7 @@ class _StrukState extends State<Struk> {
                                                                           int.parse(snap.data[x]
                                                                               [
                                                                               'total']),
-                                                                          2),
+                                                                          0),
                                                                       textAlign:
                                                                           TextAlign
                                                                               .right,
@@ -426,7 +426,7 @@ class _StrukState extends State<Struk> {
                                                             int.parse(snapshot
                                                                     .data[
                                                                 'total_akhir']),
-                                                            2),
+                                                            0),
                                                         textAlign:
                                                             TextAlign.right,
                                                         style: TextStyle(
@@ -456,7 +456,7 @@ class _StrukState extends State<Struk> {
                                                               int.parse(
                                                                   snapshot.data[
                                                                       'bayar']),
-                                                              2),
+                                                              0),
                                                       textAlign:
                                                           TextAlign.right,
                                                       style: TextStyle(
@@ -485,7 +485,7 @@ class _StrukState extends State<Struk> {
                                                               int.parse(snapshot
                                                                       .data[
                                                                   'kembalian']),
-                                                              2),
+                                                              0),
                                                       textAlign:
                                                           TextAlign.right,
                                                       style: TextStyle(
@@ -552,7 +552,7 @@ class _StrukState extends State<Struk> {
   Widget _getFAB() {
     return SpeedDial(
       animatedIcon: AnimatedIcons.menu_close,
-      animatedIconTheme: IconThemeData(size: 22),
+      animatedIconTheme: IconThemeData(size: 20),
       backgroundColor: Colors.amber,
       visible: true,
       curve: Curves.bounceIn,

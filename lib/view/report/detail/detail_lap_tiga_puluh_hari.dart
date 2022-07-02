@@ -241,7 +241,7 @@ class _DetLapTigaPuluhHariState extends State<DetLapTigaPuluhHari> {
                                                     SizedBox(
                                                       width: 170,
                                                       child: Text(
-                                                        " ${CurrencyFormat.convertToIdr(int.parse(e.total), 2)}",
+                                                        " ${CurrencyFormat.convertToIdr(int.parse(e.total), 0)}",
                                                         style: TextStyle(
                                                             fontSize: 10.sp),
                                                       ),
@@ -258,7 +258,7 @@ class _DetLapTigaPuluhHariState extends State<DetLapTigaPuluhHari> {
                                     Padding(
                                       padding: EdgeInsets.all(15.0),
                                       child: Text(
-                                        "Total : ${CurrencyFormat.convertToIdr(snapshot.data.map((e) => int.parse(e.total)).reduce((a, b) => a + b), 2)}",
+                                        "Total : ${CurrencyFormat.convertToIdr(snapshot.data.map((e) => int.parse(e.total)).reduce((a, b) => a + b), 0)}",
                                         style: TextStyle(
                                             fontSize: 10.sp,
                                             fontWeight: FontWeight.w600),

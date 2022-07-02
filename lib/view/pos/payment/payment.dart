@@ -181,7 +181,7 @@ class _PaymentState extends State<Payment> {
                                               CurrencyFormat.convertToIdr(
                                                   int.parse(snapshot.data[index]
                                                       ['total_belanja']),
-                                                  2),
+                                                  0),
                                               style: TextStyle(
                                                   fontSize: 16.sp,
                                                   fontWeight: FontWeight.w600,
@@ -192,7 +192,7 @@ class _PaymentState extends State<Payment> {
                                               // ignore: prefer_interpolation_to_compose_strings
                                               "Kembalian : " +
                                                   CurrencyFormat.convertToIdr(
-                                                      int.parse("$result"), 2),
+                                                      int.parse("$result"), 0),
                                               style: TextStyle(
                                                   fontSize: 10.sp,
                                                   color: Colors.black87),
@@ -304,7 +304,7 @@ class _PaymentState extends State<Payment> {
                                                                           snapshot.data[index]
                                                                               [
                                                                               'total_belanja']),
-                                                                      2),
+                                                                      0),
                                                                   style:
                                                                       TextStyle(
                                                                     fontSize:
@@ -536,7 +536,7 @@ class _PaymentState extends State<Payment> {
                                                                         .spaceBetween,
                                                                 children: [
                                                                   Text(
-                                                                    "Rp. 50.000,00",
+                                                                    "Rp. 50.000",
                                                                     style:
                                                                         TextStyle(
                                                                       fontSize:
@@ -617,7 +617,7 @@ class _PaymentState extends State<Payment> {
                                                   color: Colors.black87,
                                                   size: 14.sp),
                                             ),
-                                            Text('Rp.50.000,00',
+                                            Text('Rp.50.000',
                                                 style: TextStyle(
                                                     fontSize: 10.sp,
                                                     fontWeight:
@@ -767,7 +767,7 @@ class _PaymentState extends State<Payment> {
                                                                         .spaceBetween,
                                                                 children: [
                                                                   Text(
-                                                                    "Rp. 100.000,00",
+                                                                    "Rp. 100.000",
                                                                     style:
                                                                         TextStyle(
                                                                       fontSize:
@@ -849,7 +849,7 @@ class _PaymentState extends State<Payment> {
                                                   color: Colors.black87,
                                                   size: 14.sp),
                                             ),
-                                            Text('Rp.100.000,00',
+                                            Text('Rp.100.000',
                                                 style: TextStyle(
                                                     fontSize: 10.sp,
                                                     fontWeight:

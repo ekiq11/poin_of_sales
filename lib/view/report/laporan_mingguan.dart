@@ -178,7 +178,7 @@ class _LaporanMingguanState extends State<LaporanMingguan> {
                                       SizedBox(
                                         width: 300,
                                         child: Text(
-                                          " ${CurrencyFormat.convertToIdr(int.parse(e.totalTransaksi), 2)}",
+                                          " ${CurrencyFormat.convertToIdr(int.parse(e.totalTransaksi), 0)}",
                                           style: TextStyle(fontSize: 10.sp),
                                         ),
                                       ),
@@ -196,7 +196,7 @@ class _LaporanMingguanState extends State<LaporanMingguan> {
                                       SizedBox(
                                         width: 250,
                                         child: Text(
-                                          " ${CurrencyFormat.convertToIdr(int.parse(e.rataRata), 2)}",
+                                          " ${CurrencyFormat.convertToIdr(int.parse(e.rataRata), 0)}",
                                           style: TextStyle(fontSize: 10.sp),
                                         ),
                                       ),

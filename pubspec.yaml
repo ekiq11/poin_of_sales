@@ -51,7 +51,13 @@ dependencies:
   sizer: ^2.0.15
   connectivity_plus: ^2.3.5
   top_snackbar_flutter: ^2.0.0
- 
+  flutter_native_splash: ^2.2.3+1
+#Generate Splash Screen
+#Pub run flutter_native_splash:create
+flutter_native_splash: 
+  image: asset/roti.png
+  color: "#ffcc00"
+
 
 dev_dependencies:
   flutter_test:
@@ -63,6 +69,9 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^2.0.0
+
+
+
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -87,6 +96,7 @@ flutter:
     - asset/icon/report.png
     - asset/icon/logout.png
     - asset/icon/no_data.png
+    - asset/roti.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

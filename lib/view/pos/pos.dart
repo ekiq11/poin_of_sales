@@ -178,7 +178,7 @@ class _PoinOfSaleState extends State<PoinOfSale> {
                                           int.parse(
                                             snapshot.data[index]['harga_jual'],
                                           ),
-                                          2),
+                                          0),
                                       style: TextStyle(fontSize: 10.sp)),
                                   leading: CircleAvatar(
                                     radius: 30.0,
@@ -316,7 +316,7 @@ class _PoinOfSaleState extends State<PoinOfSale> {
                                                                             [
                                                                             'harga'],
                                                                       ),
-                                                                      2),
+                                                                      0),
                                                               style: TextStyle(
                                                                   fontSize:
                                                                       10.sp)),
@@ -520,7 +520,7 @@ class _PoinOfSaleState extends State<PoinOfSale> {
                                                                           index]
                                                                       [
                                                                       'total_belanja']),
-                                                                  2),
+                                                                  0),
                                                           style: TextStyle(
                                                               fontSize: 12.sp,
                                                               fontWeight:
