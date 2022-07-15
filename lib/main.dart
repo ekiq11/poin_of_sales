@@ -9,9 +9,9 @@ import 'package:sizer/sizer.dart';
 
 int? isviewed;
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations(
       [DeviceOrientation.landscapeRight, DeviceOrientation.landscapeLeft]);
-  WidgetsFlutterBinding.ensureInitialized();
   SharedPreferences prefs = await SharedPreferences.getInstance();
   isviewed = prefs.getInt('onBoard');
   runApp(const HomePage());

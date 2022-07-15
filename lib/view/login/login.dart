@@ -245,154 +245,162 @@ class _LoginPageState extends State<LoginPage> {
     return WillPopScope(
       onWillPop: _onWillPop,
       child: Scaffold(
-          body: SingleChildScrollView(
-              child: SizedBox(
-        height: MediaQuery.of(context).size.height,
-        child: Stack(
-          children: <Widget>[
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                  width: mediaQueryWidth * 0.4,
-                  padding: EdgeInsets.symmetric(horizontal: 20),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Expanded(
-                        flex: 1,
-                        child: SizedBox(),
-                      ),
-                      Column(
+        body: SingleChildScrollView(
+          child: SizedBox(
+            height: MediaQuery.of(context).size.height,
+            child: Stack(
+              children: <Widget>[
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(
+                      width: mediaQueryWidth * 0.4,
+                      padding: EdgeInsets.symmetric(horizontal: 20),
+                      child: Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
-                          Text("Selamat Datang",
-                              style: TextStyle(
-                                  fontSize: 12.sp,
-                                  fontWeight: FontWeight.w500)),
-                          Text("di Roti Dua Delima",
-                              style: TextStyle(fontSize: 10.sp)),
-                          Center(
-                            child: Image.asset(
-                              "asset/login/login.png",
-                              height: mediaQueryHeight * 0.1,
+                          Expanded(
+                            flex: 1,
+                            child: SizedBox(),
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              Text("Selamat Datang",
+                                  style: TextStyle(
+                                      fontSize: 12.sp,
+                                      fontWeight: FontWeight.w500)),
+                              Text("di Roti Dua Delima",
+                                  style: TextStyle(fontSize: 10.sp)),
+                              Center(
+                                child: Image.asset(
+                                  "asset/login/login.png",
+                                  height: mediaQueryHeight * 0.1,
+                                ),
+                              ),
+                            ],
+                          ),
+                          Visibility(
+                              maintainSize: true,
+                              maintainAnimation: true,
+                              maintainState: true,
+                              visible: visible,
+                              child: Container(
+                                  child: CircularProgressIndicator())),
+                          Container(
+                            margin: EdgeInsets.symmetric(vertical: 10),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                Text(
+                                  'Username',
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 10.sp),
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                TextField(
+                                    controller: userNameController,
+                                    style: TextStyle(fontSize: 10.sp),
+                                    obscureText: false,
+                                    decoration: InputDecoration(
+                                        border: InputBorder.none,
+                                        fillColor: Color(0xfff3f3f4),
+                                        filled: true))
+                              ],
                             ),
+                          ),
+                          Container(
+                            margin: EdgeInsets.symmetric(vertical: 10),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                Text(
+                                  'Password',
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 10.sp),
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                TextField(
+                                    controller: passwordController,
+                                    style: TextStyle(fontSize: 10.sp),
+                                    obscureText: _passwordVisible,
+                                    decoration: InputDecoration(
+                                        suffixIcon: GestureDetector(
+                                            onTap: () {
+                                              setState(() {
+                                                _passwordVisible =
+                                                    !_passwordVisible;
+                                              });
+                                            },
+                                            child: Icon(
+                                                _passwordVisible
+                                                    ? Icons.visibility_off
+                                                    : Icons.visibility,
+                                                color: Colors.black87)),
+                                        border: InputBorder.none,
+                                        fillColor: Color(0xfff3f3f4),
+                                        filled: true))
+                              ],
+                            ),
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          InkWell(
+                            child: Container(
+                              width: MediaQuery.of(context).size.width,
+                              padding: EdgeInsets.symmetric(vertical: 15),
+                              alignment: Alignment.center,
+                              decoration: BoxDecoration(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(50)),
+                                  boxShadow: <BoxShadow>[
+                                    BoxShadow(
+                                        color: Colors.grey.shade200,
+                                        offset: Offset(2, 4),
+                                        blurRadius: 5,
+                                        spreadRadius: 2)
+                                  ],
+                                  gradient: LinearGradient(
+                                      begin: Alignment.centerLeft,
+                                      end: Alignment.centerRight,
+                                      colors: const [
+                                        Color(0xfffbb448),
+                                        Color(0xfff7892b)
+                                      ])),
+                              child: Text(
+                                'LOGIN',
+                                style: TextStyle(
+                                    fontSize: 10.sp, color: Colors.black87),
+                              ),
+                            ),
+                            onTap: _cekLogin,
+                          ),
+                          Expanded(
+                            flex: 1,
+                            child: SizedBox(),
                           ),
                         ],
                       ),
-                      Visibility(
-                          maintainSize: true,
-                          maintainAnimation: true,
-                          maintainState: true,
-                          visible: visible,
-                          child: Container(child: CircularProgressIndicator())),
-                      Container(
-                        margin: EdgeInsets.symmetric(vertical: 10),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Text(
-                              'Username',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 10.sp),
-                            ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            TextField(
-                                controller: userNameController,
-                                style: TextStyle(fontSize: 10.sp),
-                                obscureText: false,
-                                decoration: InputDecoration(
-                                    border: InputBorder.none,
-                                    fillColor: Color(0xfff3f3f4),
-                                    filled: true))
-                          ],
-                        ),
-                      ),
-                      Container(
-                        margin: EdgeInsets.symmetric(vertical: 10),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Text(
-                              'Password',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 10.sp),
-                            ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            TextField(
-                                controller: passwordController,
-                                style: TextStyle(fontSize: 10.sp),
-                                obscureText: _passwordVisible,
-                                decoration: InputDecoration(
-                                    suffixIcon: GestureDetector(
-                                        onTap: () {
-                                          setState(() {
-                                            _passwordVisible =
-                                                !_passwordVisible;
-                                          });
-                                        },
-                                        child: Icon(
-                                            _passwordVisible
-                                                ? Icons.visibility_off
-                                                : Icons.visibility,
-                                            color: Colors.black87)),
-                                    border: InputBorder.none,
-                                    fillColor: Color(0xfff3f3f4),
-                                    filled: true))
-                          ],
-                        ),
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      InkWell(
-                        child: Container(
-                          width: MediaQuery.of(context).size.width,
-                          padding: EdgeInsets.symmetric(vertical: 15),
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(50)),
-                              boxShadow: <BoxShadow>[
-                                BoxShadow(
-                                    color: Colors.grey.shade200,
-                                    offset: Offset(2, 4),
-                                    blurRadius: 5,
-                                    spreadRadius: 2)
-                              ],
-                              gradient: LinearGradient(
-                                  begin: Alignment.centerLeft,
-                                  end: Alignment.centerRight,
-                                  colors: const [
-                                    Color(0xfffbb448),
-                                    Color(0xfff7892b)
-                                  ])),
-                          child: Text(
-                            'LOGIN',
-                            style: TextStyle(
-                                fontSize: 10.sp, color: Colors.black87),
-                          ),
-                        ),
-                        onTap: _cekLogin,
-                      ),
-                      Expanded(
-                        flex: 1,
-                        child: SizedBox(),
-                      ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
+                SizedBox(
+                  height: 5.0,
+                )
               ],
             ),
-          ],
+          ),
         ),
-      ))),
+      ),
     );
   }
 }
